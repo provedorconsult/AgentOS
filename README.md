@@ -1,5 +1,4 @@
 # AgentOS
-
 AgentOS is a baseline repository for building productive Codex development environments before a product repository exists, and for adapting existing repositories into an agentic workflow.
 
 It standardizes:
