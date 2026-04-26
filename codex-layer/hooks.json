@@ -1,0 +1,16 @@
+{
+  "hooks": [
+    {
+      "name": "agentos_no_secrets_check",
+      "events": ["pre-command", "pre-completion"],
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".codex/hooks/check-no-secrets.ps1"]
+    },
+    {
+      "name": "agentos_plan_hint",
+      "events": ["pre-completion"],
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".codex/hooks/check-exec-plan.ps1"]
+    }
+  ]
+}

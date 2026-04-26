@@ -1,0 +1,35 @@
+# Project-local Codex configuration for AgentOS.
+# Project .codex layers load only when the project is trusted.
+
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+
+[agents]
+max_threads = 8
+max_depth = 2
+
+[features]
+shell_snapshot = true
+
+# MCP placeholders. Enable and authenticate per machine/project.
+
+[mcp_servers.github]
+enabled = false
+command = "gh"
+args = ["mcp", "server"]
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+[mcp_servers.browser]
+enabled = false
+url = "http://localhost:3000/mcp"
+startup_timeout_sec = 20
+tool_timeout_sec = 45
+
+[mcp_servers.docs]
+enabled = false
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "docs"]
+startup_timeout_sec = 20
+tool_timeout_sec = 45

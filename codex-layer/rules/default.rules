@@ -1,0 +1,26 @@
+# AgentOS command policy examples.
+# Rules control commands Codex can run outside the sandbox.
+
+prefix_rule(
+    pattern = ["gh", "repo", "create"],
+    decision = "prompt",
+    match = [
+        "gh repo create provedorconsult/AgentOS --public",
+    ],
+)
+
+prefix_rule(
+    pattern = ["gh", "repo", "delete"],
+    decision = "forbid",
+    match = [
+        "gh repo delete provedorconsult/AgentOS",
+    ],
+)
+
+prefix_rule(
+    pattern = ["git", "push", "--force"],
+    decision = "prompt",
+    match = [
+        "git push --force",
+    ],
+)

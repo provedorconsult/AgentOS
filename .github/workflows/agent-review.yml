@@ -1,0 +1,17 @@
+name: Agent Review Checklist
+
+on:
+  pull_request:
+
+jobs:
+  checklist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required docs
+        run: |
+          test -f AGENTS.md
+          test -f docs/AGENT_ROSTER.md
+          test -f docs/QUALITY.md
+          test -f docs/SECURITY.md
+          test -f codex-layer/config.toml
