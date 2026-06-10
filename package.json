@@ -1,0 +1,27 @@
+{
+  "name": "agentos",
+  "version": "2.0.0",
+  "private": false,
+  "description": "A generic agentic development operating system with SpecPilot Engine, context capsules, mechanical verification and IDE adapters.",
+  "type": "module",
+  "scripts": {
+    "doctor": "node scripts/doctor.mjs",
+    "validate": "npm run validate:templates && npm run validate:context && npm run validate:secrets",
+    "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json",
+    "validate:context": "node scripts/validate-context-ranges.mjs --spec docs/SPEC.md .harness/sprints",
+    "validate:secrets": "node scripts/validate-no-secrets.mjs",
+    "agentos:init": "node scripts/agentos-init.mjs",
+    "agentos:adapt": "node scripts/agentos-adapt.mjs",
+    "agentos:install-adapter": "node scripts/agentos-install-adapter.mjs"
+  },
+  "keywords": [
+    "agentos",
+    "agentic-development",
+    "spec-driven-development",
+    "ai-engineering",
+    "codex",
+    "ide-adapters",
+    "context-capsules"
+  ],
+  "license": "UNLICENSED"
+}

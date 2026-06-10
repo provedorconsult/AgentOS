@@ -1,0 +1,33 @@
+project:
+  name: AgentOS
+  type: agentic-development-os
+  status: active
+agentos:
+  version: 2.0.0
+  mode: generic
+  spec_engine: specpilot
+  default_workflow: discover-spec-plan-implement-verify-finish
+context:
+  max_spec_range_lines: 120
+  max_readonly_files_per_task: 3
+  max_acceptance_criteria_per_task: 5
+  forbidden_dirs:
+    - node_modules
+    - .venv
+    - dist
+    - build
+    - .next
+    - .git
+    - coverage
+    - vendor
+verification:
+  require_exit_code: true
+  require_evidence_per_criterion: true
+  require_review_file: true
+  require_no_secrets_scan: true
+adapters:
+  default: generic-ide
+  available:
+    - codex
+    - generic-ide
+    - antigravity

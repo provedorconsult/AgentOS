@@ -1,0 +1,15 @@
+{
+  "project": {
+    "name": "AgentOS",
+    "status": "active"
+  },
+  "agentos": {
+    "version": "2.0.0",
+    "specEngine": "specpilot"
+  },
+  "currentSprint": null,
+  "goalPolicy": {
+    "field": "agentGoal",
+    "rejectLegacyField": "codexGoal"
+  }
+}

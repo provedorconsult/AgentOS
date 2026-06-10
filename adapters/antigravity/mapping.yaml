@@ -1,0 +1,8 @@
+adapter: antigravity
+status: experimental
+maps:
+  core/workflows: future-antigravity-workflows
+  core/rules: future-antigravity-rules
+notes:
+  - Placeholder only.
+  - Do not treat this as production support.

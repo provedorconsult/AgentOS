@@ -1,109 +1,99 @@
 # AgentOS
-AgentOS is a baseline repository for building productive Codex development environments before a product repository exists, and for adapting existing repositories into an agentic workflow.
 
-It standardizes:
+AgentOS is a generic agentic development operating system for repositories. It combines a universal operating model, SpecPilot Engine, mechanical verification and adapters for Codex or other IDEs/agents.
 
-- project instructions for Codex;
-- custom agents and subagents;
-- orchestration playbooks;
-- MCP configuration placeholders;
-- skills and reusable workflows;
-- hooks, rules, and guardrails;
-- repository management, review, CI, deploy, and continuous improvement routines.
+## What It Provides
 
-The goal is maximum practical autonomy: humans define intent, constraints, and approvals; agents plan, explore, implement, test, review, release, deploy, observe, and improve the environment.
+- `core/`: universal agents, workflows, rules and schemas.
+- SpecPilot Engine: SPEC, PLAN, TASK, REVIEW templates, context capsules and `.harness/`.
+- `adapters/`: tool-specific installation layers.
+- `scripts/`: local validation and setup commands in portable Node.js.
+- Documentation for architecture, quality, security, operation and migration.
 
-## Repository Status
+## SpecPilot Engine
 
-This workspace is prepared for publication as:
+SpecPilot Engine is the internal SPEC-driven execution layer. It turns goals into:
 
-```txt
-provedorconsult/AgentOS
-```
+- `docs/SPEC.md`
+- `docs/PLAN.md`
+- `.harness/sprints/*.json`
+- `docs/REVIEW.md`
 
-The current Codex GitHub connector must be authorized for the `provedorconsult` account before Codex can create or populate that public repository remotely.
+Tasks use `agentGoal`, closed context, objective acceptance criteria and verification commands.
 
-## Operating Model
+## Adapters
 
-AgentOS treats the repository as a development control plane:
+Codex is supported as an adapter, not as the foundation of the project.
 
-1. A human provides a product or technical goal.
-2. The orchestrator selects the correct agent workflow.
-3. Planner agents produce a bounded execution plan.
-4. Explorer agents gather evidence without editing.
-5. Architect agents define interfaces, risks, and constraints.
-6. Implementer agents make scoped changes.
-7. QA, security, and review agents verify the result.
-8. Release and deploy agents publish the work.
-9. Observability and continuous-improvement agents capture lessons back into the environment.
-
-## Core Agents
-
-AgentOS starts with these agents:
-
-- `orchestrator`
-- `project_initiator`
-- `product_planner`
-- `technical_planner`
-- `explorer`
-- `architect`
-- `implementer`
-- `reviewer`
-- `qa`
-- `security`
-- `release`
-- `deploy`
-- `observability`
-- `continuous_improvement`
-- `project_adapter`
-- `environment_curator`
-
-See [docs/AGENT_ROSTER.md](docs/AGENT_ROSTER.md).
-
-## Codex Layer
-
-The Codex project layer is stored in `codex-layer/` so it can be reviewed and installed intentionally. To activate it locally, run:
-
-```powershell
-./scripts/install-codex-layer.ps1
-```
-
-That installs it as `.codex/`, with `config.toml`, agents, rules, and hooks.
+- `adapters/codex/`: installs `.codex/` and Codex-compatible instructions.
+- `adapters/generic-ide/`: installs generic agent instructions without `.codex/`.
+- `adapters/antigravity/`: experimental placeholder.
 
 ## Quick Start
 
-For a new project:
+Validate AgentOS:
 
 ```powershell
-./scripts/bootstrap-project.ps1 -ProjectName "MyApp"
+npm run doctor
+npm run validate
 ```
 
-For an existing project:
+Initialize working artifacts in a project:
 
 ```powershell
-./scripts/adapt-existing-project.ps1 -ProjectPath "C:\path\to\repo"
+npm run agentos:init
 ```
 
-Run a local environment check:
+Install the Codex adapter:
 
 ```powershell
-./scripts/doctor.ps1
-./scripts/validate.ps1
+npm run agentos:install-adapter -- codex
 ```
 
-## GitHub Publication
-
-After the `provedorconsult` account is authorized in the Codex GitHub connector, Codex can populate `provedorconsult/AgentOS`.
-
-As a fallback, use:
+Install the generic IDE adapter:
 
 ```powershell
-./scripts/create-github-repo.ps1 -Owner "provedorconsult" -Repo "AgentOS" -Visibility public
+npm run agentos:install-adapter -- generic-ide
 ```
 
-## References
+Prepare an adaptation plan for an existing project:
 
-- OpenAI Codex subagents: https://developers.openai.com/codex/subagents
-- OpenAI harness engineering: https://openai.com/pt-BR/index/harness-engineering/
-- IBM AI agent orchestration: https://www.ibm.com/br-pt/think/topics/ai-agent-orchestration
-- BMAD Method: https://github.com/bmad-code-org/BMAD-METHOD
+```powershell
+npm run agentos:adapt -- C:\path\to\repo
+```
+
+## Directory Map
+
+```txt
+core/                 universal AgentOS engine
+.harness/             SpecPilot templates and sprint state
+adapters/             Codex, generic IDE and future adapters
+docs/                 architecture, PRD, templates and review evidence
+scripts/              portable local CLI and validators
+templates/            reusable business/project templates
+codex-layer/          legacy Codex source layer preserved for compatibility
+```
+
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [SpecPilot Engine](docs/SPECPILOT_ENGINE.md)
+- [Adapters](docs/ADAPTERS.md)
+- [IDE compatibility](docs/IDE_COMPATIBILITY.md)
+- [Agent roster](docs/AGENT_ROSTER.md)
+- [Operating model](docs/OPERATING_MODEL.md)
+- [Quality](docs/QUALITY.md)
+- [Security](docs/SECURITY.md)
+
+## Status
+
+AgentOS 2.0.0 is structured as a repository-template and local script toolkit. It intentionally does not include a web UI, database, daemon or external API integration in this phase.
+
+## Roadmap
+
+- Go CLI named `agentos`.
+- GitHub template publication.
+- Complete Antigravity adapter.
+- VS Code/Cursor adapter.
+- Optional MCP integration.
+- Stack-specific workflows for Go, Python, Node, Laravel, Angular and Docker/Debian.

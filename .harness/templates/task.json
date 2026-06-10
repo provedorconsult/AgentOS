@@ -1,0 +1,55 @@
+{
+  "id": "task-template",
+  "status": "pending",
+  "title": "Template task",
+  "goal": "Describe the task outcome.",
+  "agentGoal": {
+    "needed": true,
+    "draft": "/goal Deliver the task outcome verified by npm run validate, preserving declared scope.",
+    "outcome": "The task outcome is implemented and verified.",
+    "verificationSurface": "npm run validate and docs/REVIEW.md evidence",
+    "constraints": [
+      "Do not edit files outside the declared scope."
+    ],
+    "boundaries": [
+      "docs/",
+      "core/",
+      "scripts/"
+    ],
+    "iterationPolicy": "Use the smallest change that satisfies the failing verification.",
+    "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+  },
+  "specRefs": [
+    {
+      "path": "docs/SPEC.template.md",
+      "range": "1-40"
+    }
+  ],
+  "context": {
+    "readOnly": [
+      {
+        "path": "docs/PLAN.template.md",
+        "range": "1-40"
+      }
+    ],
+    "contracts": [
+      "agentos.task.v1"
+    ]
+  },
+  "files": [
+    {
+      "path": "docs/TASK.template.md",
+      "action": "modify"
+    }
+  ],
+  "acceptanceCriteria": [
+    "The task has an objective acceptance criterion.",
+    "Verification commands are declared."
+  ],
+  "verification": {
+    "commands": [
+      "npm run validate:templates"
+    ]
+  },
+  "evidence": []
+}
