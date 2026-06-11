@@ -2,44 +2,30 @@
 
 ## Summary
 
-Materialize the missing runtime SpecPilot artifacts in the root repository, activate real sprints against the SPEC, make the default validation command enforce context integrity, and add the EvoNexus-inspired operating layer described in `docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx`.
+Close only the remaining short-horizon gaps from the roadmap, keep existing placeholders honest, and refresh the active runtime evidence without adding medium or long horizon behavior.
 
 ## Tasks
 
-### Task 001 - Materialize Runtime SPEC and PLAN
+### Task 001 - Align Core and SpecPilot Surfaces
 
-- Goal: add the canonical runtime documents that the PRD and AGENTS source order expect.
-- Agent Goal: `/goal Deliver runtime SPEC and PLAN artifacts verified by npm run validate:context, preserving the current PRD scope and no-new-dependencies constraint.`
-- Editable files: `docs/SPEC.md`, `docs/PLAN.md`
-- Read-only context: `docs/PRD_AGENTOS_SPECPILOT_FUSION.md:1-83`, `AGENTS.md:1-44`, `scripts/agentos-init.mjs:1-21`
-- Verification: `npm run validate:context`
+- Goal: make the neutral core and explicit SpecPilot engine visible in the repository surface.
+- Editable files: `README.md`, `agentos.yaml`, `core/`, `specpilot/`, `docs/SPECPILOT_ENGINE.md`
+- Verification: `npm run doctor`
 
-### Task 002 - Activate Root Harness State
+### Task 002 - Align Active Runtime Artifacts
 
-- Goal: register a real project state and sprint so the repository self-hosts the SpecPilot workflow.
-- Agent Goal: `/goal Deliver active harness state verified by npm run validate:context, preserving agentGoal-based task structure and exact file scope.`
-- Editable files: `.harness/project-state.json`, `.harness/current.txt`, `.harness/sprints/2026-06-10-agentos-prd-execution.json`
-- Read-only context: `.harness/templates/project-state.json:1-17`, `.harness/templates/sprint.json:1-59`, `docs/SPEC.md:1-67`
-- Verification: `npm run validate:context`
+- Goal: point the active SPEC, PLAN and sprint state at the roadmap short horizon.
+- Editable files: `docs/SPEC.md`, `docs/PLAN.md`, `.harness/current.txt`, `.harness/project-state.json`, `.harness/sprints/2026-06-10-agentos-short-horizon.json`
+- Verification: `npm run validate`
 
-### Task 003 - Enforce the Full Validation Gate
+### Task 003 - Refresh Review Evidence
 
-- Goal: ensure the standard validation command includes context checks and leaves objective evidence.
-- Agent Goal: `/goal Deliver a full validation gate verified by npm run doctor and npm run validate, preserving the existing script surface and review discipline.`
-- Editable files: `package.json`, `scripts/doctor.mjs`, `docs/REVIEW.md`
-- Read-only context: `scripts/validate-context-ranges.mjs:1-59`, `docs/SPEC.md:1-67`, `docs/PLAN.md:1-24`
+- Goal: record objective evidence for the short-horizon alignment.
+- Editable files: `docs/REVIEW.md`
 - Verification: `npm run doctor`, `npm run validate`
-
-### Task 004 - Implement EvoNexus Alignment Sprints
-
-- Goal: deliver the PRD-defined operating layer with docs, goals, skills, layers, workflows, adapter placeholder, extensions and packs.
-- Agent Goal: `/goal Deliver the EvoNexus-inspired AgentOS operating layer verified by npm run doctor and npm run validate, preserving AgentOS as the platform, SpecPilot as the engine, Codex as initial adapter and Claude Code as experimental placeholder.`
-- Editable files: `docs/`, `core/agents/`, `core/skills/`, `core/goals/`, `core/workflows/`, `adapters/claude-code/`, `extensions/`, `packs/`, `agentos.yaml`, `scripts/doctor.mjs`, `.harness/`
-- Read-only context: `docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx`, `docs/ARCHITECTURE.md`, `agentos.yaml`, `scripts/doctor.mjs`
-- Verification: `npm run doctor`, `npm run validate`, `git diff --check`
 
 ## Risks
 
-- Future work can stale declared ranges if `docs/SPEC.md`, `docs/PLAN.md` and sprint JSON are edited independently.
-- `validate:context` checks file presence and range format, not semantic freshness of the referenced content.
-- The Claude Code adapter, extensions and packs are placeholders only; future tasks must define executable behavior and validation before use.
+- Existing legacy workflow files remain in the repository for compatibility and may confuse future work if the canonical numbered sequence is ignored.
+- `validate:context` proves path and range integrity, not semantic freshness.
+- Extensions, packs, Claude Code and Antigravity stay as placeholders until a future medium-horizon SPEC activates them.

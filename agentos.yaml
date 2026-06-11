@@ -6,7 +6,7 @@ agentos:
   version: 2.0.0
   mode: generic
   spec_engine: specpilot
-  default_workflow: discover-spec-plan-solution-implement-verify-finish-retro
+  default_workflow: discover-spec-plan-solution-implement-verify-review-release-deploy-retro
 layers:
   agents:
     enabled:
@@ -25,7 +25,11 @@ goals:
     - mission
     - project
     - goal
+    - spec
+    - plan
+    - sprint
     - task
+    - evidence
 context:
   max_spec_range_lines: 120
   max_readonly_files_per_task: 3

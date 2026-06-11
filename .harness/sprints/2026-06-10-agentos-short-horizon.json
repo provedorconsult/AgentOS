@@ -1,0 +1,121 @@
+{
+  "id": "2026-06-10-agentos-short-horizon",
+  "status": "verified",
+  "title": "Align AgentOS to the roadmap short horizon only",
+  "tasks": [
+    {
+      "id": "task-001-short-horizon-alignment",
+      "status": "verified",
+      "title": "Close the short-horizon scaffold gaps without implementing medium or long horizon items",
+      "goal": "Align the repository with the roadmap short horizon while keeping AgentOS as platform, SpecPilot as engine, Codex as adapter and Generic IDE usable without .codex.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Deliver the AgentOS short-horizon roadmap surface verified by npm run doctor and npm run validate, preserving placeholder-only extensions and packs with no external dependencies.",
+        "outcome": "The repository exposes the short-horizon core, SpecPilot, workflows, adapters and honest placeholders with updated evidence.",
+        "verificationSurface": "npm run doctor, npm run validate and docs/REVIEW.md evidence",
+        "constraints": [
+          "Do not implement medium or long horizon features.",
+          "Do not introduce databases, dashboards, schedulers, channels or remote runtime.",
+          "Do not reintroduce codexGoal in active runtime artifacts."
+        ],
+        "boundaries": [
+          "README.md",
+          "agentos.yaml",
+          "core/",
+          "specpilot/",
+          "docs/",
+          ".harness/",
+          "scripts/"
+        ],
+        "iterationPolicy": "Apply the smallest set of changes that closes the short-horizon acceptance gaps.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-72"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-34"
+          },
+          {
+            "path": "docs/PRD_AGENTOS_ROADMAP_CURTO_MEDIO_LONGO_PRAZO.md",
+            "range": "256-375"
+          },
+          {
+            "path": "docs/PRD_AGENTOS_ROADMAP_CURTO_MEDIO_LONGO_PRAZO.md",
+            "range": "398-515"
+          }
+        ],
+        "contracts": [
+          "agentos.task.v1",
+          "agentos.short-horizon.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "action": "modify"
+        },
+        {
+          "path": "agentos.yaml",
+          "action": "modify"
+        },
+        {
+          "path": "core/",
+          "action": "modify"
+        },
+        {
+          "path": "specpilot/",
+          "action": "create"
+        },
+        {
+          "path": "docs/",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/doctor.mjs",
+          "action": "modify"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Core exposes a neutral README and does not depend on .codex or .claude.",
+        "SpecPilot is explicit through specpilot/ plus existing docs and harness templates.",
+        "Canonical short-horizon workflows 01 through 10 exist, including 05-implement, 06-verify, 07-review, 08-release, 09-deploy and 10-retro.",
+        "Extensions and packs remain documented placeholders only.",
+        "Review evidence records fresh doctor and validate results."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate"
+        ]
+      },
+      "evidence": [
+        {
+          "command": "npm run doctor",
+          "status": "passed",
+          "note": "Doctor confirmed the short-horizon required surface, including core/README, specpilot/ and canonical workflow files."
+        },
+        {
+          "command": "npm run validate",
+          "status": "passed",
+          "note": "Template, context and secret validation passed with the short-horizon sprint active."
+        },
+        {
+          "command": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json .harness/sprints/2026-06-10-agentos-short-horizon.json",
+          "status": "passed",
+          "note": "Sprint and task contracts validated with agentGoal and bounded context."
+        }
+      ]
+    }
+  ]
+}

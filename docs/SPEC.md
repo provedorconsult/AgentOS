@@ -2,103 +2,87 @@
 
 ## Goal
 
-Make the AgentOS repository self-host the PRD-defined SpecPilot Engine flow and evolve it with an EvoNexus-inspired operating layer while preserving AgentOS as the platform, SpecPilot as the SPEC-driven engine and adapters as isolated tool mappings.
+Align AgentOS with the roadmap short horizon only, keeping AgentOS as the platform, SpecPilot as the internal SPEC-driven engine, Codex as an adapter and Generic IDE as a first-class path without `.codex`.
 
 ## Scope
 
 In scope:
 
-- Create canonical `docs/SPEC.md` and `docs/PLAN.md` for the AgentOS fusion rollout.
-- Materialize runtime `.harness/` state for this repository.
-- Make `npm run validate` cover template, context and secrets verification.
-- Add markdown-first skills under `core/skills/`.
-- Add goals under `core/goals/`.
-- Organize agents by documented layers.
-- Add solutioning and retro workflows.
-- Add a Claude Code adapter placeholder.
-- Add planned extensions and optional packs, including ISP.
-- Record objective evidence in `docs/REVIEW.md`.
+- keep `core/` as the neutral platform layer;
+- make SpecPilot explicit through `specpilot/`, existing templates and `.harness/`;
+- align the canonical workflow surface to the short-horizon sequence;
+- keep Codex and Generic IDE adapters operational and isolated from `core/`;
+- keep Claude Code, extensions and packs as honest placeholders only;
+- refresh active runtime artifacts and review evidence.
 
 Out of scope:
 
-- Real Claude Code adapter generation or `.claude/` creation.
-- Web UI, dashboard, database, scheduler, daemon, channels, external API, package publication or deployment automation.
-- Broad refactors outside the PRD closure needed to make the root repo operational.
+- medium or long horizon implementation;
+- functional Claude Code or Antigravity adapters;
+- memory runtime, routines, heartbeats execution, GitHub Actions, dashboard, database, scheduler, channels or remote runtime;
+- external dependencies.
 
 ## Requirements
 
-### R1 - Canonical Runtime Artifacts
+### R1 - Neutral Core
 
 Expected behavior:
 
-- The repository contains real `docs/SPEC.md`, `docs/PLAN.md`, `.harness/project-state.json` and an active sprint JSON aligned with the PRD.
+- `core/` exposes its purpose explicitly and stays independent from `.codex/` and `.claude/`.
 
 Acceptance criteria:
 
-- `npm run validate:context` exits `0`.
-- The sprint JSON references `docs/SPEC.md` and read-only context with valid `start-end` ranges.
+- `core/README.md` exists.
+- No file in `core/` requires vendor-specific runtime folders.
 
-### R2 - Active Work Uses `agentGoal`
+### R2 - Explicit SpecPilot Engine
 
 Expected behavior:
 
-- The active sprint/task uses `agentGoal`, `specRefs`, `context.readOnly`, `files`, `acceptanceCriteria`, `verification.commands` and `evidence`.
+- SpecPilot is visible as the engine surface without splitting it from AgentOS.
 
 Acceptance criteria:
 
-- The active sprint JSON follows the repository sprint contract.
-- No active runtime artifact uses the legacy `codexGoal` field.
+- `specpilot/README.md`, `specpilot/templates/README.md`, `specpilot/validators/README.md` and `specpilot/harness/README.md` exist.
+- Required short-horizon templates remain under `docs/` and `.harness/templates/`.
 
-### R3 - Default Validation Covers Context Integrity
+### R3 - Canonical Short-Horizon Workflows
 
 Expected behavior:
 
-- `npm run validate` fails when context validation fails.
+- The repository exposes the short-horizon execution sequence from discover to retro.
 
 Acceptance criteria:
 
-- `package.json` includes `validate:context` in the `validate` script.
-- `npm run validate` exits `0` only when template, context and secrets checks all pass.
+- `core/workflows/01-discover.md`, `02-spec.md`, `03-plan.md`, `04-solution.md`, `05-implement.md`, `06-verify.md`, `07-review.md`, `08-release.md`, `09-deploy.md` and `10-retro.md` exist.
+- Documentation does not require `finish` or `improve` as canonical steps.
 
-### R4 - Verification Evidence Is Recorded
+### R4 - Adapter and Placeholder Boundaries
 
 Expected behavior:
 
-- `docs/REVIEW.md` captures commands, exit codes and observed evidence for this rollout.
+- Codex remains an adapter, Generic IDE remains usable without `.codex`, and Claude Code remains a placeholder.
 
 Acceptance criteria:
 
-- `docs/REVIEW.md` includes `npm run doctor`, `npm run validate` and their exit codes.
-- The review notes any remaining operational risk.
+- `adapters/codex/` and `adapters/generic-ide/` remain installable surfaces.
+- `adapters/generic-ide/` does not require `.codex/`.
+- `adapters/claude-code/` remains documentation and mapping only.
 
-### R5 - EvoNexus-Inspired Layer
+### R5 - Honest Review Evidence
 
 Expected behavior:
 
-- The repository documents EvoNexus as a conceptual reference and adds layers, skills, goals, solutioning, retro, extensions and packs without adding runtime dependencies.
+- The active sprint and review evidence reflect this short-horizon alignment.
 
 Acceptance criteria:
 
-- `docs/EVONEXUS_ALIGNMENT.md`, `docs/GOALS.md`, `docs/SKILLS.md`, `docs/EXTENSIONS.md` and `docs/PACKS.md` exist.
-- `core/skills/` contains at least seven initial markdown skills.
-- `core/goals/` contains README, schema and templates.
-- `core/workflows/04-solution.md` and `core/workflows/10-retro.md` exist.
-
-### R6 - Adapter and Extension Boundaries
-
-Expected behavior:
-
-- Claude Code is represented only as an experimental future adapter, and extensions/packs remain optional placeholders.
-
-Acceptance criteria:
-
-- `adapters/claude-code/README.md` and `mapping.yaml` exist.
-- `extensions/` and `packs/` contain README placeholders with planned status.
-- `core/` does not depend on `.claude/`.
+- Active runtime artifacts use `agentGoal` and point to this scope.
+- `docs/REVIEW.md` records fresh `npm run doctor` and `npm run validate` results with exit codes.
 
 ## Constraints
 
-- Keep universal behavior in `core/`, `.harness/`, `docs/` and `scripts/`.
-- Preserve the current adapter structure and avoid new dependencies.
-- Preserve unrelated user changes already present in the worktree.
-- Do not declare planned placeholders as ready functionality.
+- Do not implement medium or long horizon behavior.
+- Do not add dependencies.
+- Do not delete existing files without explicit justification.
+- Do not present placeholders as ready features.

@@ -4,7 +4,7 @@ Goals provide a durable outcome layer above SpecPilot tasks.
 
 ## Hierarchy
 
-Mission -> Project -> Goal -> Task
+Mission -> Project -> Goal -> SPEC -> PLAN -> Sprint -> Task -> Evidence
 
 SpecPilot remains responsible for SPEC, PLAN, sprint, task, context capsule, acceptance criteria, verification and evidence. Goals connect that execution to a longer-lived outcome.
 
