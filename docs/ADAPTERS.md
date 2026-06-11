@@ -17,6 +17,7 @@ Cada adaptador deve ter:
 - Nao prometer suporte que nao existe.
 - Criar backup quando o destino ja existir.
 - Referenciar `core/`, `.harness/` e docs centrais.
+- Manter qualquer dependencia de ferramenta dentro de `adapters/<tool>/`.
 
 ## Checklist de Novo Adaptador
 
@@ -24,3 +25,10 @@ Cada adaptador deve ter:
 - Mapear arquivos universais para arquivos especificos da ferramenta.
 - Documentar instalacao e reversao.
 - Provar que nao depende de Codex, exceto no adaptador Codex.
+
+## Current Adapters
+
+- `codex`: supported initial adapter.
+- `generic-ide`: supported portable instructions.
+- `antigravity`: experimental placeholder.
+- `claude-code`: experimental future placeholder; it must not make `core/` depend on `.claude/`.

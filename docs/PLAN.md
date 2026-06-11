@@ -2,7 +2,7 @@
 
 ## Summary
 
-Materialize the missing runtime SpecPilot artifacts in the root repository, activate a real sprint against the new SPEC, and make the default validation command enforce context integrity from the same flow.
+Materialize the missing runtime SpecPilot artifacts in the root repository, activate real sprints against the SPEC, make the default validation command enforce context integrity, and add the EvoNexus-inspired operating layer described in `docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx`.
 
 ## Tasks
 
@@ -30,7 +30,16 @@ Materialize the missing runtime SpecPilot artifacts in the root repository, acti
 - Read-only context: `scripts/validate-context-ranges.mjs:1-59`, `docs/SPEC.md:1-67`, `docs/PLAN.md:1-24`
 - Verification: `npm run doctor`, `npm run validate`
 
+### Task 004 - Implement EvoNexus Alignment Sprints
+
+- Goal: deliver the PRD-defined operating layer with docs, goals, skills, layers, workflows, adapter placeholder, extensions and packs.
+- Agent Goal: `/goal Deliver the EvoNexus-inspired AgentOS operating layer verified by npm run doctor and npm run validate, preserving AgentOS as the platform, SpecPilot as the engine, Codex as initial adapter and Claude Code as experimental placeholder.`
+- Editable files: `docs/`, `core/agents/`, `core/skills/`, `core/goals/`, `core/workflows/`, `adapters/claude-code/`, `extensions/`, `packs/`, `agentos.yaml`, `scripts/doctor.mjs`, `.harness/`
+- Read-only context: `docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx`, `docs/ARCHITECTURE.md`, `agentos.yaml`, `scripts/doctor.mjs`
+- Verification: `npm run doctor`, `npm run validate`, `git diff --check`
+
 ## Risks
 
 - Future work can stale declared ranges if `docs/SPEC.md`, `docs/PLAN.md` and sprint JSON are edited independently.
 - `validate:context` checks file presence and range format, not semantic freshness of the referenced content.
+- The Claude Code adapter, extensions and packs are placeholders only; future tasks must define executable behavior and validation before use.

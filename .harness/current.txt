@@ -1,1 +1,1 @@
-.harness/sprints/2026-06-10-agentos-prd-execution.json
+.harness/sprints/2026-06-11-evonexus-alignment.json

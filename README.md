@@ -4,9 +4,11 @@ AgentOS is a generic agentic development operating system for repositories. It c
 
 ## What It Provides
 
-- `core/`: universal agents, workflows, rules and schemas.
+- `core/`: universal agents, workflows, rules, schemas, goals and markdown-first skills.
 - SpecPilot Engine: SPEC, PLAN, TASK, REVIEW templates, context capsules and `.harness/`.
 - `adapters/`: tool-specific installation layers.
+- `extensions/`: planned optional capabilities such as memory, heartbeats, routines, channels and knowledge DB.
+- `packs/`: optional domain packs, including ISP.
 - `scripts/`: local validation and setup commands in portable Node.js.
 - Documentation for architecture, quality, security, operation and migration.
 
@@ -21,6 +23,20 @@ SpecPilot Engine is the internal SPEC-driven execution layer. It turns goals int
 
 Tasks use `agentGoal`, closed context, objective acceptance criteria and verification commands.
 
+## EvoNexus-Inspired Operating Layer
+
+EvoNexus inspired AgentOS to add agent layers, markdown-first skills, goals, solutioning, retro, planned extensions and optional packs. EvoNexus is only a conceptual reference; AgentOS does not depend on EvoNexus or Claude Code.
+
+The new operating layer includes:
+
+- `core/agents/`: layer mapping for engineering, business, operations and knowledge.
+- `core/skills/`: reusable markdown procedures for dev, security, product, ops, data and docs.
+- `core/goals/`: Mission -> Project -> Goal -> Task templates and schema.
+- `core/workflows/04-solution.md`: technical solutioning before implementation.
+- `core/workflows/10-retro.md`: learning capture after verified delivery.
+- `extensions/`: roadmap placeholders only, with no dashboard, scheduler, database or real integrations.
+- `packs/`: optional domain bundles, including `packs/isp/`.
+
 ## Adapters
 
 Codex is supported as an adapter, not as the foundation of the project.
@@ -28,6 +44,7 @@ Codex is supported as an adapter, not as the foundation of the project.
 - `adapters/codex/`: installs `.codex/` and Codex-compatible instructions.
 - `adapters/generic-ide/`: installs generic agent instructions without `.codex/`.
 - `adapters/antigravity/`: experimental placeholder.
+- `adapters/claude-code/`: experimental future placeholder for Claude Code mappings; it does not create `.claude/` in this phase.
 
 ## Quick Start
 
@@ -68,6 +85,8 @@ npm run agentos:adapt -- C:\path\to\repo
 core/                 universal AgentOS engine
 .harness/             SpecPilot templates and sprint state
 adapters/             Codex, generic IDE and future adapters
+extensions/           planned optional capabilities
+packs/                optional domain bundles
 docs/                 architecture, PRD, templates and review evidence
 scripts/              portable local CLI and validators
 templates/            reusable business/project templates
@@ -77,6 +96,11 @@ codex-layer/          legacy Codex source layer preserved for compatibility
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [EvoNexus alignment](docs/EVONEXUS_ALIGNMENT.md)
+- [Goals](docs/GOALS.md)
+- [Skills](docs/SKILLS.md)
+- [Extensions](docs/EXTENSIONS.md)
+- [Packs](docs/PACKS.md)
 - [SpecPilot Engine](docs/SPECPILOT_ENGINE.md)
 - [Adapters](docs/ADAPTERS.md)
 - [IDE compatibility](docs/IDE_COMPATIBILITY.md)
@@ -87,7 +111,7 @@ codex-layer/          legacy Codex source layer preserved for compatibility
 
 ## Status
 
-AgentOS 2.0.0 is structured as a repository-template and local script toolkit. It intentionally does not include a web UI, database, daemon or external API integration in this phase.
+AgentOS 2.0.0 is structured as a repository-template and local script toolkit. It intentionally does not include a web UI, database, daemon, scheduler, channel integration or external API integration in this phase.
 
 ## Roadmap
 

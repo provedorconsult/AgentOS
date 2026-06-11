@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentOS Goal",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "status",
+    "missionId",
+    "projectId",
+    "owner",
+    "priority",
+    "outcome",
+    "successSignals",
+    "constraints",
+    "linkedSpecRefs",
+    "linkedTasks",
+    "evidence",
+    "createdAt",
+    "updatedAt"
+  ],
+  "properties": {
+    "status": {
+      "enum": ["pending", "in-progress", "blocked", "verified", "done"]
+    },
+    "priority": {
+      "enum": ["P0", "P1", "P2", "P3"]
+    }
+  }
+}

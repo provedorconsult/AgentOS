@@ -6,7 +6,26 @@ agentos:
   version: 2.0.0
   mode: generic
   spec_engine: specpilot
-  default_workflow: discover-spec-plan-implement-verify-finish
+  default_workflow: discover-spec-plan-solution-implement-verify-finish-retro
+layers:
+  agents:
+    enabled:
+      - engineering
+      - business
+      - operations
+      - knowledge
+skills:
+  enabled: true
+  root: core/skills
+  format: markdown
+goals:
+  enabled: true
+  root: core/goals
+  hierarchy:
+    - mission
+    - project
+    - goal
+    - task
 context:
   max_spec_range_lines: 120
   max_readonly_files_per_task: 3
@@ -25,9 +44,29 @@ verification:
   require_evidence_per_criterion: true
   require_review_file: true
   require_no_secrets_scan: true
+extensions:
+  memory:
+    status: planned
+  heartbeats:
+    status: planned
+  routines:
+    status: planned
+  channels:
+    status: planned
+  knowledge_db:
+    status: planned
+packs:
+  enabled: false
+  available:
+    - engineering
+    - business
+    - isp
+    - devops
+    - security
 adapters:
   default: generic-ide
   available:
     - codex
     - generic-ide
     - antigravity
+    - claude-code

@@ -1,0 +1,22 @@
+adapter:
+  id: claude-code
+  status: experimental
+  target_tool: Claude Code
+  core_dependency: false
+maps:
+  agents:
+    from: core/agents
+    to: .claude/agents
+    status: planned
+  skills:
+    from: core/skills
+    to: .claude/skills
+    status: planned
+  instructions:
+    from: AGENTS.md
+    to: CLAUDE.md
+    status: planned
+notes:
+  - This adapter is a placeholder.
+  - Do not make AgentOS depend on Claude Code.
+  - Core files must remain IDE-neutral.
