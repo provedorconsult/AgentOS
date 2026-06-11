@@ -27,3 +27,12 @@
 - Add simple local routines and heartbeats without introducing a scheduler or daemon.
 - Evolve Claude Code and Antigravity from placeholders into optional adapters with backup-aware installers.
 - Introduce packs with opt-in activation and pack-specific validation instead of placeholder-only READMEs.
+
+## GitHub Sync
+
+| Criterion | Command | Exit Code | Evidence |
+| --- | --- | --- | --- |
+| Remote parity before sync | `git log --oneline --decorate -n 1` | 0 | `HEAD` and `origin/agentos/specpilot-engine` pointed to the same commit `f8d5765` before this sync. |
+| Local-only artifact scope | `git status --short --branch` | 0 | The only local divergence was untracked `backups/`. |
+| Ignore local backups | `npm run doctor` | 0 | Doctor still passed after adding `backups/` to `.gitignore`. |
+| Full validation after ignore rule | `npm run validate` | 0 | Template, context and secrets checks all passed after the ignore rule change. |
