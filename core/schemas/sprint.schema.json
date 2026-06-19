@@ -10,6 +10,17 @@
     "status": { "enum": ["pending", "in-progress", "blocked", "verified", "done", "archived"] },
     "title": { "type": "string", "minLength": 1 },
     "blocker": { "type": "string", "minLength": 1 },
+    "scopePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowDeclaredFiles", "allowEvidenceFiles", "allowGeneratedFiles", "allowPatterns"],
+      "properties": {
+        "allowDeclaredFiles": { "type": "boolean" },
+        "allowEvidenceFiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "allowGeneratedFiles": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "allowPatterns": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
     "tasks": { "type": "array", "minItems": 1, "items": { "$ref": "https://agentos.local/schemas/task.schema.json" } }
   }
 }
