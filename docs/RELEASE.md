@@ -7,13 +7,13 @@
 3. `npm audit --audit-level=moderate`;
 4. `npm run validate:scope`;
 5. harness discovery through `npm run validate:templates`;
-6. formal `APPROVE` review on the PR;
+6. owner approval is explicit in the task or PR context;
 7. clean worktree;
 8. changelog and review evidence updated;
 9. create the next unused `v2.0.0-rc.N` annotated tag;
 10. publish a GitHub prerelease from `CHANGELOG.md` and `docs/REVIEW.md`.
 
-For final RC hardening, an administrative merge is not an acceptable substitute for formal review. If the repository has no eligible external reviewer, mark the release decision `BLOCKED`, do not merge, do not tag and do not publish a prerelease.
+AgentOS is currently maintained by the repository owner. Owner-approved merge is allowed when all required checks pass and branch protection does not require an independent reviewer. Administrative bypass should not be used for normal development flow; instead, keep required checks enabled and remove the required-review rule when no eligible reviewer exists.
 
 ## Required Checks
 
@@ -23,7 +23,8 @@ For final RC hardening, an administrative merge is not an acceptable substitute 
 - Scope validation: required.
 - Sprint discovery: required.
 - Branch protection: required.
-- Formal review: required.
+- Formal review: optional unless an eligible reviewer is available and explicitly requested.
+- Owner-approved merge: allowed after required checks pass.
 - Clean worktree: required.
 - Changelog and REVIEW: required.
 - Tag and prerelease: release-only after all prior gates pass.

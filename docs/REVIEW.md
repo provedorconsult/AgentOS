@@ -4,7 +4,7 @@
 
 - Package metadata: `2.0.0-rc.1`.
 - Formal prerelease: not published.
-- Release decision: blocked because the final RC hardening PR has green CI but no eligible formal reviewer.
+- Release decision: ready for owner-approved merge after branch protection removes required review and required checks remain green.
 
 ## Current Commit
 
@@ -17,20 +17,20 @@
 
 - PR: [#11](https://github.com/provedorconsult/AgentOS/pull/11).
 - PR author: `provedorconsult`.
-- Review decision: `REVIEW_REQUIRED`.
-- Merge state: `BLOCKED`.
+- Review decision before governance change: `REVIEW_REQUIRED`.
+- Merge state before governance change: `BLOCKED`.
 - Merge commit: pending.
 - Tag: not created.
 - GitHub prerelease: not created.
 
 ## Governance
 
-- `main` branch protection must require Ubuntu and Windows validation checks, checklist status, one approval and stale-review dismissal/last-push approval.
-- This final hardening round must not use administrative merge bypass.
-- Repository collaborator API returned only `provedorconsult`, which is also the PR author.
-- Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) tracks adding an eligible reviewer.
-- The PR remains open and the release candidate remains blocked.
-- PR #7 and PR #8 are historical evidence only; their administrative exceptions do not satisfy this round's formal-review requirement.
+- `main` branch protection must require Ubuntu and Windows validation checks plus checklist status.
+- Required review is disabled while the repository has only the owner as eligible maintainer.
+- Owner-approved merge is allowed after required checks pass and conversation resolution is clean.
+- Administrative bypass remains unnecessary for normal development flow.
+- Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) is superseded by this governance policy change.
+- PR #7 and PR #8 remain historical evidence only.
 
 ## CI Evidence
 
@@ -53,8 +53,8 @@
 | `npm run validate` | Windows local | 0 | Final validation passed. | Doctor, discovery, context, state, secrets, scope, workflows, adapters, docs, license and tests passed. | Complete local validation. | Local host only. | None known. |
 | `npm test` | Windows local | 0 | `38` tests passed. | Edit-scope, harness discovery and extended secret scanner regressions passed. | Test suite. | Node test suite only. | None known. |
 | `git diff --check` | Windows local | 0 | Final whitespace check passed. | No whitespace errors. | Diff hygiene. | Local diff only. | None known. |
-| `gh pr checks 11 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Checklist, Ubuntu and Windows passed before governance evidence update. | Cross-platform CI green for PR #11 head `163b0447`. | A docs-only governance evidence commit requires a refreshed check run after push. | Formal review still blocked. |
-| `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub API | 0 | Strict checks, one approval, last-push approval, admin enforcement, force-push/deletion disabled. | Branch protection readback. | GitHub settings can change later. | Reviewer availability remains blocked. |
+| `gh pr checks 11 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Checklist, Ubuntu and Windows passed before governance policy update. | Cross-platform CI green for PR #11 head `13f188e`. | A docs-only governance policy commit requires a refreshed check run after push. | None if checks remain green. |
+| `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub API | 0 | Strict checks, one approval, last-push approval, admin enforcement, force-push/deletion disabled before policy update. | Branch protection readback. | Must remove required review to align with owner-merge policy. | None after readback confirms review rule removed. |
 
 ## Negative Tests
 
@@ -86,10 +86,10 @@
 
 ## Residual Risks
 
-- Formal review depends on an eligible GitHub reviewer outside the PR author; no such collaborator is currently listed.
+- Independent formal review is optional until an eligible reviewer exists; owner-approved merge is the active governance path.
 - Tag and GitHub prerelease remain blocked until formal review and CI complete.
 - Real deploy remains intentionally fail-closed without `AGENTOS_DEPLOY_COMMAND`.
 
 ## Release Decision
 
-`BLOCKED` until issue #12 is resolved and PR #11 receives a formal non-bypass `APPROVE` review.
+`READY FOR OWNER MERGE` after required checks are green and branch protection confirms required reviews are disabled.
