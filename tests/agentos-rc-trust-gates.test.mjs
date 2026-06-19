@@ -70,7 +70,7 @@ test("task lifecycle, agentGoal, duplicate criteria and review are enforced", ()
 test("repository path containment rejects absolute, traversal, overlap and symlink escapes", (t) => {
   assert.equal(resolveInsideRoot(repoRoot, "docs/SPEC.md"), "docs/SPEC.md");
   assert.throws(() => resolveInsideRoot(repoRoot, "../outside.md"), /outside repository root/i);
-  assert.throws(() => resolveInsideRoot(repoRoot, path.parse(repoRoot).root + "outside.md"), /outside repository root/i);
+  assert.throws(() => resolveInsideRoot(repoRoot, path.parse(repoRoot).root + "outside.md"), /absolute|outside repository root/i);
 
   const overlap = validTask({
     context: { readOnly: [{ path: "scripts/lib/agentos-contracts.mjs", range: "1-10" }], contracts: [] }

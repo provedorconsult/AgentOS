@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseDocument } from "yaml";
+import { createSchemaValidator } from "./json-schema.mjs";
 
 export function toPosix(value) {
   return value.replaceAll("\\", "/");
@@ -24,11 +25,24 @@ function realpathWithExistingParent(targetPath) {
   return path.join(realParent, ...tail);
 }
 
-export function resolveInsideRoot(root, targetPath) {
+function isForeignAbsolutePath(targetPath) {
+  return path.win32.isAbsolute(targetPath) || path.posix.isAbsolute(targetPath);
+}
+
+function isForbiddenRelativePath(targetPath, forbiddenDirs) {
+  const normalized = toPosix(targetPath);
+  return forbiddenDirs.some((dir) => {
+    const normalizedDir = toPosix(dir).replace(/^\.?\//, "").replace(/\/$/, "");
+    return normalized === normalizedDir || normalized.startsWith(`${normalizedDir}/`) || normalized.includes(`/${normalizedDir}/`);
+  });
+}
+
+export function resolveInsideRoot(root, targetPath, options = {}) {
   if (typeof targetPath !== "string" || targetPath.trim().length === 0) {
     throw new Error("path must be a non-empty string");
   }
   if (targetPath.includes("\0")) throw new Error("path contains NUL");
+  if (isForeignAbsolutePath(targetPath)) throw new Error(`absolute or UNC path is not allowed: ${targetPath}`);
 
   const realRoot = fs.realpathSync.native(root);
   const candidate = path.resolve(realRoot, targetPath);
@@ -39,7 +53,11 @@ export function resolveInsideRoot(root, targetPath) {
   if (normalizedResolved !== normalizedRoot && !normalizedResolved.startsWith(`${normalizedRoot}${path.sep}`)) {
     throw new Error(`path is outside repository root: ${targetPath}`);
   }
-  return toPosix(path.relative(realRoot, resolved)) || ".";
+  const relative = toPosix(path.relative(realRoot, resolved)) || ".";
+  if (isForbiddenRelativePath(relative, options.forbiddenDirs ?? [])) {
+    throw new Error(`path resolves under forbidden directory: ${relative}`);
+  }
+  return relative;
 }
 
 export function readText(filePath) {
@@ -69,19 +87,14 @@ export function loadAgentosConfig(root = process.cwd()) {
   }
   const data = document.toJS();
   if (!data || typeof data !== "object") throw new Error("agentos.yaml must contain an object");
-  if (!data.agentos || typeof data.agentos.version !== "string" || data.agentos.version.trim().length === 0) {
-    throw new Error("agentos.version is required");
+  const configSchema = readJson(path.join(root, "core", "schemas", "agentos-config.schema.json"));
+  const schemaFailures = createSchemaValidator({ config: configSchema }).validate(configSchema.$id, data);
+  if (schemaFailures.length > 0) {
+    throw new Error(`invalid agentos.yaml config: ${schemaFailures.join("; ")}`);
   }
-  if (data.agentos.spec_engine !== "specpilot") throw new Error("agentos.spec_engine must be specpilot");
-  if (!Array.isArray(data.context?.forbidden_dirs)) throw new Error("context.forbidden_dirs must be an array");
   const availableAdapters = data.adapters?.available;
-  if (!Array.isArray(availableAdapters) || !availableAdapters.includes(data.adapters?.default)) {
+  if (!availableAdapters.includes(data.adapters.default)) {
     throw new Error("adapters.default must reference an available adapter");
-  }
-  for (const [name, extension] of Object.entries(data.extensions ?? {})) {
-    if (!["planned", "active", "disabled"].includes(extension?.status)) {
-      throw new Error(`extensions.${name}.status is invalid`);
-    }
   }
 
   return {
@@ -94,10 +107,10 @@ export function loadAgentosConfig(root = process.cwd()) {
       forbiddenDirs: data.context.forbidden_dirs
     },
     verification: {
-      requireExitCode: data.verification?.require_exit_code === true,
-      requireEvidencePerCriterion: data.verification?.require_evidence_per_criterion === true,
-      requireReviewFile: data.verification?.require_review_file === true,
-      requireNoSecretsScan: data.verification?.require_no_secrets_scan === true
+      requireExitCode: data.verification.require_exit_code,
+      requireEvidencePerCriterion: data.verification.require_evidence_per_criterion,
+      requireReviewFile: data.verification.require_review_file,
+      requireNoSecretsScan: data.verification.require_no_secrets_scan
     }
   };
 }
