@@ -1,11 +1,11 @@
 {
   "id": "2026-06-19-agentos-rc-trust-gates",
-  "status": "in-progress",
+  "status": "verified",
   "title": "Enforce AgentOS 2.0 RC trust gates",
   "tasks": [
     {
       "id": "task-001-trust-gates",
-      "status": "in-progress",
+      "status": "verified",
       "title": "Harden evidence, secrets, paths, state, YAML and CI contracts",
       "goal": "Remove known false-success paths from the AgentOS release-candidate gates.",
       "agentGoal": {
@@ -79,10 +79,47 @@
           "npm run doctor",
           "npm run validate",
           "npm test",
-          "git diff --check"
+          "git diff --check",
+          "gh pr checks 7 --repo provedorconsult/AgentOS"
         ]
       },
-      "evidence": []
+      "evidence": [
+        {
+          "criterion": "Verified evidence cannot represent false success.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Negative evidence and lifecycle contract tests passed."
+        },
+        {
+          "criterion": "Secret scanning evaluates and redacts each occurrence.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Mixed placeholder and live-token regression tests passed."
+        },
+        {
+          "criterion": "Operational paths cannot escape the repository root.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Traversal, absolute path, overlap and symlink escape tests passed."
+        },
+        {
+          "criterion": "Agent goals, state and YAML configuration are structurally valid.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Schemas, state pointers and YAML validation passed."
+        },
+        {
+          "criterion": "Doctor, local validation and Windows/Linux CI fail closed.",
+          "command": "gh pr checks 7 --repo provedorconsult/AgentOS",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Checklist, Ubuntu and Windows checks passed on PR 7."
+        }
+      ]
     }
   ]
 }
