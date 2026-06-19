@@ -1,16 +1,21 @@
 {
   "name": "agentos",
-  "version": "2.0.0",
-  "private": false,
+  "version": "2.0.0-rc.1",
+  "private": true,
   "description": "A generic agentic development operating system with SpecPilot Engine, context capsules, mechanical verification and IDE adapters.",
   "type": "module",
   "scripts": {
     "doctor": "node scripts/doctor.mjs",
     "test": "node --test tests/*.test.mjs",
-    "validate": "npm run validate:templates && npm run validate:context && npm run validate:secrets && npm test",
-    "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json",
+    "validate": "npm run doctor && npm run validate:templates && npm run validate:context && npm run validate:state && npm run validate:secrets && npm run validate:workflows && npm run validate:adapters && npm run validate:docs && npm run validate:license && npm test",
+    "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json .harness/sprints/2026-06-19-agentos-audit-hardening.json",
     "validate:context": "node scripts/validate-context-ranges.mjs --spec docs/SPEC.md .harness/sprints",
+    "validate:state": "node scripts/validate-state.mjs",
     "validate:secrets": "node scripts/validate-no-secrets.mjs",
+    "validate:workflows": "node scripts/validate-workflows.mjs",
+    "validate:adapters": "node scripts/validate-adapters.mjs",
+    "validate:docs": "node scripts/validate-docs.mjs",
+    "validate:license": "node scripts/validate-license.mjs",
     "agentos:init": "node scripts/agentos-init.mjs",
     "agentos:adapt": "node scripts/agentos-adapt.mjs",
     "agentos:install-adapter": "node scripts/agentos-install-adapter.mjs"
@@ -24,5 +29,17 @@
     "ide-adapters",
     "context-capsules"
   ],
-  "license": "UNLICENSED"
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/provedorconsult/AgentOS.git"
+  },
+  "homepage": "https://github.com/provedorconsult/AgentOS",
+  "bugs": {
+    "url": "https://github.com/provedorconsult/AgentOS/issues"
+  },
+  "author": "provedorconsult"
 }

@@ -2,39 +2,17 @@
 
 ## Summary
 
-- Task: establish the AgentOS Architecture 2.0 canonical source, eliminate `.codex/` drift, replace false deploy behavior and expand validation/tests.
-- Result: `docs/ARCHITECTURE.md` is the canonical Architecture 2.0 source; `.codex/config.toml` matches `codex-layer/config.toml`; deploy fails closed without `AGENTOS_DEPLOY_COMMAND`; `npm run validate` now includes contract tests.
+- Task: close the remaining P0/P1 audit gaps for the AgentOS 2.0 release candidate.
+- Result: local hardening is complete and ready for remote CI confirmation on the release-candidate branch.
 - Reviewer: Codex
 
 ## Evidence
 
-| Criterion | Command | Exit Code | Evidence |
-| --- | --- | --- | --- |
-| RED contract test | `node --test tests/agentos-2-contracts.test.mjs` | 1 | Failed before implementation on missing canonical-source docs, `.codex/` drift and false deploy success. |
-| Doctor gate | `npm run doctor` | 0 | Reported Node `v24.15.0`, Git `2.52.0.windows.1`, and `AgentOS doctor passed.` |
-| Contract tests | `npm test` | 0 | Ran `tests/*.test.mjs`; `3` tests passed, `0` failed. |
-| Full validation gate | `npm run validate` | 0 | Ran templates, context ranges, secret scan and contract tests; context validation covered `4` JSON files and no secrets were detected. |
-| Diff hygiene | `git diff --check` | 0 | Passed; Git only reported CRLF conversion warnings on edited files. |
-
-## Changed Files
-
-- `.codex/config.toml`: aligned with canonical `codex-layer/config.toml`.
-- `.harness/current.txt`: points to the active Architecture 2.0 hardening sprint.
-- `.harness/project-state.json`: points to the active Architecture 2.0 hardening sprint.
-- `.harness/sprints/2026-06-18-agentos-architecture-2-hardening.json`: records task scope, context, acceptance criteria and verification.
-- `codex-layer/config.toml`: canonical Codex layer config preserved and normalized.
-- `docs/ARCHITECTURE.md`: published as AgentOS Architecture 2.0 canonical source.
-- `docs/INDEX.md`: routes to Architecture 2.0.
-- `docs/PLAN.md`: updated to the immediate Architecture 2.0 hardening plan.
-- `docs/REVIEW.md`: refreshed with current evidence.
-- `docs/SPEC.md`: updated to the active Architecture 2.0 hardening contract.
-- `package.json`: added `npm test` and included tests in `npm run validate`.
-- `scripts/deploy.ps1`: replaced no-op success with fail-closed deployment contract.
-- `scripts/doctor.mjs`: added deploy script and contract tests to required surfaces.
-- `tests/agentos-2-contracts.test.mjs`: added executable tests for canonical source, `.codex/` drift and deploy behavior.
-
-## Risks
-
-- No real deploy target is configured. `scripts/deploy.ps1` intentionally exits non-zero until `AGENTOS_DEPLOY_COMMAND` is set.
-- `validate:context` checks range integrity and file presence, not semantic freshness.
-- Future edits to `codex-layer/` must reinstall or sync `.codex/` to avoid drift.
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `npm run doctor` | Windows local | 0 | Passed | Node `v24.15.0`, Git `2.52.0.windows.1`, `AgentOS doctor passed.` | Canonical repository surface exists. | Local workstation only. | Linux still depends on CI. |
+| `npm run validate` | Windows local | 0 | Passed | Templates, context, state, secrets, workflows, adapters, docs, license and tests all passed. | Full local gate is green. | Local workstation only. | Remote CI still required. |
+| `npm test` | Windows local | 0 | Passed | `13` tests passed, `0` failed. | Contract and E2E tests are green. | Local workstation only. | Linux still depends on CI. |
+| `git diff --check` | Windows local | 0 | Passed | No whitespace errors; Git only warned about CRLF normalization. | Diff hygiene is clean enough to publish. | Warnings are informational. | None. |
+| `AgentOS CI` | GitHub Actions Windows | 0 | Passed | Run `27806503917`, job `validate (windows-latest)` completed successfully: https://github.com/provedorconsult/AgentOS/actions/runs/27806503917/job/82287377839 | Remote Windows CI matches local validation. | GitHub emitted a Node 20 deprecation annotation for the pinned action runtime. | Pinned action SHAs should be refreshed when Node 24-native revisions are available. |
+| `AgentOS CI` | GitHub Actions Linux | 0 | Passed | Run `27806503917`, job `validate (ubuntu-latest)` completed successfully: https://github.com/provedorconsult/AgentOS/actions/runs/27806503917/job/82287377821 | Remote Linux CI proves portability. | GitHub emitted a Node 20 deprecation annotation for the pinned action runtime. | Pinned action SHAs should be refreshed when Node 24-native revisions are available. |

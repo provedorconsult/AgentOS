@@ -14,7 +14,7 @@ Never commit:
 - database dumps;
 - customer data.
 
-Use `.env.example` for placeholders.
+Use `.env.example` for placeholders only. The secret scanner validates `.env.example` and rejects live-looking keys there as well.
 
 ## Command Safety
 
@@ -27,6 +27,10 @@ Production operations require:
 - rollback plan;
 - expected health check;
 - human confirmation.
+
+## Reporting
+
+Report vulnerabilities privately through the security contact documented in the repository root `SECURITY.md` before opening a public issue.
 
 ## Dependency Safety
 

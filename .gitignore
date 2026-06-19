@@ -29,3 +29,7 @@ yarn-error.log*
 
 # Local backups
 backups/
+*.bak-*
+.*.bak-*
+.codex.bak-*
+AGENTS.md.bak-*

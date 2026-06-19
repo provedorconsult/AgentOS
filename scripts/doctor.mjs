@@ -51,6 +51,8 @@ const required = [
   "core/goals/project-goal.template.md",
   "core/goals/goal.template.md",
   "core/workflows/01-discover.md",
+  "core/workflows/02-spec.md",
+  "core/workflows/03-plan.md",
   "core/workflows/04-solution.md",
   "core/workflows/05-implement.md",
   "core/workflows/06-verify.md",
@@ -84,8 +86,15 @@ const required = [
   "scripts/validate-sprint-json.mjs",
   "scripts/validate-context-ranges.mjs",
   "scripts/validate-no-secrets.mjs",
+  "scripts/validate-state.mjs",
+  "scripts/validate-workflows.mjs",
+  "scripts/validate-adapters.mjs",
+  "scripts/validate-docs.mjs",
+  "scripts/validate-license.mjs",
+  "scripts/deploy.mjs",
   "scripts/deploy.ps1",
-  "tests/agentos-2-contracts.test.mjs"
+  "tests/agentos-2-contracts.test.mjs",
+  "tests/agentos-audit-hardening.test.mjs"
 ];
 
 let failures = 0;

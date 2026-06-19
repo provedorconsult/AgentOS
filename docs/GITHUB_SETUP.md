@@ -1,32 +1,19 @@
 # GitHub Setup
 
-Target repository:
+Target repository: `provedorconsult/AgentOS`
 
-```txt
-provedorconsult/AgentOS
-```
+## Current State
 
-## Current Connector Requirement
+- repository exists;
+- default branch is `main`;
+- release-candidate work should happen through feature branches and pull requests;
+- CI must be green on Windows and Linux before merge.
 
-The Codex GitHub connector must be authorized for the `provedorconsult` account before Codex can create or populate files there.
+## Publication Flow
 
-At the time this repository was scaffolded, the connector exposed:
-
-- `Haisemberg2008`
-- `You-Telecom-Provedor-de-internet`
-
-It did not expose:
-
-- `provedorconsult`
-
-## Publication Options
-
-Option A: authorize the Codex GitHub app for `provedorconsult`, then ask Codex to publish this workspace.
-
-Option B: create an empty public GitHub repository named `AgentOS` under `provedorconsult`, then ask Codex to populate `provedorconsult/AgentOS`.
-
-Option C: run:
-
-```powershell
-./scripts/create-github-repo.ps1 -Owner "provedorconsult" -Repo "AgentOS" -Visibility public
-```
+1. create a branch from `main`;
+2. run `npm run doctor`, `npm run validate`, `npm test` and `git diff --check`;
+3. push the branch;
+4. open a PR with Summary, Verification, Risks, Migration, Rollback and Files Changed;
+5. wait for required review and green checks;
+6. tag the approved release candidate when governance gates are satisfied.

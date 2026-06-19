@@ -2,100 +2,98 @@
 
 ## Goal
 
-Establish AgentOS Architecture 2.0 as the canonical source for the repository, publish the full 2.0 architecture contract, eliminate `.codex/` drift from its canonical layer, replace the false deploy path with a fail-closed deployment contract, and expand validation with executable tests.
+Promote AgentOS 2.0 from an alpha-shaped scaffold to a release-candidate-ready local platform by hardening CI, adapter installation, validators, metadata, docs and evidence without adding new product scope or running a real deployment.
 
 ## Canonical Source
 
-`docs/ARCHITECTURE.md` is the canonical source for AgentOS Architecture 2.0. Other docs, harness tasks, adapters and scripts must route back to that file when they describe platform boundaries, canonical workflow, adapter boundaries, `.codex/` generation, deployment readiness or validation requirements.
+`docs/ARCHITECTURE.md` remains the canonical source for AgentOS Architecture 2.0. This SPEC narrows the short-horizon hardening slice required for `2.0.0-rc.1`.
 
 ## Scope
 
 In scope:
 
-- publish the full Architecture 2.0 contract in `docs/ARCHITECTURE.md`;
-- keep `core/` as the neutral platform layer;
-- keep SpecPilot explicit through `specpilot/`, `.harness/` and docs templates;
-- keep `codex-layer/` as the canonical source for project `.codex/` material;
-- require `.codex/` to match the canonical `codex-layer/` output;
-- replace the no-op deploy script with a fail-closed script that requires a real configured deployment command;
-- add executable tests and include them in `npm run validate`;
-- refresh active sprint and review evidence.
+- replace legacy CI gating with canonical Node-based validation on Windows and Linux;
+- keep `codex-layer/` as the canonical Codex source and make adapter installation honor it;
+- validate active sprint state, project state, context ranges, workflow manifest, docs and license metadata;
+- harden secret scanning for `.env.example` and backup artifacts;
+- reconcile release-candidate docs, changelog and review evidence;
+- keep deploy contract-only and fail closed when no real target exists.
 
 Out of scope:
 
-- remote production deployment without `AGENTOS_DEPLOY_COMMAND`;
-- medium or long horizon implementation;
+- real deployment without an approved `AGENTOS_DEPLOY_COMMAND`;
+- dashboard, database, scheduler, channels, remote runtime, executable memory, heartbeats, routines or knowledge-db;
 - functional Claude Code or Antigravity adapters;
-- memory runtime, routines, heartbeats execution, dashboard, database, scheduler, channels or remote runtime;
-- external dependencies.
+- external npm dependencies.
 
 ## Requirements
 
-### R1 - Architecture 2.0 Canonical Source
+### R1 - Canonical Validation and CI
 
 Expected behavior:
 
-- Architecture 2.0 is published completely in one canonical document.
-- `docs/SPEC.md`, `docs/PLAN.md`, `docs/INDEX.md` and active sprint state point to the canonical source.
+- CI validates the same contracts that local developers run.
+- Validation is portable across Windows and Linux.
 
 Acceptance criteria:
 
-- `docs/ARCHITECTURE.md` starts with `# AgentOS Architecture 2.0`.
-- `docs/ARCHITECTURE.md` contains a `Canonical Source` section.
-- `docs/INDEX.md` routes readers to Architecture 2.0.
+- `.github/workflows/ci.yml` runs `npm run doctor`, `npm run validate` and `git diff --check`.
+- CI uses `ubuntu-latest` and `windows-latest`.
+- GitHub Actions are pinned by immutable SHA.
 
-### R2 - Neutral Core and Explicit SpecPilot Engine
+### R2 - Canonical Adapter Installation
 
 Expected behavior:
 
-- `core/` remains IDE-neutral and independent from `.codex/` and `.claude/`.
-- SpecPilot remains the internal SPEC-driven engine.
+- Codex installation copies `codex-layer/` into `.codex/`.
+- Generic IDE installation stays `.codex`-free.
+- Existing files are backed up before replacement.
 
 Acceptance criteria:
 
-- `core/README.md`, `specpilot/README.md`, `specpilot/templates/README.md`, `specpilot/validators/README.md` and `specpilot/harness/README.md` exist.
-- Required templates remain under `docs/` and `.harness/templates/`.
+- Codex E2E tests prove `.codex/config.toml` matches `codex-layer/config.toml` after install.
+- Generic IDE E2E tests prove no `.codex/` is created.
+- Backup artifacts are ignored by git.
 
-### R3 - No `.codex/` Drift
+### R3 - Complete Harness and Contract Validation
 
 Expected behavior:
 
-- `codex-layer/` is the canonical source for project-local Codex material.
-- `.codex/` is an installed copy, not a divergent source of truth.
+- Sprint, task, context, state, docs, workflows and metadata are mechanically enforced.
 
 Acceptance criteria:
 
-- `.codex/config.toml` is byte-for-byte equal to `codex-layer/config.toml`.
-- Tests fail if those files drift.
+- `validate-sprint-json.mjs` rejects out-of-bounds ranges and invalid task/state rules.
+- `validate-state.mjs` validates `.harness/current.txt` against `.harness/project-state.json`.
+- `npm run validate` includes `doctor`, `state`, `workflows`, `adapters`, `docs`, `license` and `test`.
 
-### R4 - Honest Deployment Contract
+### R4 - Hardened Security and Release Metadata
 
 Expected behavior:
 
-- The repository no longer reports a successful deploy when no real target exists.
-- Deployment is approval/configuration-gated through explicit environment variables.
+- `.env.example` is scanned for unsafe values but accepts safe placeholders.
+- Release-candidate metadata is coherent across package, YAML, harness and docs.
 
 Acceptance criteria:
 
-- `scripts/deploy.ps1` exits non-zero when `AGENTOS_DEPLOY_COMMAND` is not set.
-- The failure message explains how to configure a real deployment command.
-- The deploy script does not describe itself as a placeholder.
+- unsafe secrets in `.env.example` fail validation;
+- `package.json` uses `MIT`, `private: true` and `engines.node >=22`;
+- `README.md`, `agentos.yaml` and `.harness/project-state.json` reflect `2.0.0-rc.1`.
 
-### R5 - Expanded Validation and Tests
+### R5 - Honest Release-Candidate Documentation
 
 Expected behavior:
 
-- Validation covers architecture canonicality, `.codex/` drift and fail-closed deploy behavior.
+- documentation no longer references obsolete publication assumptions;
+- review evidence is structured by criterion, command and limitation;
+- release and rollback guidance are explicit.
 
 Acceptance criteria:
 
-- `npm test` runs the contract test suite.
-- `npm run validate` includes `npm test`.
-- `docs/REVIEW.md` records fresh `npm run doctor`, `npm test`, `npm run validate` and `git diff --check` results with exit codes.
+- `docs/GITHUB_SETUP.md`, `docs/INDEX.md`, `docs/REVIEW.md`, `docs/RELEASE.md`, `docs/MIGRATION.md`, `CHANGELOG.md`, `CONTRIBUTING.md` and root `SECURITY.md` reflect the current release-candidate contract.
 
 ## Constraints
 
 - Do not add dependencies.
-- Do not delete existing compatibility files without explicit justification.
-- Do not present placeholders as ready features.
-- Do not run a real deployment unless a real deploy target is configured and approved.
+- Do not remove compatibility files unless they are clearly deprecated.
+- Do not perform a real deploy.

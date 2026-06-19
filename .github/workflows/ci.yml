@@ -8,9 +8,22 @@ on:
 
 jobs:
   validate:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Validate AgentOS
-        shell: pwsh
-        run: ./scripts/validate.ps1
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Doctor
+        run: npm run doctor
+      - name: Validate
+        run: npm run validate
+      - name: Diff hygiene
+        run: git diff --check

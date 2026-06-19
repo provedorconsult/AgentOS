@@ -1,3 +1,5 @@
 # 05 Verify
 
-Run declared commands, capture exit codes and record evidence per acceptance criterion in `docs/REVIEW.md`.
+Deprecated compatibility workflow.
+
+Use `core/workflows/06-verify.md` for the canonical verification step.

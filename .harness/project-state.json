@@ -4,12 +4,14 @@
     "status": "active"
   },
   "agentos": {
-    "version": "2.0.0",
+    "version": "2.0.0-rc.1",
     "specEngine": "specpilot"
   },
-  "currentSprint": ".harness/sprints/2026-06-18-agentos-architecture-2-hardening.json",
+  "currentSprint": null,
+  "lastVerifiedSprint": ".harness/sprints/2026-06-19-agentos-audit-hardening.json",
   "goalPolicy": {
     "field": "agentGoal",
-    "rejectLegacyField": "codexGoal"
+    "rejectLegacyField": "codexGoal",
+    "currentPointerMode": "lastVerifiedSprint"
   }
 }

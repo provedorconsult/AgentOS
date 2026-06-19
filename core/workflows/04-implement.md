@@ -1,3 +1,5 @@
 # 04 Implement
 
-Implement only the current task. Read declared ranges first, preserve user changes, avoid unrelated refactors and keep context closed.
+Deprecated compatibility workflow.
+
+Use `core/workflows/04-solution.md` and `core/workflows/05-implement.md` for the canonical sequence.
