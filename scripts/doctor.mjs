@@ -97,6 +97,7 @@ const required = [
   "scripts/validate-license.mjs",
   "scripts/deploy.mjs",
   "scripts/deploy.ps1",
+  ".github/workflows/security-audit.yml",
   "tests/agentos-2-contracts.test.mjs",
   "tests/agentos-audit-hardening.test.mjs"
   ,"tests/agentos-rc-trust-gates.test.mjs"
@@ -104,6 +105,7 @@ const required = [
   ,"tests/agentos-edit-scope.test.mjs"
   ,"tests/agentos-harness-discovery.test.mjs"
   ,"tests/agentos-secret-scan-extended.test.mjs"
+  ,"tests/agentos-governance-fluency.test.mjs"
 ];
 
 let failures = 0;

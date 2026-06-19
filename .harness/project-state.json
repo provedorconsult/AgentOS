@@ -8,7 +8,7 @@
     "specEngine": "specpilot"
   },
   "currentSprint": null,
-  "lastVerifiedSprint": ".harness/sprints/2026-06-19-agentos-rc-final-hardening.json",
+  "lastVerifiedSprint": ".harness/sprints/2026-06-19-agentos-governance-fluency.json",
   "goalPolicy": {
     "field": "agentGoal",
     "rejectLegacyField": "codexGoal",

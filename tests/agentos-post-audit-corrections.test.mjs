@@ -157,7 +157,7 @@ test("CI and doctor include dependency and post-audit integrity gates", () => {
   const ci = fs.readFileSync(".github/workflows/ci.yml", "utf8");
   const doctor = fs.readFileSync("scripts/doctor.mjs", "utf8");
   assert.match(ci, /^permissions:\s*\n\s+contents:\s+read/m);
-  assert.match(ci, /npm audit --audit-level=moderate/);
+  assert.match(ci, /npm run audit:pr/);
   assert.match(ci, /timeout-minutes:/);
   assert.match(ci, /^concurrency:/m);
   assert.ok(fs.existsSync(".github/dependabot.yml"));
