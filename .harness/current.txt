@@ -1,1 +1,1 @@
-.harness/sprints/2026-06-19-agentos-rc-final-hardening.json
+.harness/sprints/2026-06-19-agentos-governance-fluency.json

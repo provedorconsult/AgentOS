@@ -14,7 +14,50 @@ on:
       - main
 
 jobs:
+  changes:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    outputs:
+      docs_only: ${{ steps.classify.outputs.docs_only }}
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          fetch-depth: 0
+      - name: Classify change set
+        id: classify
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base="${{ github.event.pull_request.base.sha }}"
+            head="${{ github.event.pull_request.head.sha }}"
+          else
+            base="${{ github.event.before }}"
+            head="${{ github.sha }}"
+          fi
+
+          if [[ -z "$base" || "$base" =~ ^0+$ ]]; then
+            base="$(git rev-list --max-count=1 --skip=1 "$head" || true)"
+          fi
+
+          docs_only="false"
+          if [[ -n "$base" ]]; then
+            files="$(git diff --name-only "$base" "$head")"
+            if [[ -n "$files" ]]; then
+              docs_only="true"
+              while IFS= read -r file; do
+                case "$file" in
+                  docs/*|README.md|CHANGELOG.md|SECURITY.md|CONTRIBUTING.md) ;;
+                  *) docs_only="false" ;;
+                esac
+              done <<< "$files"
+            fi
+          fi
+
+          echo "docs_only=$docs_only" >> "$GITHUB_OUTPUT"
+
   validate:
+    needs: changes
+    if: needs.changes.outputs.docs_only != 'true'
     timeout-minutes: 10
     strategy:
       matrix:
@@ -32,7 +75,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Dependency audit
-        run: npm audit --audit-level=moderate
+        run: npm run audit:pr
       - name: Doctor
         run: npm run doctor
       - name: Validate
@@ -42,3 +85,45 @@ jobs:
       - name: Clean worktree
         shell: bash
         run: test -z "$(git status --porcelain)"
+
+  docs_only:
+    name: docs-only
+    needs: changes
+    if: needs.changes.outputs.docs_only == 'true'
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate docs-only change
+        run: npm run validate:docs-only
+      - name: Diff hygiene
+        run: git diff --check
+      - name: Clean worktree
+        shell: bash
+        run: test -z "$(git status --porcelain)"
+
+  quality-gate:
+    needs: [changes, validate, docs_only]
+    if: always()
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce selected validation path
+        shell: bash
+        env:
+          DOCS_ONLY: ${{ needs.changes.outputs.docs_only }}
+          VALIDATE_RESULT: ${{ needs.validate.result }}
+          DOCS_RESULT: ${{ needs.docs_only.result }}
+        run: |
+          if [[ "$DOCS_ONLY" == "true" ]]; then
+            test "$DOCS_RESULT" = "success"
+          else
+            test "$VALIDATE_RESULT" = "success"
+          fi

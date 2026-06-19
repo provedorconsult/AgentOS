@@ -7,7 +7,10 @@
   "scripts": {
     "doctor": "node scripts/doctor.mjs",
     "test": "node --test tests/*.test.mjs",
+    "audit:pr": "npm audit --audit-level=high",
+    "audit:release": "npm audit --audit-level=moderate",
     "validate": "npm run doctor && npm run validate:templates && npm run validate:context && npm run validate:state && npm run validate:secrets && npm run validate:scope && npm run validate:workflows && npm run validate:adapters && npm run validate:docs && npm run validate:license && npm test",
+    "validate:docs-only": "npm run doctor && npm run validate:secrets && npm run validate:docs && npm run validate:license",
     "validate:templates": "node scripts/validate-sprint-json.mjs --discover",
     "validate:context": "node scripts/validate-context-ranges.mjs --spec docs/SPEC.md .harness/sprints",
     "validate:state": "node scripts/validate-state.mjs",

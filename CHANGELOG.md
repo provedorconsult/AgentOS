@@ -11,6 +11,7 @@
 - rejected malformed nested contracts, policy-flag type bypasses, cross-platform absolute paths and forbidden-directory symlink aliases;
 - expanded secret assignment scanning for prefixed variables such as `DB_PASSWORD` and `SERVICE_SECRET`;
 - added remote dependency audit, minimal workflow permissions, CI timeout/concurrency and Dependabot configuration;
+- consolidated required PR checks into `quality-gate`, split PR and release audit surfaces, removed the legacy checklist workflow and documented owner-approved squash-only merge governance;
 - corrected Quick Start, release evidence and governance documentation after the trust-gate merge;
 - replaced the legacy CI gate with canonical Node-based validation on Windows and Linux;
 - aligned Codex adapter installation with `codex-layer/` as the canonical source;
