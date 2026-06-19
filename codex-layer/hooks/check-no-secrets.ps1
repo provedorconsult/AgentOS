@@ -12,7 +12,8 @@ $files = Get-ChildItem -Path . -Recurse -File -Force |
   Where-Object {
     $_.FullName -notmatch "\\.git\\" -and
     $_.FullName -notmatch "\\node_modules\\" -and
-    $_.FullName -notmatch "\\.venv\\"
+    $_.FullName -notmatch "\\.venv\\" -and
+    $_.FullName -notmatch "\\check-no-secrets\\.ps1$"
   }
 
 foreach ($file in $files) {
