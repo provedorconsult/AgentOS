@@ -2,6 +2,11 @@
 
 ## 2.0.0-rc.1 - 2026-06-19
 
+- added edit-scope enforcement that compares Git diff paths and actions against sprint `task.files[]`;
+- added automatic harness JSON discovery for templates, active sprints and archive files;
+- consolidated the review evidence structure for the current release candidate;
+- extended secret assignment parsing for quoted, special-character, base64, YAML, JSON, Markdown and comment cases;
+- documented that formal `APPROVE` review is required before merge, tag or prerelease and that administrative bypass is not acceptable for final RC hardening;
 - added executable JSON Schema Draft 2020-12 enforcement with Ajv for tasks, sprints, project state and AgentOS configuration;
 - rejected malformed nested contracts, policy-flag type bypasses, cross-platform absolute paths and forbidden-directory symlink aliases;
 - expanded secret assignment scanning for prefixed variables such as `DB_PASSWORD` and `SERVICE_SECRET`;

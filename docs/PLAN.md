@@ -4,6 +4,8 @@
 
 Close the 2026-06-19 RC trust-gate delta in strict priority order while preserving `docs/ARCHITECTURE.md` as the canonical source: false-success evidence and secret scanning first, then path containment, state/YAML contracts, doctor/CI integrity, documentation and GitHub governance.
 
+Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.files -> Git diff -> evidence -> review -> tag -> prerelease`.
+
 ## Tasks
 
 ### Task 001 - Canonical CI and Deploy Contract
@@ -42,8 +44,15 @@ Close the 2026-06-19 RC trust-gate delta in strict priority order while preservi
 - Editable files: `core/schemas/*`, `scripts/lib/*`, `scripts/validate-no-secrets.mjs`, `.github/*`, `.harness/*`, `README.md`, `CHANGELOG.md`, `docs/*`
 - Verification: `npm audit --audit-level=moderate`, `npm run validate`, `npm test`, `git diff --check`
 
+### Task 007 - Final RC Traceability Gates
+
+- Goal: enforce real Git diff scope, discover every harness JSON file, extend structured secret assignment scanning and block release publication without formal review.
+- Editable files: `scripts/validate-edit-scope.mjs`, `scripts/validate-sprint-json.mjs`, `scripts/validate-no-secrets.mjs`, `scripts/doctor.mjs`, `core/schemas/sprint.schema.json`, `tests/*.test.mjs`, `.harness/*`, `.github/workflows/ci.yml`, `package.json`, `README.md`, `CHANGELOG.md`, `docs/*.md`
+- Verification: `npm ci`, `npm audit --audit-level=moderate`, `npm run doctor`, `npm run validate`, `npm test`, `git diff --check`, `git status --porcelain`
+
 ## Risks
 
 - real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;
 - branch protection and formal review requirements still depend on GitHub-side settings;
-- tag and prerelease publication remain blocked until the PR has formal review and required Windows/Linux checks.
+- tag and prerelease publication remain blocked until the PR has formal review and required Windows/Linux checks;
+- if no eligible reviewer exists, the final RC hardening PR must remain unmerged and the release decision must be `BLOCKED`.

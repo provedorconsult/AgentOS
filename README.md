@@ -2,7 +2,9 @@
 
 AgentOS is the platform. SpecPilot is the internal SPEC-driven engine. Adapters translate that contract to tools such as Codex or a generic IDE without turning any adapter into the core.
 
-Current release candidate: AgentOS 2.0.0-rc.1.
+Current release candidate package metadata: AgentOS 2.0.0-rc.1.
+
+Formal GitHub prerelease status: not published until edit-scope validation, sprint discovery, CI, formal `APPROVE` review, tag and prerelease gates are complete.
 
 ## Short-Horizon Surface
 
@@ -47,6 +49,13 @@ SpecPilot turns work into:
 
 Tasks use `agentGoal`, closed context, declared editable files, acceptance criteria and verification commands.
 
+Validation is mechanical:
+
+- `npm run validate:templates` discovers `.harness/templates/*.json`, `.harness/sprints/*.json` and `.harness/archive/*.json`.
+- `npm run validate:scope` compares the real Git diff with `task.files[]` and `scopePolicy`.
+- `npm run validate:secrets` scans structured assignments in env, YAML, JSON, Markdown and comments.
+- `npm run validate:secrets:history` is optional and documents the cost/limits of history review.
+
 ## Directory Map
 
 ```text
@@ -76,4 +85,4 @@ codex-layer/          canonical source for installed Codex material
 
 ## Status
 
-AgentOS 2.0.0-rc.1 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local and mechanical, with pinned YAML and JSON Schema validation dependencies.
+AgentOS 2.0.0-rc.1 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local and mechanical, with pinned YAML, Ajv JSON Schema validation and Git scope-validation dependencies.

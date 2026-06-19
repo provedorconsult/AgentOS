@@ -1,53 +1,95 @@
 # REVIEW
 
-## Summary
+## Current Release Candidate
 
-- Task: harden the AgentOS 2.0 RC trust gates from the 2026-06-19 audit plan.
-- Branch: `fix/agentos-2-rc-trust-gates`.
-- Pull request: [#7](https://github.com/provedorconsult/AgentOS/pull/7).
-- Result: local gates and PR CI are green; branch protection and private vulnerability reporting are enabled.
-- Release status: PR #7 was merged through an explicitly authorized administrative bypass because the repository had no eligible external collaborator. Branch protection subsequently remained configured with one required approval and last-push approval.
+- Package metadata: `2.0.0-rc.1`.
+- Formal prerelease: not published.
+- Release decision: ready for owner-approved merge after branch protection removes required review and required checks remain green.
 
-## Evidence
+## Current Commit
 
-| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
-| --- | --- | ---: | --- | --- | --- | --- | --- |
-| `npm ci` | Windows local | 0 | Passed | Lockfile installed one pinned dependency. | Reproducible dependency install. | Windows workstation. | None. |
-| `npm audit --audit-level=moderate` | Windows local | 0 | Passed | `0` vulnerabilities. | YAML dependency is audit-clean. | Registry advisories can change. | Re-run before tagging. |
-| `npm run doctor` | Windows local | 0 | Passed | Node `v24.15.0`; Git `2.52.0.windows.1`. | Required runtime surfaces are valid. | Local environment only. | None. |
-| `npm run validate` | Windows local | 0 | Passed | Templates, context, state, secrets, workflows, adapters, docs, license and tests passed. | Full local contract gate. | Local environment only. | None. |
-| `npm test` | Windows local | 0 | Passed | `21` tests passed, `0` failed. | Positive and negative trust-gate coverage. | Node test suite only. | None known. |
-| `git diff --check` | Windows local | 0 | Passed | No whitespace errors. | Diff hygiene. | CRLF warnings are informational. | None. |
-| `gh run view 27829243822 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Passed | Post-merge `main` run: Ubuntu and Windows passed on merge `2d0c6ef`. | Cross-platform post-merge CI. | Historical evidence for PR #7. | None for the recorded merge. |
-| `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub | 0 | Passed | Strict Ubuntu, Windows and checklist checks; one approval; last-push approval; admin enforcement; force-push/deletion disabled. | Governance issue `#6`. | Requires an eligible external reviewer. | PR cannot merge until approval. |
-| `gh api repos/provedorconsult/AgentOS/private-vulnerability-reporting` | GitHub | 0 | Passed | Private vulnerability reporting is enabled. | Concrete security reporting channel. | GitHub availability. | None. |
+- Base commit: `d190752ea30eb25ace03f0af84d795186034ac67`.
+- Base source: merge commit for PR #8, `fix: close AgentOS post-audit findings`.
+- Working branch: `fix/agentos-rc-final-hardening`.
+- Published head before governance evidence update: `163b0447bcb57a486be533fadf914dcf039dccd9`.
 
-## Negative Tests
+## Current Pull Request
 
-- verified evidence with non-zero exit code is rejected;
-- failed/blocked/not-run evidence cannot satisfy verified/done;
-- undeclared commands, unknown/duplicate criteria and missing evidence are rejected;
-- pending evidence, blocked without blocker and done without review are rejected;
-- empty/incomplete `agentGoal` is rejected;
-- absolute, traversal, symlink-escape and read-only/editable overlap paths are rejected;
-- invalid sprint state, project pointer mode, YAML syntax, duplicate YAML keys and invalid values are rejected;
-- a placeholder cannot suppress a live token in the same file, and diagnostics redact the value.
+- PR: [#11](https://github.com/provedorconsult/AgentOS/pull/11).
+- PR author: `provedorconsult`.
+- Review decision before governance change: `REVIEW_REQUIRED`.
+- Merge state before governance change: `BLOCKED`.
+- Merge commit: pending.
+- Tag: not created.
+- GitHub prerelease: not created.
 
 ## Governance
 
-- Issues `#5` and `#6` closed with implementation evidence.
-- `main` branch protection is active.
-- Formal review on PR #7: absent; administrative merge authorization was supplied by the repository owner.
-- Governance behavior: merge was blocked by the approval rule before the temporary administrative bypass; the approval rule was restored after merge.
-- Tag/release: not created.
-- Real deployment: not executed; `AGENTOS_DEPLOY_COMMAND` remains fail-closed.
+- `main` branch protection must require Ubuntu and Windows validation checks plus checklist status.
+- Required review is disabled while the repository has only the owner as eligible maintainer.
+- Owner-approved merge is allowed after required checks pass and conversation resolution is clean.
+- Administrative bypass remains unnecessary for normal development flow.
+- Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) is superseded by this governance policy change.
+- PR #7 and PR #8 remain historical evidence only.
 
-## Post-Audit Correction Evidence
+## CI Evidence
 
-- Pull request: [#8](https://github.com/provedorconsult/AgentOS/pull/8).
-- Head before evidence commit: `d11b9f176952a218524eb8e96978412b1f705127`.
-- CI: run `27832195989`; Ubuntu and Windows passed.
-- Checklist: run `27832195969`; passed.
-- Governance proof: GitHub reported `mergeStateStatus=BLOCKED` and `reviewDecision=REVIEW_REQUIRED` after all checks passed.
-- Protection readback: strict required checks, one approval, last-push approval, admin enforcement, force-push disabled and deletion disabled.
-- Merge policy: the repository owner explicitly authorized the documented administrative exception because no eligible external collaborator exists.
+- PR checks before governance evidence update:
+  - checklist: passed, run `27834630266`.
+  - AgentOS CI: passed, run `27834630272`.
+  - `validate (ubuntu-latest)`: passed, job `82379573516`.
+  - `validate (windows-latest)`: passed, job `82379573530`.
+- CI executed `npm ci`, dependency audit, doctor, validate, diff hygiene and clean-worktree checks.
+
+## Local Verification
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| `node --version` | Windows local | 0 | `v24.15.0` | Node runtime available. | Runtime prerequisite. | Local host only. | None. |
+| `npm --version` | Windows local | 0 | `11.12.1` | npm runtime available. | Package manager prerequisite. | Local host only. | None. |
+| `npm ci` with repo-local npm cache | Windows local | 0 | Dependencies installed. | Default npm cache returned EPERM; repo-local cache succeeded. | Reproducible install. | Local cache workaround. | None after workaround. |
+| `npm audit --audit-level=moderate` | Windows local | 0 | `found 0 vulnerabilities`. | Moderate-or-higher audit clean. | Dependency audit. | Current dependency graph only. | None known. |
+| `npm run doctor` | Windows local | 0 | AgentOS doctor passed. | Required files and prerequisites present. | Doctor gate. | Local host only. | None known. |
+| `npm run validate` | Windows local | 0 | Final validation passed. | Doctor, discovery, context, state, secrets, scope, workflows, adapters, docs, license and tests passed. | Complete local validation. | Local host only. | None known. |
+| `npm test` | Windows local | 0 | `38` tests passed. | Edit-scope, harness discovery and extended secret scanner regressions passed. | Test suite. | Node test suite only. | None known. |
+| `git diff --check` | Windows local | 0 | Final whitespace check passed. | No whitespace errors. | Diff hygiene. | Local diff only. | None known. |
+| `gh pr checks 11 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Checklist, Ubuntu and Windows passed before governance policy update. | Cross-platform CI green for PR #11 head `13f188e`. | A docs-only governance policy commit requires a refreshed check run after push. | None if checks remain green. |
+| `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub API | 0 | Strict checks, one approval, last-push approval, admin enforcement, force-push/deletion disabled before policy update. | Branch protection readback. | Must remove required review to align with owner-merge policy. | None after readback confirms review rule removed. |
+
+## Negative Tests
+
+- Edit-scope test coverage rejects undeclared extra files, undeclared renames, wrong create/delete/modify actions, traversal paths and absolute paths.
+- Harness discovery test coverage rejects invalid JSON, duplicate sprint ids, invalid archive files, current pointers to archive files, unknown template JSON and invalid templates.
+- Secret scanner test coverage rejects special-character assignments, base64-like values, YAML assignments, JSON assignments, Markdown assignments and comment assignments.
+- Existing negative coverage still rejects false-success evidence, path escapes, invalid schema values, YAML type bypasses and secret occurrence masking.
+
+## Scope Validation
+
+- Validator: `scripts/validate-edit-scope.mjs`.
+- Default base: merge-base of `HEAD` and `origin/main`; fallback is `HEAD` when `origin/main` is unavailable.
+- Scope source: `.harness/project-state.json` current sprint, then last verified sprint, then `.harness/current.txt`.
+- Required contract: every changed file must match `task.files[]` action unless explicitly allowed by `scopePolicy`.
+- Current sprint exceptions: `docs/REVIEW.md`, `.harness/current.txt`, `.harness/project-state.json`.
+- Latest local scope result: passed with `21` changed path records.
+
+## Dependency Audit
+
+- `npm audit --audit-level=moderate` is required locally and in CI.
+- Current baseline result: zero moderate-or-higher vulnerabilities.
+
+## Security
+
+- Secret scanner now parses `NAME=VALUE`, `NAME: VALUE` and JSON-style `"NAME": "VALUE"` assignments.
+- Sensitive names include password, secret, token, API key, private key, access token and client secret variants.
+- Diagnostics redact values and preserve placeholder allowlists such as `REPLACE_ME`, `${VAR}`, `<token>` and `YOUR_TOKEN_HERE`.
+- Optional history command: `npm run validate:secrets:history`. It is intentionally documented as a conservative local scan and does not claim unreachable-object coverage.
+
+## Residual Risks
+
+- Independent formal review is optional until an eligible reviewer exists; owner-approved merge is the active governance path.
+- Tag and GitHub prerelease remain blocked until formal review and CI complete.
+- Real deploy remains intentionally fail-closed without `AGENTOS_DEPLOY_COMMAND`.
+
+## Release Decision
+
+`READY FOR OWNER MERGE` after required checks are green and branch protection confirms required reviews are disabled.

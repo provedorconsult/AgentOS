@@ -1,0 +1,201 @@
+{
+  "id": "2026-06-19-agentos-rc-final-hardening",
+  "status": "verified",
+  "title": "AgentOS RC final hardening",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [
+      "docs/REVIEW.md",
+      ".harness/current.txt",
+      ".harness/project-state.json"
+    ],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-rc-final-hardening",
+      "status": "verified",
+      "title": "Enforce final release-candidate gates",
+      "goal": "Mechanically connect SpecPilot declared scope, Git diff validation, harness discovery, secret scanning, review evidence and release governance.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Close AgentOS RC final hardening with edit-scope, harness discovery, secret scanner and governance gates verified before release.",
+        "outcome": "The RC branch cannot pass validation when real changes exceed declared sprint scope, harness JSON is missed, secrets evade scanner, or release governance is incomplete.",
+        "verificationSurface": "npm audit, npm run doctor, npm run validate, npm test, git diff --check, GitHub PR checks and review state",
+        "constraints": [
+          "Do not add medium or long-term AgentOS runtime features.",
+          "Do not use administrative merge bypass for this sprint."
+        ],
+        "boundaries": [
+          "scripts/",
+          "tests/",
+          ".harness/",
+          ".github/",
+          "docs/",
+          "README.md",
+          "CHANGELOG.md",
+          "package.json"
+        ],
+        "iterationPolicy": "Write failing regression tests before implementation and keep each gate mechanically verifiable.",
+        "blockedStopCondition": "Stop if required checks fail or branch protection cannot enforce the owner-approved merge policy."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-30"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "1-40"
+          },
+          {
+            "path": "SECURITY.md",
+            "range": "1-15"
+          }
+        ],
+        "contracts": [
+          "agentos.rc-final-hardening.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/validate-edit-scope.mjs",
+          "action": "create"
+        },
+        {
+          "path": "scripts/validate-sprint-json.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/validate-no-secrets.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/doctor.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "core/schemas/sprint.schema.json",
+          "action": "modify"
+        },
+        {
+          "path": "tests/agentos-edit-scope.test.mjs",
+          "action": "create"
+        },
+        {
+          "path": "tests/agentos-harness-discovery.test.mjs",
+          "action": "create"
+        },
+        {
+          "path": "tests/agentos-secret-scan-extended.test.mjs",
+          "action": "create"
+        },
+        {
+          "path": "package.json",
+          "action": "modify"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/templates/project-state.json",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/sprints/2026-06-19-agentos-rc-final-hardening.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/superpowers/plans/2026-06-19-agentos-rc-final-hardening.md",
+          "action": "create"
+        },
+        {
+          "path": "README.md",
+          "action": "modify"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/SPEC.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/RELEASE.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/REVIEW.md",
+          "action": "modify"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Git diff scope validation rejects undeclared files and action mismatches.",
+        "Harness JSON discovery validates templates, active sprints and archive files without package hardcoding.",
+        "Secret scanning detects special-character and structured secret assignments while redacting values.",
+        "Review and release docs reflect current governance, CI and blocked-release rules.",
+        "Owner-approved merge is allowed after required checks pass and required reviews are disabled."
+      ],
+      "verification": {
+        "commands": [
+          "npm ci",
+          "npm audit --audit-level=moderate",
+          "npm run doctor",
+          "npm run validate",
+          "npm test",
+          "git diff --check",
+          "git status --porcelain",
+          "gh pr checks 11 --repo provedorconsult/AgentOS",
+          "gh pr view 11 --repo provedorconsult/AgentOS --json reviewDecision,mergeStateStatus,mergeCommit"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Git diff scope validation rejects undeclared files and action mismatches.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Local validate passed with edit-scope enforcement over 21 changed path records."
+        },
+        {
+          "criterion": "Harness JSON discovery validates templates, active sprints and archive files without package hardcoding.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "validate:templates discovered and validated 11 harness JSON files."
+        },
+        {
+          "criterion": "Secret scanning detects special-character and structured secret assignments while redacting values.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "38 tests passed, including structured secret assignment and redaction coverage."
+        },
+        {
+          "criterion": "Review and release docs reflect current governance, CI and blocked-release rules.",
+          "command": "gh pr checks 11 --repo provedorconsult/AgentOS",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Checklist, Ubuntu and Windows checks passed on PR #11 before the governance evidence update."
+        },
+        {
+          "criterion": "Owner-approved merge is allowed after required checks pass and required reviews are disabled.",
+          "command": "gh pr view 11 --repo provedorconsult/AgentOS --json reviewDecision,mergeStateStatus,mergeCommit",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Governance changed to allow owner-approved merge after required checks pass and required review protection is disabled."
+        }
+      ]
+    }
+  ]
+}

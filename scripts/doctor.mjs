@@ -87,6 +87,7 @@ const required = [
   "packs/devops/README.md",
   "packs/security/README.md",
   "scripts/validate-sprint-json.mjs",
+  "scripts/validate-edit-scope.mjs",
   "scripts/validate-context-ranges.mjs",
   "scripts/validate-no-secrets.mjs",
   "scripts/validate-state.mjs",
@@ -100,6 +101,9 @@ const required = [
   "tests/agentos-audit-hardening.test.mjs"
   ,"tests/agentos-rc-trust-gates.test.mjs"
   ,"tests/agentos-post-audit-corrections.test.mjs"
+  ,"tests/agentos-edit-scope.test.mjs"
+  ,"tests/agentos-harness-discovery.test.mjs"
+  ,"tests/agentos-secret-scan-extended.test.mjs"
 ];
 
 let failures = 0;
