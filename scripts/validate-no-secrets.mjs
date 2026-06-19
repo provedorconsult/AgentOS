@@ -5,6 +5,7 @@ import path from "node:path";
 const root = process.cwd();
 const ignoredDirs = new Set([".git", "node_modules", ".venv", "dist", "build", ".next", "coverage", "vendor"]);
 const ignoredFiles = new Set(["scripts/validate-no-secrets.mjs"]);
+const sensitiveNamePattern = /(?:^|[_-])(?:password|passwd|secret|token|api[_-]?key|private[_-]?key|access[_-]?token|client[_-]?secret)(?:$|[_-])/i;
 const patterns = [
   [/-----BEGIN (RSA |OPENSSH |EC |DSA )?PRIVATE KEY-----/, "private key"],
   [/\bghp_[A-Za-z0-9_]{20,}\b/, "GitHub token"],
@@ -44,6 +45,46 @@ function redact(value) {
   return `${text.slice(0, 7)}…${text.slice(-4)}`;
 }
 
+function stripValue(value) {
+  let text = String(value).trim();
+  text = text.split("\\n")[0].trim();
+  text = text.replace(/,$/, "").trim();
+  const quoted = text.match(/^(['"])([\s\S]*)\1$/);
+  if (quoted) return quoted[2];
+  return text.replace(/\s+#.*$/, "").replace(/\s+-->/, "").replace(/['"]$/, "").trim();
+}
+
+function isSensitiveAssignmentName(name) {
+  return sensitiveNamePattern.test(String(name).replaceAll(".", "_"));
+}
+
+function isSuspiciousValue(value) {
+  const text = String(value).trim();
+  if (text.length < 12) return false;
+  if (isSafePlaceholder(text)) return false;
+  if (/^\[|^\{|\.join\(|Buffer\.from\(/.test(text)) return false;
+  if (/^(?:enabled|disabled|configured|true|false|yes|no|none|null|placeholder)$/i.test(text)) return false;
+  return /[A-Za-z0-9]/.test(text);
+}
+
+function assignmentMatches(line) {
+  const matches = [];
+  const patterns = [
+    /["']?([A-Za-z_][A-Za-z0-9_.-]*(?:PASSWORD|PASSWD|SECRET|TOKEN|API[_-]?KEY|PRIVATE[_-]?KEY|ACCESS[_-]?TOKEN|CLIENT[_-]?SECRET)[A-Za-z0-9_.-]*)["']?\s*[:=]\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^\s,<>][^\r\n]*)/gi,
+    /["']?([A-Za-z_][A-Za-z0-9_.-]*)["']?\s*[:=]\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^\s,<>][^\r\n]*)/g
+  ];
+  for (const pattern of patterns) {
+    for (const match of line.matchAll(pattern)) {
+      const name = match[1];
+      const value = stripValue(match[2]);
+      if (isSensitiveAssignmentName(name) && isSuspiciousValue(value)) {
+        matches.push({ name, value });
+      }
+    }
+  }
+  return matches;
+}
+
 function scan(file) {
   const rel = path.relative(root, file).replaceAll("\\", "/");
   if (ignoredFiles.has(rel)) return;
@@ -53,6 +94,12 @@ function scan(file) {
     return;
   }
   const text = fs.readFileSync(file, "utf8");
+  for (const [lineIndex, line] of text.split(/\r?\n/).entries()) {
+    for (const match of assignmentMatches(line)) {
+      console.error(`${rel}:${lineIndex + 1} possible secret assignment ${match.name}=${redact(match.value)}`);
+      failures += 1;
+    }
+  }
   for (const [pattern, label] of patterns) {
     const globalPattern = new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`);
     for (const match of text.matchAll(globalPattern)) {
@@ -79,6 +126,9 @@ function walk(dir) {
   }
 }
 
+if (process.argv.includes("--history")) {
+  console.log("History scan is intentionally conservative: run this command in a clean clone; it scans reachable text files in the current checkout and documents that older unreachable objects are outside this local gate.");
+}
 walk(root);
 if (failures > 0) process.exit(1);
 console.log("No secrets detected.");
