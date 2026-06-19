@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-Report security issues privately to the repository maintainers before opening a public issue. Include:
+Use [GitHub private vulnerability reporting](https://github.com/provedorconsult/AgentOS/security/advisories/new). Do not open a public issue for an undisclosed vulnerability. Include:
 
 - affected version or branch;
 - reproduction steps;

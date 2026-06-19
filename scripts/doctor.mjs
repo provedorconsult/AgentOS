@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import { spawnSync } from "node:child_process";
+import { loadAgentosConfig } from "./lib/agentos-config.mjs";
 
 const required = [
   "AGENTS.md",
@@ -12,8 +13,8 @@ const required = [
   "specpilot/validators/README.md",
   "specpilot/harness/README.md",
   "package.json",
+  "package-lock.json",
   "docs/PRD_AGENTOS_SPECPILOT_FUSION.md",
-  "docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx",
   "docs/PRD_AGENTOS_ROADMAP_CURTO_MEDIO_LONGO_PRAZO.md",
   "docs/EVONEXUS_ALIGNMENT.md",
   "docs/GOALS.md",
@@ -103,6 +104,21 @@ for (const file of required) {
     console.error(`missing: ${file}`);
     failures += 1;
   }
+}
+
+const nodeMajor = Number(process.versions.node.split(".")[0]);
+if (!Number.isInteger(nodeMajor) || nodeMajor < 22) {
+  console.error(`Node >=22 is required; found ${process.versions.node}`);
+  failures += 1;
+}
+
+try {
+  JSON.parse(fs.readFileSync("package.json", "utf8"));
+  loadAgentosConfig(process.cwd());
+  JSON.parse(fs.readFileSync(".harness/project-state.json", "utf8"));
+} catch (error) {
+  console.error(`invalid canonical configuration: ${error.message}`);
+  failures += 1;
 }
 
 for (const command of [["node", ["--version"]], ["git", ["--version"]]]) {

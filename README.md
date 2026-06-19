@@ -2,7 +2,7 @@
 
 AgentOS is the platform. SpecPilot is the internal SPEC-driven engine. Adapters translate that contract to tools such as Codex or a generic IDE without turning any adapter into the core.
 
-Current release candidate target: AgentOS 2.0.0-rc.1.
+Current release candidate: AgentOS 2.0.0-rc.1.
 
 ## Short-Horizon Surface
 
@@ -75,4 +75,4 @@ codex-layer/          canonical source for installed Codex material
 
 ## Status
 
-AgentOS 2.0.0 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local, mechanical and dependency-free.
+AgentOS 2.0.0 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local and mechanical, with one pinned YAML parsing dependency.

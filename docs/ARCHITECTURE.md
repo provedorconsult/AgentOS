@@ -14,7 +14,7 @@ This file is the canonical source for AgentOS Architecture 2.0. When another rep
 - Adapters translate the core contract into tool-specific files.
 - Generated or installed adapter layers are not canonical sources.
 - Placeholders must be documented as placeholders until a SPEC activates them.
-- Validation must be mechanical and reproducible without external dependencies.
+- Validation must be mechanical and reproducible with pinned, audited dependencies.
 - Deploy must fail closed when no real target is configured.
 
 ## Layer Model
@@ -29,7 +29,7 @@ codex-layer/          canonical source for installable project .codex material
 .codex/               installed Codex layer copy; must not drift from codex-layer/
 extensions/           planned optional capabilities only
 packs/                planned optional domain bundles only
-scripts/              dependency-free local validation, setup and deploy entrypoints
+scripts/              local validation, setup and deploy entrypoints
 templates/            reusable project and business templates
 tests/                executable contract tests for Architecture 2.0 invariants
 ```
