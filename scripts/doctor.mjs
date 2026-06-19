@@ -51,6 +51,8 @@ const required = [
   "core/goals/mission.template.md",
   "core/goals/project-goal.template.md",
   "core/goals/goal.template.md",
+  "core/schemas/agentos-config.schema.json",
+  "scripts/lib/json-schema.mjs",
   "core/workflows/01-discover.md",
   "core/workflows/02-spec.md",
   "core/workflows/03-plan.md",
@@ -96,6 +98,8 @@ const required = [
   "scripts/deploy.ps1",
   "tests/agentos-2-contracts.test.mjs",
   "tests/agentos-audit-hardening.test.mjs"
+  ,"tests/agentos-rc-trust-gates.test.mjs"
+  ,"tests/agentos-post-audit-corrections.test.mjs"
 ];
 
 let failures = 0;
