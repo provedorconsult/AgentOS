@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentOS Task",
+  "type": "object",
+  "required": [
+    "id",
+    "status",
+    "title",
+    "goal",
+    "agentGoal",
+    "specRefs",
+    "context",
+    "files",
+    "acceptanceCriteria",
+    "verification",
+    "evidence"
+  ],
+  "properties": {
+    "status": {
+      "enum": ["pending", "in-progress", "blocked", "verified", "done"]
+    }
+  },
+  "not": {
+    "required": ["codexGoal"]
+  }
+}

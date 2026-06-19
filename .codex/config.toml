@@ -12,10 +12,12 @@ max_depth = 2
 [features]
 shell_snapshot = true
 
+# MCP placeholders. Enable and authenticate per machine/project.
+
 [mcp_servers.github]
-enabled = true
-url = "https://api.githubcopilot.com/mcp/"
-bearer_token_env_var = "GITHUB_TOKEN"
+enabled = false
+command = "gh"
+args = ["mcp", "server"]
 startup_timeout_sec = 20
 tool_timeout_sec = 60
 

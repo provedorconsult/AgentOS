@@ -1,0 +1,144 @@
+{
+  "id": "2026-06-11-evonexus-alignment",
+  "status": "verified",
+  "title": "Evolve AgentOS with EvoNexus-inspired operating layer",
+  "tasks": [
+    {
+      "id": "task-001-alignment-docs",
+      "status": "verified",
+      "title": "Document EvoNexus alignment and architecture boundaries",
+      "goal": "Create alignment docs and update architecture with core, adapters, extensions and packs boundaries.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Deliver EvoNexus alignment documentation verified by npm run doctor, preserving EvoNexus as reference only.",
+        "outcome": "Alignment and architecture docs explain adopted and deferred concepts.",
+        "verificationSurface": "npm run doctor and docs/REVIEW.md evidence",
+        "constraints": ["Do not declare planned placeholders as ready functionality."],
+        "boundaries": ["docs/"],
+        "iterationPolicy": "Make the smallest documentation change that satisfies the PRD acceptance criteria.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "1-93"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "1-43"},
+          {"path": "docs/ARCHITECTURE.md", "range": "1-55"}
+        ],
+        "contracts": ["agentos.evonexus-alignment.v1"]
+      },
+      "files": [
+        {"path": "docs/EVONEXUS_ALIGNMENT.md", "action": "create"},
+        {"path": "docs/ARCHITECTURE.md", "action": "modify"}
+      ],
+      "acceptanceCriteria": [
+        "EvoNexus is documented as a conceptual reference, not a dependency.",
+        "Architecture separates core, adapters, extensions and packs."
+      ],
+      "verification": {"commands": ["npm run doctor"]},
+      "evidence": [
+        {
+          "command": "npm run doctor",
+          "exitCode": 0,
+          "result": "Doctor passed after EvoNexus alignment docs and architecture updates were added."
+        }
+      ]
+    },
+    {
+      "id": "task-002-goals-skills-layers",
+      "status": "verified",
+      "title": "Create goals, skills and agent layers",
+      "goal": "Add markdown-first goals, skills and agent-layer documentation.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Deliver goals, skills and agent layers verified by npm run doctor, preserving IDE-neutral core files.",
+        "outcome": "Core contains documented goals, skills and layer mapping.",
+        "verificationSurface": "npm run doctor and docs/REVIEW.md evidence",
+        "constraints": ["No Codex or Claude Code dependency in core."],
+        "boundaries": ["core/goals/", "core/skills/", "core/agents/", "docs/"],
+        "iterationPolicy": "Add markdown-first files and avoid moving existing agents.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "1-93"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "1-43"},
+          {"path": "docs/SKILLS.md", "range": "1-30"}
+        ],
+        "contracts": ["agentos.core-neutral.v1"]
+      },
+      "files": [
+        {"path": "core/goals/", "action": "create"},
+        {"path": "core/skills/", "action": "create"},
+        {"path": "core/agents/README.md", "action": "create"}
+      ],
+      "acceptanceCriteria": [
+        "At least seven core skills exist.",
+        "Goal schema and templates exist.",
+        "Agent layer mapping exists without moving existing agent files."
+      ],
+      "verification": {"commands": ["npm run doctor"]},
+      "evidence": [
+        {
+          "command": "npm run doctor",
+          "exitCode": 0,
+          "result": "Doctor passed with core goals, skills and agent-layer documentation present."
+        },
+        {
+          "command": "Get-ChildItem -Recurse -File core\\skills | Measure-Object",
+          "exitCode": 0,
+          "result": "Reported 9 files under core/skills, including 7 initial skill markdown files."
+        }
+      ]
+    },
+    {
+      "id": "task-003-workflows-adapter-extensions-packs",
+      "status": "verified",
+      "title": "Add solutioning, retro, adapter placeholder, extensions and packs",
+      "goal": "Add the PRD-requested workflows, Claude Code placeholder, extensions and packs.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Deliver workflows, adapter placeholder, extensions and packs verified by npm run validate, preserving no-new-dependencies and no-runtime-integration constraints.",
+        "outcome": "Solutioning and retro workflows exist; placeholders are clearly planned or experimental.",
+        "verificationSurface": "npm run validate and docs/REVIEW.md evidence",
+        "constraints": ["No dashboard, scheduler, database, channels or integrations."],
+        "boundaries": ["core/workflows/", "adapters/claude-code/", "extensions/", "packs/"],
+        "iterationPolicy": "Create documented placeholders only.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "1-93"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "1-43"},
+          {"path": "docs/EXTENSIONS.md", "range": "1-22"},
+          {"path": "docs/PACKS.md", "range": "1-24"}
+        ],
+        "contracts": ["agentos.placeholders.v1"]
+      },
+      "files": [
+        {"path": "core/workflows/04-solution.md", "action": "create"},
+        {"path": "core/workflows/10-retro.md", "action": "create"},
+        {"path": "adapters/claude-code/", "action": "create"},
+        {"path": "extensions/", "action": "create"},
+        {"path": "packs/", "action": "create"}
+      ],
+      "acceptanceCriteria": [
+        "Claude Code is experimental and isolated under adapters.",
+        "Extensions and packs are not declared as ready functionality.",
+        "ISP pack lists planned agents and skills."
+      ],
+      "verification": {"commands": ["npm run validate"]},
+      "evidence": [
+        {
+          "command": "npm run validate",
+          "exitCode": 0,
+          "result": "Template, context and secret validation passed with the new sprint JSON."
+        },
+        {
+          "command": "git diff --check",
+          "exitCode": 0,
+          "result": "Whitespace check passed; Git reported CRLF conversion warnings only."
+        }
+      ]
+    }
+  ]
+}

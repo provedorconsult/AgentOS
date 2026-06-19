@@ -1,0 +1,175 @@
+{
+  "id": "2026-06-18-agentos-architecture-2-hardening",
+  "status": "verified",
+  "title": "Harden AgentOS Architecture 2.0 canonical source, Codex layer and deployment gates",
+  "tasks": [
+    {
+      "id": "task-001-canonical-architecture",
+      "status": "verified",
+      "title": "Publish Architecture 2.0 as canonical source",
+      "goal": "Make docs/ARCHITECTURE.md the complete canonical source for Architecture 2.0 and route active docs to it.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Publish AgentOS Architecture 2.0 as the canonical source verified by npm test and npm run validate.",
+        "outcome": "Architecture 2.0 is documented as the canonical source and referenced by SPEC, PLAN and INDEX.",
+        "verificationSurface": "npm test, npm run validate and docs/REVIEW.md evidence",
+        "constraints": ["Do not create a competing architecture source."],
+        "boundaries": ["docs/", ".harness/"],
+        "iterationPolicy": "Edit the smallest set of docs and harness files required to make the source of truth unambiguous.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "1-45"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "1-38"},
+          {"path": "docs/ARCHITECTURE.md", "range": "1-119"}
+        ],
+        "contracts": ["agentos.architecture-2.canonical-source.v1"]
+      },
+      "files": [
+        {"path": "docs/SPEC.md", "action": "modify"},
+        {"path": "docs/PLAN.md", "action": "modify"},
+        {"path": "docs/ARCHITECTURE.md", "action": "modify"},
+        {"path": "docs/INDEX.md", "action": "modify"},
+        {"path": ".harness/current.txt", "action": "modify"},
+        {"path": ".harness/project-state.json", "action": "modify"},
+        {"path": ".harness/sprints/2026-06-18-agentos-architecture-2-hardening.json", "action": "create"}
+      ],
+      "acceptanceCriteria": [
+        "docs/ARCHITECTURE.md starts with AgentOS Architecture 2.0.",
+        "SPEC, PLAN and INDEX identify the canonical source."
+      ],
+      "verification": {"commands": ["npm test", "npm run validate"]},
+      "evidence": [
+        {
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Contract tests passed after Architecture 2.0 canonical-source docs were published."
+        }
+      ]
+    },
+    {
+      "id": "task-002-codex-drift",
+      "status": "verified",
+      "title": "Eliminate .codex drift from codex-layer",
+      "goal": "Make .codex/config.toml match the canonical codex-layer/config.toml file.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Remove .codex drift verified by the Architecture 2.0 contract test.",
+        "outcome": ".codex/config.toml is byte-for-byte equal to codex-layer/config.toml.",
+        "verificationSurface": "node --test tests/agentos-2-contracts.test.mjs",
+        "constraints": ["Do not introduce machine-specific secrets or enabled local MCP credentials."],
+        "boundaries": [".codex/", "codex-layer/", "tests/"],
+        "iterationPolicy": "Prefer copying canonical content from codex-layer into .codex.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "59-69"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "15-19"},
+          {"path": "docs/ARCHITECTURE.md", "range": "101-105"}
+        ],
+        "contracts": ["agentos.codex-layer.no-drift.v1"]
+      },
+      "files": [
+        {"path": ".codex/config.toml", "action": "modify"},
+        {"path": "tests/agentos-2-contracts.test.mjs", "action": "create"}
+      ],
+      "acceptanceCriteria": [
+        ".codex/config.toml equals codex-layer/config.toml.",
+        "Tests fail if the two files drift again."
+      ],
+      "verification": {"commands": ["node --test tests/agentos-2-contracts.test.mjs"]},
+      "evidence": [
+        {
+          "command": "node --test tests/agentos-2-contracts.test.mjs",
+          "exitCode": 0,
+          "result": "Contract tests passed after .codex/config.toml was aligned with codex-layer/config.toml."
+        }
+      ]
+    },
+    {
+      "id": "task-003-fail-closed-deploy",
+      "status": "verified",
+      "title": "Replace false deploy with fail-closed deploy contract",
+      "goal": "Ensure deploy does not report success without a real configured deployment target.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Replace the false deploy script with a fail-closed deployment contract verified by tests.",
+        "outcome": "scripts/deploy.ps1 exits non-zero without AGENTOS_DEPLOY_COMMAND and explains the required configuration.",
+        "verificationSurface": "node --test tests/agentos-2-contracts.test.mjs",
+        "constraints": ["Do not run a real deployment without an explicit command and approval."],
+        "boundaries": ["scripts/", "tests/"],
+        "iterationPolicy": "Fail closed first, then allow explicit configured execution.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "71-82"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "21-25"},
+          {"path": "docs/ARCHITECTURE.md", "range": "115-119"}
+        ],
+        "contracts": ["agentos.deploy.fail-closed.v1"]
+      },
+      "files": [
+        {"path": "scripts/deploy.ps1", "action": "modify"},
+        {"path": "tests/agentos-2-contracts.test.mjs", "action": "create"}
+      ],
+      "acceptanceCriteria": [
+        "Deploy exits non-zero without AGENTOS_DEPLOY_COMMAND.",
+        "Deploy output names AGENTOS_DEPLOY_COMMAND.",
+        "Deploy output does not present itself as a placeholder."
+      ],
+      "verification": {"commands": ["node --test tests/agentos-2-contracts.test.mjs"]},
+      "evidence": [
+        {
+          "command": "node --test tests/agentos-2-contracts.test.mjs",
+          "exitCode": 0,
+          "result": "Contract tests passed after deploy was changed to fail closed."
+        }
+      ]
+    },
+    {
+      "id": "task-004-validation-evidence",
+      "status": "verified",
+      "title": "Expand validation and record evidence",
+      "goal": "Make tests part of validation and record current command evidence.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Expand AgentOS validation with contract tests and record fresh evidence in docs/REVIEW.md.",
+        "outcome": "npm run validate includes npm test, doctor checks the test surface, and REVIEW records fresh evidence.",
+        "verificationSurface": "npm run doctor, npm test, npm run validate and git diff --check",
+        "constraints": ["Do not add dependencies."],
+        "boundaries": ["package.json", "scripts/", "docs/"],
+        "iterationPolicy": "Use Node built-in test runner and existing validators.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [{"path": "docs/SPEC.md", "range": "84-101"}],
+      "context": {
+        "readOnly": [
+          {"path": "docs/PLAN.md", "range": "27-38"},
+          {"path": "docs/ARCHITECTURE.md", "range": "121-146"}
+        ],
+        "contracts": ["agentos.validation.contract-tests.v1"]
+      },
+      "files": [
+        {"path": "package.json", "action": "modify"},
+        {"path": "scripts/doctor.mjs", "action": "modify"},
+        {"path": "docs/REVIEW.md", "action": "modify"}
+      ],
+      "acceptanceCriteria": [
+        "npm test runs Architecture 2.0 contract tests.",
+        "npm run validate includes npm test.",
+        "docs/REVIEW.md records command evidence and remaining risks."
+      ],
+      "verification": {"commands": ["npm run doctor", "npm test", "npm run validate", "git diff --check"]},
+      "evidence": [
+        {
+          "command": "npm run validate",
+          "exitCode": 0,
+          "result": "Template, context, secret and contract-test gates passed."
+        }
+      ]
+    }
+  ]
+}

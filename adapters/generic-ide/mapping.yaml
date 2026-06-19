@@ -1,0 +1,8 @@
+adapter: generic-ide
+status: supported
+maps:
+  adapters/generic-ide/templates/AGENTS.md: AGENTS.md
+  adapters/generic-ide/templates/IDE_AGENT_GUIDE.md: IDE_AGENT_GUIDE.md
+notes:
+  - No Codex-specific files are installed.
+  - Agents should read core workflows and .harness templates directly.

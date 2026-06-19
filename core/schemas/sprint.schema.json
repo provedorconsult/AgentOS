@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentOS Sprint",
+  "type": "object",
+  "required": ["id", "status", "title", "tasks"],
+  "properties": {
+    "tasks": {
+      "type": "array",
+      "minItems": 1
+    }
+  }
+}

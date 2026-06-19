@@ -1,0 +1,119 @@
+{
+  "id": "2026-06-10-agentos-prd-execution",
+  "status": "verified",
+  "title": "Close the remaining PRD runtime gaps in the AgentOS root repository",
+  "tasks": [
+    {
+      "id": "task-001-runtime-specpilot-self-hosting",
+      "status": "verified",
+      "title": "Materialize runtime SpecPilot artifacts and close the validation gap",
+      "goal": "Make the AgentOS repository self-host the PRD-defined SpecPilot flow with real runtime artifacts and a complete validation gate.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Deliver runtime SpecPilot artifacts and a complete validation gate verified by npm run doctor and npm run validate, preserving the current PRD scope and no-new-dependencies constraint.",
+        "outcome": "The root repository contains canonical SPEC, PLAN and harness state with green doctor and validation gates.",
+        "verificationSurface": "npm run doctor, npm run validate and docs/REVIEW.md evidence",
+        "constraints": [
+          "Do not edit files outside docs/, .harness/, scripts/ and package.json.",
+          "Keep the active task contract on agentGoal and never reintroduce codexGoal."
+        ],
+        "boundaries": [
+          "docs/",
+          ".harness/",
+          "scripts/",
+          "package.json"
+        ],
+        "iterationPolicy": "Use the smallest repository-level change that closes the missing runtime and validation gaps.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-67"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-33"
+          },
+          {
+            "path": "docs/PRD_AGENTOS_SPECPILOT_FUSION.md",
+            "range": "1-83"
+          },
+          {
+            "path": "scripts/validate-context-ranges.mjs",
+            "range": "1-59"
+          }
+        ],
+        "contracts": [
+          "agentos.task.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "docs/SPEC.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "create"
+        },
+        {
+          "path": ".harness/project-state.json",
+          "action": "create"
+        },
+        {
+          "path": ".harness/current.txt",
+          "action": "create"
+        },
+        {
+          "path": ".harness/sprints/2026-06-10-agentos-prd-execution.json",
+          "action": "create"
+        },
+        {
+          "path": "package.json",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/doctor.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "docs/REVIEW.md",
+          "action": "modify"
+        }
+      ],
+      "acceptanceCriteria": [
+        "The root repository contains runtime SPEC, PLAN and harness state files aligned with the PRD.",
+        "The active sprint uses agentGoal, specRefs, context.readOnly, editable files, acceptanceCriteria, verification.commands and evidence.",
+        "The default validate command runs template, context and secrets checks.",
+        "Review evidence records fresh doctor and validation results."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate"
+        ]
+      },
+      "evidence": [
+        {
+          "command": "npm run validate:context",
+          "status": "passed",
+          "note": "Context validation passed after runtime SPEC, PLAN and sprint state were created."
+        },
+        {
+          "command": "npm run doctor",
+          "status": "passed",
+          "note": "Doctor passed after the root repository gained canonical runtime artifacts."
+        },
+        {
+          "command": "npm run validate",
+          "status": "passed",
+          "note": "Template, context and secrets checks passed through the default gate."
+        }
+      ]
+    }
+  ]
+}

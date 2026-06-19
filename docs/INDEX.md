@@ -1,5 +1,6 @@
 # AgentOS Documentation Index
 
+- `ARCHITECTURE.md`: canonical source for AgentOS Architecture 2.0.
 - `AGENT_ROSTER.md`: agent list, responsibilities, and handoffs.
 - `OPERATING_MODEL.md`: how work flows from intent to deployment.
 - `ORCHESTRATION.md`: when to spawn agents and how to split work.
