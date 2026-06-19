@@ -22,14 +22,14 @@
   "specRefs": [
     {
       "path": "docs/SPEC.template.md",
-      "range": "1-40"
+      "range": "1-31"
     }
   ],
   "context": {
     "readOnly": [
       {
         "path": "docs/PLAN.template.md",
-        "range": "1-40"
+        "range": "1-19"
       }
     ],
     "contracts": [

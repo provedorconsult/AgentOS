@@ -1,3 +1,5 @@
 # 06 Finish
 
-Review the diff, summarize changed files, remaining risks and verification evidence before closing the task.
+Deprecated compatibility workflow.
+
+Use `core/workflows/07-review.md` and `core/workflows/08-release.md` for the canonical closing sequence.

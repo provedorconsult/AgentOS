@@ -1,3 +1,5 @@
 # 09 Improve
 
-When repeated lessons appear, update docs, rules, templates, validators or workflows so future agents avoid the same failure.
+Deprecated compatibility workflow.
+
+Use `core/workflows/10-retro.md` for the canonical improvement loop.

@@ -1,0 +1,292 @@
+{
+  "id": "2026-06-19-agentos-audit-hardening",
+  "status": "verified",
+  "title": "Close the AgentOS 2.0 audit hardening slice for the release candidate",
+  "tasks": [
+    {
+      "id": "task-001-ci-canonical",
+      "status": "verified",
+      "title": "Replace the legacy CI gate with canonical multi-OS validation",
+      "goal": "Run canonical AgentOS validation on Windows and Linux and keep deploy contract-only.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Harden the AgentOS CI and deploy workflows for the release candidate, verified by npm test and npm run validate.",
+        "outcome": "CI uses npm doctor/validate on Windows and Linux, and deploy uses a bound GitHub Environment without claiming a real target.",
+        "verificationSurface": "npm test, npm run validate, and workflow file review",
+        "constraints": [
+          "Do not execute a real deployment."
+        ],
+        "boundaries": [
+          ".github/workflows/",
+          "scripts/"
+        ],
+        "iterationPolicy": "Change the smallest workflow surface that removes the legacy validation gate.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-56"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-37"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "1-120"
+          }
+        ],
+        "contracts": [
+          "agentos.ci.v2"
+        ]
+      },
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "action": "modify"
+        },
+        {
+          "path": ".github/workflows/deploy.yml",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/deploy.mjs",
+          "action": "create"
+        },
+        {
+          "path": "scripts/deploy.ps1",
+          "action": "modify"
+        }
+      ],
+      "acceptanceCriteria": [
+        "CI uses ubuntu-latest and windows-latest.",
+        "CI runs npm run doctor, npm run validate and git diff --check.",
+        "Deploy binds the selected GitHub Environment and stays contract-only."
+      ],
+      "verification": {
+        "commands": [
+          "npm test",
+          "npm run validate"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "CI uses ubuntu-latest and windows-latest.",
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Workflow contract tests passed."
+        },
+        {
+          "criterion": "CI runs npm run doctor, npm run validate and git diff --check.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "result": "Validation chain passed."
+        },
+        {
+          "criterion": "Deploy binds the selected GitHub Environment and stays contract-only.",
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Deploy workflow contract test passed."
+        }
+      ]
+    },
+    {
+      "id": "task-002-adapters",
+      "status": "verified",
+      "title": "Align adapter installation with canonical Codex and Generic IDE behavior",
+      "goal": "Use codex-layer as the Codex source of truth, preserve generic IDE behavior, and back up user files safely.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Harden AgentOS adapters with backup-safe installs verified by E2E tests.",
+        "outcome": "Codex installs from codex-layer, Generic IDE stays .codex-free, and backups are ignored.",
+        "verificationSurface": "npm test and validate:adapters",
+        "constraints": [
+          "Do not overwrite user files without backup."
+        ],
+        "boundaries": [
+          "adapters/",
+          "scripts/",
+          ".gitignore"
+        ],
+        "iterationPolicy": "Prefer canonical copies and explicit targets over implicit in-place writes.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "58-95"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-37"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "82-107"
+          }
+        ],
+        "contracts": [
+          "agentos.adapters.v2"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/agentos-install-adapter.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "adapters/codex/README.md",
+          "action": "modify"
+        },
+        {
+          "path": "adapters/codex/mapping.yaml",
+          "action": "modify"
+        },
+        {
+          "path": "adapters/generic-ide/README.md",
+          "action": "modify"
+        },
+        {
+          "path": ".gitignore",
+          "action": "modify"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Codex installer copies codex-layer to .codex.",
+        "Generic IDE installer does not create .codex.",
+        "Backups are created and ignored by git."
+      ],
+      "verification": {
+        "commands": [
+          "npm test",
+          "npm run validate:adapters"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Codex installer copies codex-layer to .codex.",
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Codex installer E2E passed."
+        },
+        {
+          "criterion": "Generic IDE installer does not create .codex.",
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Generic IDE installer E2E passed."
+        },
+        {
+          "criterion": "Backups are created and ignored by git.",
+          "command": "npm run validate:adapters",
+          "exitCode": 0,
+          "result": "Adapter docs and mappings align with backup policy."
+        }
+      ]
+    },
+    {
+      "id": "task-003-validators",
+      "status": "verified",
+      "title": "Enforce harness, state, metadata and docs validators",
+      "goal": "Promote the remaining short-horizon contracts into first-class validation gates.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Harden AgentOS validators and release metadata for the 2.0.0-rc.1 candidate.",
+        "outcome": "Templates, state, docs, workflows, license and secrets are mechanically enforced.",
+        "verificationSurface": "npm run validate, npm test and docs/REVIEW.md",
+        "constraints": [
+          "Keep validation dependency-free."
+        ],
+        "boundaries": [
+          ".harness/",
+          "scripts/",
+          "docs/",
+          "package.json",
+          "agentos.yaml"
+        ],
+        "iterationPolicy": "Reuse shared contract logic so validators do not drift.",
+        "blockedStopCondition": "Stop after three failed attempts with the same blocker."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "69-99"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-37"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "1-120"
+          }
+        ],
+        "contracts": [
+          "agentos.validation.v2"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/validate-sprint-json.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/validate-context-ranges.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/validate-state.mjs",
+          "action": "create"
+        },
+        {
+          "path": "scripts/validate-workflows.mjs",
+          "action": "create"
+        },
+        {
+          "path": "scripts/validate-docs.mjs",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Ranges outside file bounds are rejected.",
+        "current.txt and project-state.json are validated together.",
+        "validate includes doctor, state, workflows, adapters, docs, license and tests."
+      ],
+      "verification": {
+        "commands": [
+          "npm run validate",
+          "npm test"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Ranges outside file bounds are rejected.",
+          "command": "npm test",
+          "exitCode": 0,
+          "result": "Negative range test passed."
+        },
+        {
+          "criterion": "current.txt and project-state.json are validated together.",
+          "command": "npm run validate:state",
+          "exitCode": 0,
+          "result": "State validation passed."
+        },
+        {
+          "criterion": "validate includes doctor, state, workflows, adapters, docs, license and tests.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "result": "Full validation chain passed."
+        }
+      ]
+    }
+  ]
+}

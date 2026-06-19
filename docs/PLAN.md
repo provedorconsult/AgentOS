@@ -2,37 +2,36 @@
 
 ## Summary
 
-Close the immediate Architecture 2.0 hardening slice: make `docs/ARCHITECTURE.md` the canonical source, publish the complete 2.0 boundaries, remove `.codex/` drift, replace the false deploy success path, and make those contracts executable through tests and validation.
+Close the 2026-06-19 audit delta in strict priority order while keeping `docs/ARCHITECTURE.md` as the canonical source: CI first, adapters second, validators/tests/security next, then docs and release-candidate metadata.
 
 ## Tasks
 
-### Task 001 - Publish the Canonical Source
+### Task 001 - Canonical CI and Deploy Contract
 
-- Goal: make Architecture 2.0 the single canonical source for platform boundaries and current readiness.
-- Editable files: `docs/SPEC.md`, `docs/PLAN.md`, `docs/ARCHITECTURE.md`, `docs/INDEX.md`, `.harness/current.txt`, `.harness/project-state.json`, `.harness/sprints/2026-06-18-agentos-architecture-2-hardening.json`
+- Goal: replace the legacy PowerShell gate with canonical cross-platform validation and bind the deploy workflow to GitHub Environment without claiming a real target.
+- Editable files: `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`, `scripts/deploy.mjs`, `scripts/deploy.ps1`, `tests/*.test.mjs`
 - Verification: `npm test`, `npm run validate`
 
-### Task 002 - Eliminate `.codex/` Drift
+### Task 002 - Adapter Hardening
 
-- Goal: keep the project-local `.codex/` layer byte-for-byte aligned with the canonical `codex-layer/`.
-- Editable files: `.codex/config.toml`, `codex-layer/config.toml`, `tests/agentos-2-contracts.test.mjs`
-- Verification: `npm test`
+- Goal: keep `codex-layer/` as the source of truth, support target-aware installs, backups and dry-runs, and keep Generic IDE `.codex`-free.
+- Editable files: `scripts/agentos-install-adapter.mjs`, `adapters/codex/*`, `adapters/generic-ide/*`, `.gitignore`, `tests/*.test.mjs`
+- Verification: `npm test`, `npm run validate:adapters`
 
-### Task 003 - Replace False Deploy
+### Task 003 - Validators, Harness and Metadata
 
-- Goal: remove the no-op deploy success path and fail closed unless a real deployment command is configured.
-- Editable files: `scripts/deploy.ps1`, `tests/agentos-2-contracts.test.mjs`
-- Verification: `node --test tests/agentos-2-contracts.test.mjs`
+- Goal: enforce state, workflow, docs, license, range and evidence contracts through dependency-free validators.
+- Editable files: `scripts/*.mjs`, `scripts/lib/*.mjs`, `.harness/*`, `agentos.yaml`, `package.json`, `core/workflows/*`
+- Verification: `npm run validate`, `npm test`
 
-### Task 004 - Expand Gates and Record Evidence
+### Task 004 - Security and Documentation Reconciliation
 
-- Goal: include tests in the validation path and record objective evidence.
-- Editable files: `package.json`, `scripts/doctor.mjs`, `docs/REVIEW.md`
-- Verification: `npm run doctor`, `npm test`, `npm run validate`, `git diff --check`
+- Goal: harden `.env.example` scanning, remove obsolete GitHub bootstrap guidance and publish release-candidate docs.
+- Editable files: `.env.example`, `README.md`, `docs/*.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`
+- Verification: `npm run validate:secrets`, `npm run validate:docs`, `npm run validate:license`
 
 ## Risks
 
-- A real deploy remains blocked until `AGENTOS_DEPLOY_COMMAND` points to an approved deployment executable.
-- `validate:context` proves path and range integrity, not semantic freshness.
-- `.codex/` must be regenerated or copied from `codex-layer/` after future canonical layer edits.
-- Claude Code, Antigravity, extensions and packs remain placeholders until future SPECs activate them.
+- real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;
+- branch protection and formal review requirements still depend on GitHub-side settings;
+- Linux validation will be confirmed through CI because this workstation is Windows-only.

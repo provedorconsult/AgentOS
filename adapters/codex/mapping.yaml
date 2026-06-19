@@ -1,10 +1,8 @@
 adapter: codex
 status: supported
 maps:
-  core/workflows: .codex/workflows
-  core/rules: .codex/rules
-  core/agents: .codex/agents
+  codex-layer: .codex
   adapters/codex/templates/AGENTS.md: AGENTS.md
 notes:
-  - Codex-specific files live in this adapter.
+  - codex-layer is the canonical source for installed Codex files.
   - AgentOS core remains the source of universal rules.

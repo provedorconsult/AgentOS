@@ -27,8 +27,8 @@ test("project .codex layer has no drift from the canonical codex-layer", () => {
 
 test("deploy script fails closed unless a real deployment command is configured", () => {
   const result = spawnSync(
-    "powershell",
-    ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "scripts/deploy.ps1"],
+    "node",
+    ["scripts/deploy.mjs"],
     { encoding: "utf8" }
   );
 
@@ -37,13 +37,13 @@ test("deploy script fails closed unless a real deployment command is configured"
   assert.doesNotMatch(`${result.stdout}\n${result.stderr}`, /placeholder/i);
 });
 
-test("validate script passes on repository placeholders and canonical secret rules", () => {
+test("secret scanner passes on repository placeholders and canonical secret rules", () => {
   const result = spawnSync(
-    "powershell",
-    ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "scripts/validate.ps1"],
+    "node",
+    ["scripts/validate-no-secrets.mjs"],
     { encoding: "utf8" }
   );
 
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-  assert.match(result.stdout, /AgentOS validation completed\./);
+  assert.match(result.stdout, /No secrets detected\./);
 });

@@ -3,7 +3,7 @@ project:
   type: agentic-development-os
   status: active
 agentos:
-  version: 2.0.0
+  version: 2.0.0-rc.1
   mode: generic
   spec_engine: specpilot
   default_workflow: discover-spec-plan-solution-implement-verify-review-release-deploy-retro

@@ -2,6 +2,8 @@
 
 AgentOS is the platform. SpecPilot is the internal SPEC-driven engine. Adapters translate that contract to tools such as Codex or a generic IDE without turning any adapter into the core.
 
+Current release candidate target: AgentOS 2.0.0-rc.1.
+
 ## Short-Horizon Surface
 
 - `core/`: neutral rules, workflows, skills, goals, schemas and agent layers.
@@ -56,7 +58,7 @@ packs/                planned optional domain bundles only
 docs/                 architecture, templates and review evidence
 scripts/              local validators and setup commands
 templates/            reusable business and project templates
-codex-layer/          legacy compatibility material
+codex-layer/          canonical source for installed Codex material
 ```
 
 ## Documentation
