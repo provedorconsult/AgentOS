@@ -7,7 +7,7 @@
     "version": "2.0.0",
     "specEngine": "specpilot"
   },
-  "currentSprint": ".harness/sprints/2026-06-10-agentos-short-horizon.json",
+  "currentSprint": ".harness/sprints/2026-06-18-agentos-architecture-2-hardening.json",
   "goalPolicy": {
     "field": "agentGoal",
     "rejectLegacyField": "codexGoal"

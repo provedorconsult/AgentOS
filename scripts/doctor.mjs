@@ -83,7 +83,9 @@ const required = [
   "packs/security/README.md",
   "scripts/validate-sprint-json.mjs",
   "scripts/validate-context-ranges.mjs",
-  "scripts/validate-no-secrets.mjs"
+  "scripts/validate-no-secrets.mjs",
+  "scripts/deploy.ps1",
+  "tests/agentos-2-contracts.test.mjs"
 ];
 
 let failures = 0;

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "doctor": "node scripts/doctor.mjs",
-    "validate": "npm run validate:templates && npm run validate:context && npm run validate:secrets",
+    "test": "node --test tests/*.test.mjs",
+    "validate": "npm run validate:templates && npm run validate:context && npm run validate:secrets && npm test",
     "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json",
     "validate:context": "node scripts/validate-context-ranges.mjs --spec docs/SPEC.md .harness/sprints",
     "validate:secrets": "node scripts/validate-no-secrets.mjs",
