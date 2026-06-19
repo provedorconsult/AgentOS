@@ -36,3 +36,14 @@ test("deploy script fails closed unless a real deployment command is configured"
   assert.match(`${result.stdout}\n${result.stderr}`, /AGENTOS_DEPLOY_COMMAND/);
   assert.doesNotMatch(`${result.stdout}\n${result.stderr}`, /placeholder/i);
 });
+
+test("validate script passes on repository placeholders and canonical secret rules", () => {
+  const result = spawnSync(
+    "powershell",
+    ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "scripts/validate.ps1"],
+    { encoding: "utf8" }
+  );
+
+  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+  assert.match(result.stdout, /AgentOS validation completed\./);
+});
