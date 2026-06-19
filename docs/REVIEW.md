@@ -4,17 +4,21 @@
 
 - Package metadata: `2.0.0-rc.1`.
 - Formal prerelease: not published.
-- Release decision: blocked until the final RC hardening PR has green CI and a formal non-bypass `APPROVE` review.
+- Release decision: blocked because the final RC hardening PR has green CI but no eligible formal reviewer.
 
 ## Current Commit
 
 - Base commit: `d190752ea30eb25ace03f0af84d795186034ac67`.
 - Base source: merge commit for PR #8, `fix: close AgentOS post-audit findings`.
 - Working branch: `fix/agentos-rc-final-hardening`.
+- Published head before governance evidence update: `163b0447bcb57a486be533fadf914dcf039dccd9`.
 
 ## Current Pull Request
 
-- PR: pending creation for `fix/agentos-rc-final-hardening`.
+- PR: [#11](https://github.com/provedorconsult/AgentOS/pull/11).
+- PR author: `provedorconsult`.
+- Review decision: `REVIEW_REQUIRED`.
+- Merge state: `BLOCKED`.
 - Merge commit: pending.
 - Tag: not created.
 - GitHub prerelease: not created.
@@ -23,14 +27,19 @@
 
 - `main` branch protection must require Ubuntu and Windows validation checks, checklist status, one approval and stale-review dismissal/last-push approval.
 - This final hardening round must not use administrative merge bypass.
-- If no eligible reviewer can approve, the PR remains open and the release candidate remains blocked.
+- Repository collaborator API returned only `provedorconsult`, which is also the PR author.
+- Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) tracks adding an eligible reviewer.
+- The PR remains open and the release candidate remains blocked.
 - PR #7 and PR #8 are historical evidence only; their administrative exceptions do not satisfy this round's formal-review requirement.
 
 ## CI Evidence
 
-- CI for this branch: pending until PR creation.
-- Required jobs: Ubuntu validation and Windows validation.
-- CI must run `npm ci`, dependency audit, doctor, validate, diff hygiene and clean-worktree checks.
+- PR checks before governance evidence update:
+  - checklist: passed, run `27834630266`.
+  - AgentOS CI: passed, run `27834630272`.
+  - `validate (ubuntu-latest)`: passed, job `82379573516`.
+  - `validate (windows-latest)`: passed, job `82379573530`.
+- CI executed `npm ci`, dependency audit, doctor, validate, diff hygiene and clean-worktree checks.
 
 ## Local Verification
 
@@ -41,9 +50,11 @@
 | `npm ci` with repo-local npm cache | Windows local | 0 | Dependencies installed. | Default npm cache returned EPERM; repo-local cache succeeded. | Reproducible install. | Local cache workaround. | None after workaround. |
 | `npm audit --audit-level=moderate` | Windows local | 0 | `found 0 vulnerabilities`. | Moderate-or-higher audit clean. | Dependency audit. | Current dependency graph only. | None known. |
 | `npm run doctor` | Windows local | 0 | AgentOS doctor passed. | Required files and prerequisites present. | Doctor gate. | Local host only. | None known. |
-| `npm run validate` | Windows local | 0 | Baseline validation passed before final hardening edits. | Baseline gates green. | Regression baseline. | Superseded by final run required after edits. | None known. |
-| `npm test` | Windows local | 0 | Baseline `28` tests passed before final hardening edits. | Pre-change regression baseline. | Test baseline. | Superseded by final 38-test run required after edits. | None known. |
-| `git diff --check` | Windows local | 0 | Baseline whitespace check passed. | No whitespace errors. | Diff hygiene. | Superseded by final check required after edits. | None known. |
+| `npm run validate` | Windows local | 0 | Final validation passed. | Doctor, discovery, context, state, secrets, scope, workflows, adapters, docs, license and tests passed. | Complete local validation. | Local host only. | None known. |
+| `npm test` | Windows local | 0 | `38` tests passed. | Edit-scope, harness discovery and extended secret scanner regressions passed. | Test suite. | Node test suite only. | None known. |
+| `git diff --check` | Windows local | 0 | Final whitespace check passed. | No whitespace errors. | Diff hygiene. | Local diff only. | None known. |
+| `gh pr checks 11 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Checklist, Ubuntu and Windows passed before governance evidence update. | Cross-platform CI green for PR #11 head `163b0447`. | A docs-only governance evidence commit requires a refreshed check run after push. | Formal review still blocked. |
+| `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub API | 0 | Strict checks, one approval, last-push approval, admin enforcement, force-push/deletion disabled. | Branch protection readback. | GitHub settings can change later. | Reviewer availability remains blocked. |
 
 ## Negative Tests
 
@@ -59,6 +70,7 @@
 - Scope source: `.harness/project-state.json` current sprint, then last verified sprint, then `.harness/current.txt`.
 - Required contract: every changed file must match `task.files[]` action unless explicitly allowed by `scopePolicy`.
 - Current sprint exceptions: `docs/REVIEW.md`, `.harness/current.txt`, `.harness/project-state.json`.
+- Latest local scope result: passed with `21` changed path records.
 
 ## Dependency Audit
 
@@ -74,10 +86,10 @@
 
 ## Residual Risks
 
-- Formal review depends on an eligible GitHub reviewer outside the PR author.
+- Formal review depends on an eligible GitHub reviewer outside the PR author; no such collaborator is currently listed.
 - Tag and GitHub prerelease remain blocked until formal review and CI complete.
 - Real deploy remains intentionally fail-closed without `AGENTOS_DEPLOY_COMMAND`.
 
 ## Release Decision
 
-`BLOCKED` until a PR exists, GitHub CI is green, branch protection is confirmed and a formal non-bypass `APPROVE` review is recorded.
+`BLOCKED` until issue #12 is resolved and PR #11 receives a formal non-bypass `APPROVE` review.

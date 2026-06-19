@@ -1,7 +1,8 @@
 {
   "id": "2026-06-19-agentos-rc-final-hardening",
-  "status": "in-progress",
+  "status": "blocked",
   "title": "AgentOS RC final hardening",
+  "blocker": "GitHub has no eligible independent reviewer for PR #11; only the PR author is listed as collaborator, so formal APPROVE review cannot be recorded without adding a reviewer.",
   "scopePolicy": {
     "allowDeclaredFiles": true,
     "allowEvidenceFiles": [
@@ -15,8 +16,9 @@
   "tasks": [
     {
       "id": "task-001-rc-final-hardening",
-      "status": "in-progress",
+      "status": "blocked",
       "title": "Enforce final release-candidate gates",
+      "blocker": "PR #11 has green CI but remains REVIEW_REQUIRED/BLOCKED because no eligible independent reviewer is available.",
       "goal": "Mechanically connect SpecPilot declared scope, Git diff validation, harness discovery, secret scanning, review evidence and release governance.",
       "agentGoal": {
         "needed": true,
@@ -155,11 +157,47 @@
           "npm test",
           "git diff --check",
           "git status --porcelain",
-          "gh pr checks 9 --repo provedorconsult/AgentOS",
-          "gh pr view 9 --repo provedorconsult/AgentOS --json reviewDecision,mergeStateStatus,mergeCommit"
+          "gh pr checks 11 --repo provedorconsult/AgentOS",
+          "gh pr view 11 --repo provedorconsult/AgentOS --json reviewDecision,mergeStateStatus,mergeCommit"
         ]
       },
-      "evidence": []
+      "evidence": [
+        {
+          "criterion": "Git diff scope validation rejects undeclared files and action mismatches.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Local validate passed with edit-scope enforcement over 21 changed path records."
+        },
+        {
+          "criterion": "Harness JSON discovery validates templates, active sprints and archive files without package hardcoding.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "validate:templates discovered and validated 11 harness JSON files."
+        },
+        {
+          "criterion": "Secret scanning detects special-character and structured secret assignments while redacting values.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "38 tests passed, including structured secret assignment and redaction coverage."
+        },
+        {
+          "criterion": "Review and release docs reflect current governance, CI and blocked-release rules.",
+          "command": "gh pr checks 11 --repo provedorconsult/AgentOS",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Checklist, Ubuntu and Windows checks passed on PR #11 before the governance evidence update."
+        },
+        {
+          "criterion": "Formal review is required before merge, tag or prerelease.",
+          "command": "gh pr view 11 --repo provedorconsult/AgentOS --json reviewDecision,mergeStateStatus,mergeCommit",
+          "exitCode": 0,
+          "status": "blocked",
+          "result": "GitHub reports REVIEW_REQUIRED and BLOCKED; issue #12 tracks the missing eligible reviewer."
+        }
+      ]
     }
   ]
 }
