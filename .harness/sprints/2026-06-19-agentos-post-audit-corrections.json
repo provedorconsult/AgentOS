@@ -1,11 +1,11 @@
 {
   "id": "2026-06-19-agentos-post-audit-corrections",
-  "status": "in-progress",
+  "status": "verified",
   "title": "Close AgentOS post-merge audit findings",
   "tasks": [
     {
       "id": "task-001-post-audit-enforcement",
-      "status": "in-progress",
+      "status": "verified",
       "title": "Enforce schemas, configuration, paths, security and release integrity",
       "goal": "Close the P0 and P1 findings from the post-merge trust-gate audit.",
       "agentGoal": {
@@ -79,10 +79,47 @@
           "npm audit --audit-level=moderate",
           "npm run validate",
           "npm test",
-          "git diff --check"
+          "git diff --check",
+          "gh pr checks 8 --repo provedorconsult/AgentOS"
         ]
       },
-      "evidence": []
+      "evidence": [
+        {
+          "criterion": "JSON Schemas reject invalid scalar, nested and additional fields.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Executable task and project-state schema regression tests passed."
+        },
+        {
+          "criterion": "AgentOS YAML rejects policy type bypasses and malformed semantic sections.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "YAML semantic schema regression tests passed."
+        },
+        {
+          "criterion": "Closed paths reject forbidden symlink aliases, repository root edits and foreign absolute syntax.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Closed-path regression tests passed on Windows and Ubuntu CI."
+        },
+        {
+          "criterion": "Secret scanning detects prefixed assignment names.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Prefixed secret assignment regression tests passed."
+        },
+        {
+          "criterion": "CI, dependency policy and release documentation match the verified state.",
+          "command": "gh pr checks 8 --repo provedorconsult/AgentOS",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Checklist, Ubuntu and Windows checks passed on PR 8."
+        }
+      ]
     }
   ]
 }

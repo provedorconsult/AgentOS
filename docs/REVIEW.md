@@ -41,3 +41,13 @@
 - Governance behavior: merge was blocked by the approval rule before the temporary administrative bypass; the approval rule was restored after merge.
 - Tag/release: not created.
 - Real deployment: not executed; `AGENTOS_DEPLOY_COMMAND` remains fail-closed.
+
+## Post-Audit Correction Evidence
+
+- Pull request: [#8](https://github.com/provedorconsult/AgentOS/pull/8).
+- Head before evidence commit: `d11b9f176952a218524eb8e96978412b1f705127`.
+- CI: run `27832195989`; Ubuntu and Windows passed.
+- Checklist: run `27832195969`; passed.
+- Governance proof: GitHub reported `mergeStateStatus=BLOCKED` and `reviewDecision=REVIEW_REQUIRED` after all checks passed.
+- Protection readback: strict required checks, one approval, last-push approval, admin enforcement, force-push disabled and deletion disabled.
+- Merge policy: the repository owner explicitly authorized the documented administrative exception because no eligible external collaborator exists.
