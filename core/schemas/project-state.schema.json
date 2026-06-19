@@ -2,5 +2,38 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AgentOS Project State",
   "type": "object",
-  "required": ["project", "agentos"]
+  "additionalProperties": false,
+  "required": ["project", "agentos", "currentSprint", "lastVerifiedSprint", "goalPolicy"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["active", "maintenance", "archived"] }
+      }
+    },
+    "agentos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "specEngine"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "specEngine": { "const": "specpilot" }
+      }
+    },
+    "currentSprint": { "type": ["string", "null"] },
+    "lastVerifiedSprint": { "type": ["string", "null"] },
+    "goalPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "rejectLegacyField", "currentPointerMode"],
+      "properties": {
+        "field": { "const": "agentGoal" },
+        "rejectLegacyField": { "const": "codexGoal" },
+        "currentPointerMode": { "enum": ["currentSprint", "lastVerifiedSprint"] }
+      }
+    }
+  }
 }
