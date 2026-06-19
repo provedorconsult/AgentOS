@@ -75,7 +75,7 @@ test("state validation rejects current pointer drift and verified sprint ambigui
   fs.mkdirSync(path.join(tempDir, "core", "schemas"), { recursive: true });
   fs.writeFileSync(
     path.join(tempDir, "agentos.yaml"),
-    "agentos:\n  version: 2.0.0-rc.1\ncontext:\n  max_spec_range_lines: 120\n  max_readonly_files_per_task: 3\n  max_acceptance_criteria_per_task: 5\n  forbidden_dirs:\n    - node_modules\nverification:\n  require_exit_code: true\n  require_evidence_per_criterion: true\n  require_review_file: true\n  require_no_secrets_scan: true\n"
+    "agentos:\n  version: 2.0.0-rc.1\n  spec_engine: specpilot\ncontext:\n  max_spec_range_lines: 120\n  max_readonly_files_per_task: 3\n  max_acceptance_criteria_per_task: 5\n  forbidden_dirs:\n    - node_modules\nverification:\n  require_exit_code: true\n  require_evidence_per_criterion: true\n  require_review_file: true\n  require_no_secrets_scan: true\nextensions: {}\nadapters:\n  default: generic-ide\n  available:\n    - generic-ide\n"
   );
   fs.writeFileSync(
     path.join(tempDir, "core", "schemas", "task.schema.json"),
@@ -194,7 +194,7 @@ test("secret scanner evaluates .env.example placeholders and rejects live-lookin
   const unsafeDir = makeTempDir("secrets-unsafe");
   fs.writeFileSync(
     path.join(unsafeDir, ".env.example"),
-    "OPENAI_API_KEY=sk-abcdefghijklmnopqrstuvwxyz123456\n"
+    `OPENAI_API_KEY=${["sk", "abcdefghijklmnopqrstuvwxyz123456"].join("-")}\n`
   );
   const unsafe = runNode([path.join(repoRoot, "scripts/validate-no-secrets.mjs")], { cwd: unsafeDir });
   assert.notEqual(unsafe.status, 0);

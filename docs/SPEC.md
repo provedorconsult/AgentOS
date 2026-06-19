@@ -15,7 +15,8 @@ In scope:
 - replace legacy CI gating with canonical Node-based validation on Windows and Linux;
 - keep `codex-layer/` as the canonical Codex source and make adapter installation honor it;
 - validate active sprint state, project state, context ranges, workflow manifest, docs and license metadata;
-- harden secret scanning for `.env.example` and backup artifacts;
+- harden evidence semantics, secret scanning and closed repository paths;
+- parse and validate `agentos.yaml` with the pinned `yaml` package;
 - reconcile release-candidate docs, changelog and review evidence;
 - keep deploy contract-only and fail closed when no real target exists.
 
@@ -24,7 +25,7 @@ Out of scope:
 - real deployment without an approved `AGENTOS_DEPLOY_COMMAND`;
 - dashboard, database, scheduler, channels, remote runtime, executable memory, heartbeats, routines or knowledge-db;
 - functional Claude Code or Antigravity adapters;
-- external npm dependencies.
+- product/runtime dependencies unrelated to validation.
 
 ## Requirements
 
@@ -92,8 +93,17 @@ Acceptance criteria:
 
 - `docs/GITHUB_SETUP.md`, `docs/INDEX.md`, `docs/REVIEW.md`, `docs/RELEASE.md`, `docs/MIGRATION.md`, `CHANGELOG.md`, `CONTRIBUTING.md` and root `SECURITY.md` reflect the current release-candidate contract.
 
+### R6 - Trust Gates Fail Closed
+
+Acceptance criteria:
+
+- verified/done evidence requires declared commands, exit code `0`, status `passed` and exact criterion coverage;
+- placeholders cannot suppress another secret occurrence in the same file;
+- operational paths cannot resolve outside the repository, including through symlinks;
+- `agentGoal`, sprint state, project state and YAML values are validated before completion.
+
 ## Constraints
 
-- Do not add dependencies.
+- Keep dependencies minimal, pinned and audit-clean.
 - Do not remove compatibility files unless they are clearly deprecated.
 - Do not perform a real deploy.

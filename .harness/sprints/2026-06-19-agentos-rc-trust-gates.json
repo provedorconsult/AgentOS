@@ -1,0 +1,125 @@
+{
+  "id": "2026-06-19-agentos-rc-trust-gates",
+  "status": "verified",
+  "title": "Enforce AgentOS 2.0 RC trust gates",
+  "tasks": [
+    {
+      "id": "task-001-trust-gates",
+      "status": "verified",
+      "title": "Harden evidence, secrets, paths, state, YAML and CI contracts",
+      "goal": "Remove known false-success paths from the AgentOS release-candidate gates.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Enforce AgentOS RC trust gates with negative tests and cross-platform CI.",
+        "outcome": "Evidence, secret scanning, paths, state, YAML, doctor and CI fail closed.",
+        "verificationSurface": "npm run doctor, npm run validate, npm test and GitHub Actions",
+        "constraints": [
+          "Do not add medium-term product functionality.",
+          "Do not execute a real deployment."
+        ],
+        "boundaries": [
+          "scripts/",
+          "tests/",
+          "core/schemas/",
+          ".harness/",
+          ".github/",
+          "docs/"
+        ],
+        "iterationPolicy": "Use test-first changes and keep each validator responsibility explicit.",
+        "blockedStopCondition": "Stop after three identical blockers or when an external review is required."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-20"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "1-30"
+          },
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-30"
+          }
+        ],
+        "contracts": [
+          "agentos.rc.trust-gates.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/lib/agentos-contracts.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/lib/agentos-config.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/validate-no-secrets.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "tests/agentos-rc-trust-gates.test.mjs",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Verified evidence cannot represent false success.",
+        "Secret scanning evaluates and redacts each occurrence.",
+        "Operational paths cannot escape the repository root.",
+        "Agent goals, state and YAML configuration are structurally valid.",
+        "Doctor, local validation and Windows/Linux CI fail closed."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate",
+          "npm test",
+          "git diff --check",
+          "gh pr checks 7 --repo provedorconsult/AgentOS"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Verified evidence cannot represent false success.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Negative evidence and lifecycle contract tests passed."
+        },
+        {
+          "criterion": "Secret scanning evaluates and redacts each occurrence.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Mixed placeholder and live-token regression tests passed."
+        },
+        {
+          "criterion": "Operational paths cannot escape the repository root.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Traversal, absolute path, overlap and symlink escape tests passed."
+        },
+        {
+          "criterion": "Agent goals, state and YAML configuration are structurally valid.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Schemas, state pointers and YAML validation passed."
+        },
+        {
+          "criterion": "Doctor, local validation and Windows/Linux CI fail closed.",
+          "command": "gh pr checks 7 --repo provedorconsult/AgentOS",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Checklist, Ubuntu and Windows checks passed on PR 7."
+        }
+      ]
+    }
+  ]
+}

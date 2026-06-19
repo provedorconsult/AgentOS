@@ -4,6 +4,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const ignoredDirs = new Set([".git", "node_modules", ".venv", "dist", "build", ".next", "coverage", "vendor"]);
+const ignoredFiles = new Set(["scripts/validate-no-secrets.mjs"]);
 const patterns = [
   [/-----BEGIN (RSA |OPENSSH |EC |DSA )?PRIVATE KEY-----/, "private key"],
   [/\bghp_[A-Za-z0-9_]{20,}\b/, "GitHub token"],
@@ -21,17 +22,27 @@ const patterns = [
   [/\b(password|secret|token|api[_-]?key)\s*=\s*['"]?[^'"\s]{12,}/i, "secret assignment"]
 ];
 let failures = 0;
-const safePlaceholderPatterns = [
-  /^OPENAI_API_KEY=$/m,
-  /^GITHUB_TOKEN=$/m,
-  /sk-example-openai-key/,
-  /ghp_example_github_token/,
-  /replace-me/i,
-  /xxxxxxxx/i
-];
+
+export function isSafePlaceholder(match) {
+  const value = String(match).trim();
+  return [
+    /^sk-example(?:-[A-Za-z0-9_-]+)*$/i,
+    /^sk-x{8,}$/i,
+    /^ghp_example(?:_[A-Za-z0-9_-]+)*$/i,
+    /^ghp_x{8,}$/i,
+    /^(?:REPLACE_ME|YOUR_TOKEN_HERE|<token>|x{8,})$/i
+  ].some((pattern) => pattern.test(value));
+}
+
+function redact(value) {
+  const text = String(value);
+  if (text.length <= 10) return "…";
+  return `${text.slice(0, 7)}…${text.slice(-4)}`;
+}
 
 function scan(file) {
   const rel = path.relative(root, file).replaceAll("\\", "/");
+  if (ignoredFiles.has(rel)) return;
   if (path.basename(file) === ".env") {
     console.error(`${rel}: real .env files are not allowed`);
     failures += 1;
@@ -39,8 +50,11 @@ function scan(file) {
   }
   const text = fs.readFileSync(file, "utf8");
   for (const [pattern, label] of patterns) {
-    if (pattern.test(text) && !safePlaceholderPatterns.some((placeholder) => placeholder.test(text))) {
-      console.error(`${rel}: possible ${label}`);
+    const globalPattern = new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`);
+    for (const match of text.matchAll(globalPattern)) {
+      const value = match[0];
+      if (isSafePlaceholder(value)) continue;
+      console.error(`${rel}:${text.slice(0, match.index).split(/\r?\n/).length} possible ${label} ${redact(value)}`);
       failures += 1;
     }
   }

@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { lineCount, loadAgentosConfig, readJson, resolveFromRoot, toPosix } from "./agentos-config.mjs";
+import { lineCount, loadAgentosConfig, readJson, resolveFromRoot, resolveInsideRoot, toPosix } from "./agentos-config.mjs";
 
 const allowedFileActions = new Set(["create", "modify", "delete"]);
+const allowedTaskStatuses = new Set(["pending", "in-progress", "blocked", "verified", "done"]);
+const allowedSprintStatuses = new Set(["pending", "in-progress", "blocked", "verified", "done", "archived"]);
+const allowedEvidenceStatuses = new Set(["passed", "failed", "blocked", "not-run"]);
 
 export function createCollector() {
   const failures = [];
@@ -61,7 +64,14 @@ function validateRangeReference(owner, ref, root, config, collector) {
     collector.fail(`${owner}: range ${ref.range} exceeds ${config.context.maxSpecRangeLines} lines`);
   }
 
-  const resolvedPath = resolveFromRoot(root, ref.path);
+  let safePath;
+  try {
+    safePath = resolveInsideRoot(root, ref.path);
+  } catch (error) {
+    collector.fail(`${owner}: ${error.message}`);
+    return;
+  }
+  const resolvedPath = resolveFromRoot(root, safePath);
   if (!fs.existsSync(resolvedPath)) {
     collector.fail(`${owner}: missing ${ref.path}`);
     return;
@@ -88,6 +98,14 @@ function validateEvidence(task, owner, config, collector) {
     collector.fail(`${owner}: pending tasks cannot include completion evidence`);
   }
 
+  const declaredCommands = new Set(Array.isArray(task.verification?.commands) ? task.verification.commands : []);
+  const criteria = Array.isArray(task.acceptanceCriteria) ? task.acceptanceCriteria : [];
+  const criterionCounts = new Map();
+  for (const criterion of criteria) criterionCounts.set(criterion, (criterionCounts.get(criterion) ?? 0) + 1);
+  for (const [criterion, count] of criterionCounts) {
+    if (count > 1) collector.fail(`${owner}: duplicate acceptance criterion "${criterion}"`);
+  }
+
   for (const [index, item] of evidence.entries()) {
     const evidenceOwner = `${owner}.evidence[${index}]`;
     if (typeof item !== "object" || item == null) {
@@ -97,17 +115,70 @@ function validateEvidence(task, owner, config, collector) {
     if (typeof item.command !== "string" || item.command.length === 0) collector.fail(`${evidenceOwner}: missing command`);
     if (config.verification.requireExitCode && typeof item.exitCode !== "number") collector.fail(`${evidenceOwner}: missing numeric exitCode`);
     if (typeof item.result !== "string" || item.result.length === 0) collector.fail(`${evidenceOwner}: missing result`);
+    if (!allowedEvidenceStatuses.has(item.status)) collector.fail(`${evidenceOwner}: invalid status ${item.status}`);
     if (["verified", "done"].includes(task.status) && (typeof item.criterion !== "string" || item.criterion.length === 0)) {
       collector.fail(`${evidenceOwner}: verified evidence requires criterion`);
+    }
+    if (item.command && !declaredCommands.has(item.command)) collector.fail(`${evidenceOwner}: command is not declared in verification.commands`);
+    if (item.criterion && !criteria.includes(item.criterion)) collector.fail(`${evidenceOwner}: criterion is not declared in acceptanceCriteria`);
+    if (["verified", "done"].includes(task.status)) {
+      if (item.exitCode !== 0) collector.fail(`${evidenceOwner}: verified evidence requires exitCode 0`);
+      if (item.status !== "passed") collector.fail(`${evidenceOwner}: verified evidence requires status passed`);
+      if (/\b(fail(?:ed|ure)?|blocked|not[- ]run)\b/i.test(item.result ?? "")) {
+        collector.fail(`${evidenceOwner}: result does not represent success`);
+      }
     }
   }
 
   if (config.verification.requireEvidencePerCriterion && ["verified", "done"].includes(task.status)) {
-    const coveredCriteria = new Set(evidence.map((item) => item?.criterion).filter(Boolean));
+    const coveredCriteria = new Map();
+    for (const item of evidence) {
+      if (item?.criterion) coveredCriteria.set(item.criterion, (coveredCriteria.get(item.criterion) ?? 0) + 1);
+    }
     for (const criterion of task.acceptanceCriteria || []) {
       if (!coveredCriteria.has(criterion)) {
         collector.fail(`${owner}: missing evidence for criterion "${criterion}"`);
+      } else if (coveredCriteria.get(criterion) > 1) {
+        collector.fail(`${owner}: criterion "${criterion}" has duplicate evidence`);
       }
+    }
+  }
+}
+
+function ensureAllowedFields(data, schema, owner, collector) {
+  if (schema.additionalProperties !== false) return;
+  const allowed = new Set(Object.keys(schema.properties ?? {}));
+  for (const key of Object.keys(data)) {
+    if (!allowed.has(key)) collector.fail(`${owner}: unknown field ${key}`);
+  }
+}
+
+function validateAgentGoal(agentGoal, owner, root, collector) {
+  if (!agentGoal || typeof agentGoal !== "object" || Array.isArray(agentGoal)) {
+    collector.fail(`${owner}: missing agentGoal object`);
+    return;
+  }
+  if (typeof agentGoal.needed !== "boolean") collector.fail(`${owner}.agentGoal.needed must be boolean`);
+  if (agentGoal.needed === false) return;
+  for (const field of ["draft", "outcome", "verificationSurface", "iterationPolicy", "blockedStopCondition"]) {
+    if (typeof agentGoal[field] !== "string" || agentGoal[field].trim().length === 0) {
+      collector.fail(`${owner}.agentGoal.${field} must be a non-empty string`);
+    }
+  }
+  if (typeof agentGoal.draft === "string" && !agentGoal.draft.startsWith("/goal")) {
+    collector.fail(`${owner}.agentGoal.draft must start with /goal`);
+  }
+  for (const field of ["constraints", "boundaries"]) {
+    if (!Array.isArray(agentGoal[field]) || agentGoal[field].some((value) => typeof value !== "string")) {
+      collector.fail(`${owner}.agentGoal.${field} must be an array of strings`);
+    }
+  }
+  for (const boundary of Array.isArray(agentGoal.boundaries) ? agentGoal.boundaries : []) {
+    if (/^[a-z][a-z0-9+.-]*:\/\//i.test(boundary)) continue;
+    try {
+      resolveInsideRoot(root, boundary);
+    } catch (error) {
+      collector.fail(`${owner}.agentGoal.boundaries: ${error.message}`);
     }
   }
 }
@@ -126,15 +197,14 @@ export function validateTaskData(task, options = {}) {
 
   if ("codexGoal" in task) collector.fail(`${owner}: uses rejected legacy field codexGoal`);
   ensureRequiredFields(task, schemas.task.required || [], owner, collector);
+  ensureAllowedFields(task, schemas.task, owner, collector);
 
-  const allowedStatus = new Set(schemas.task.properties?.status?.enum ?? []);
+  const allowedStatus = new Set(schemas.task.properties?.status?.enum ?? allowedTaskStatuses);
   if (!allowedStatus.has(task.status)) {
     collector.fail(`${owner}: invalid status ${task.status}`);
   }
 
-  if (!task.agentGoal || typeof task.agentGoal !== "object") {
-    collector.fail(`${owner}: missing agentGoal object`);
-  }
+  validateAgentGoal(task.agentGoal, owner, root, collector);
 
   const specRefs = Array.isArray(task.specRefs) ? task.specRefs : [];
   if (specRefs.length === 0) collector.fail(`${owner}: must declare specRefs`);
@@ -151,6 +221,7 @@ export function validateTaskData(task, options = {}) {
   }
 
   const files = Array.isArray(task.files) ? task.files : [];
+  const editablePaths = new Set();
   if (files.length === 0) collector.fail(`${owner}: must declare editable files`);
   for (const [index, file] of files.entries()) {
     if (!file || typeof file.path !== "string" || typeof file.action !== "string") {
@@ -163,6 +234,21 @@ export function validateTaskData(task, options = {}) {
     if (isForbiddenPath(toPosix(file.path), config.context.forbiddenDirs)) {
       collector.fail(`${owner}.files[${index}]: path is under forbidden directory ${file.path}`);
     }
+    try {
+      editablePaths.add(resolveInsideRoot(root, file.path));
+    } catch (error) {
+      collector.fail(`${owner}.files[${index}]: ${error.message}`);
+    }
+  }
+  for (const [index, ref] of readOnly.entries()) {
+    try {
+      const readOnlyPath = resolveInsideRoot(root, ref.path);
+      if (editablePaths.has(readOnlyPath)) {
+        collector.fail(`${owner}: ${ref.path} cannot be both read-only and editable`);
+      }
+    } catch {
+      // The range validator already reports the path error.
+    }
   }
 
   const acceptanceCriteria = Array.isArray(task.acceptanceCriteria) ? task.acceptanceCriteria : [];
@@ -174,8 +260,11 @@ export function validateTaskData(task, options = {}) {
   const commands = Array.isArray(task.verification?.commands) ? task.verification.commands : [];
   if (commands.length === 0) collector.fail(`${owner}: must declare verification.commands`);
 
-  if (task.status === "blocked" && typeof task.blocker !== "string") {
+  if (task.status === "blocked" && (typeof task.blocker !== "string" || task.blocker.trim().length === 0)) {
     collector.fail(`${owner}: blocked tasks require blocker`);
+  }
+  if (task.status === "done" && (typeof task.review !== "string" || task.review.trim().length === 0)) {
+    collector.fail(`${owner}: done tasks require review`);
   }
 
   validateEvidence(task, owner, config, collector);
@@ -195,6 +284,12 @@ export function validateSprintData(data, options = {}) {
   }
 
   ensureRequiredFields(data, schemas.sprint.required || [], owner, collector);
+  ensureAllowedFields(data, schemas.sprint, owner, collector);
+  if (!allowedSprintStatuses.has(data.status)) collector.fail(`${owner}: invalid status ${data.status}`);
+  if (data.status === "blocked" && (typeof data.blocker !== "string" || data.blocker.trim().length === 0)) {
+    collector.fail(`${owner}: blocked sprint requires blocker`);
+  }
+  if (data.status === "archived" && options.isCurrent === true) collector.fail(`${owner}: archived sprint cannot be current`);
   const tasks = Array.isArray(data.tasks) ? data.tasks : [];
   if (tasks.length === 0) {
     collector.fail(`${owner}: sprint must include at least one task`);
@@ -202,6 +297,12 @@ export function validateSprintData(data, options = {}) {
 
   for (const task of tasks) {
     validateTaskData(task, { root, config, schemas, collector, owner: `${owner}.${task?.id ?? "task"}` });
+  }
+  if (data.status === "verified" && tasks.some((task) => !["verified", "done"].includes(task.status))) {
+    collector.fail(`${owner}: verified sprint requires verified or done tasks`);
+  }
+  if (data.status === "done" && tasks.some((task) => task.status !== "done")) {
+    collector.fail(`${owner}: done sprint requires all tasks done`);
   }
 
   return collector.flush();
@@ -220,10 +321,27 @@ export function validateProjectStateData(data, options = {}) {
   }
 
   ensureRequiredFields(data, schemas.projectState.required || [], owner, collector);
+  ensureAllowedFields(data, schemas.projectState, owner, collector);
+  if (!["active", "maintenance", "archived"].includes(data.project?.status)) collector.fail(`${owner}: invalid project.status`);
   if (data.agentos?.specEngine !== "specpilot") collector.fail(`${owner}: agentos.specEngine must be specpilot`);
   if (data.agentos?.version !== config.version) collector.fail(`${owner}: agentos.version must match agentos.yaml`);
   if (!data.goalPolicy || data.goalPolicy.field !== "agentGoal" || data.goalPolicy.rejectLegacyField !== "codexGoal") {
     collector.fail(`${owner}: goalPolicy must enforce agentGoal and reject codexGoal`);
+  }
+  if (!["currentSprint", "lastVerifiedSprint"].includes(data.goalPolicy?.currentPointerMode)) {
+    collector.fail(`${owner}: goalPolicy.currentPointerMode is invalid`);
+  }
+  const expectedMode = data.currentSprint ? "currentSprint" : "lastVerifiedSprint";
+  if (data.goalPolicy?.currentPointerMode !== expectedMode) {
+    collector.fail(`${owner}: goalPolicy.currentPointerMode must be ${expectedMode}`);
+  }
+  for (const field of ["currentSprint", "lastVerifiedSprint"]) {
+    if (data[field] == null) continue;
+    try {
+      resolveInsideRoot(root, data[field]);
+    } catch (error) {
+      collector.fail(`${owner}.${field}: ${error.message}`);
+    }
   }
 
   return collector.flush();

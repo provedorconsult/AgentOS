@@ -3,10 +3,11 @@
 ## Candidate Flow
 
 1. green CI on Windows and Linux;
-2. required review on the PR;
-3. changelog and review evidence updated;
-4. create tag `v2.0.0-rc.1`;
-5. publish release notes from `CHANGELOG.md` and `docs/REVIEW.md`.
+2. branch protection and required checks confirmed on `main`;
+3. formal `APPROVE` review on the PR;
+4. changelog and review evidence updated;
+5. create the next unused `v2.0.0-rc.N` tag;
+6. publish a GitHub prerelease from `CHANGELOG.md` and `docs/REVIEW.md`.
 
 ## Rollback
 

@@ -54,10 +54,24 @@ if (fs.existsSync("docs/REVIEW.md")) {
   }
 }
 
-const markdownFiles = ["README.md", ...fs.readdirSync("docs").filter((entry) => entry.endsWith(".md")).map((entry) => path.join("docs", entry))];
+function collectMarkdown(target) {
+  if (!fs.existsSync(target)) return [];
+  const stat = fs.statSync(target);
+  if (stat.isFile()) return target.endsWith(".md") ? [target] : [];
+  return fs.readdirSync(target, { withFileTypes: true }).flatMap((entry) =>
+    collectMarkdown(path.join(target, entry.name))
+  );
+}
+
+const markdownFiles = [
+  "README.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  ...["docs", "core", "specpilot", "adapters", "extensions", "packs"].flatMap(collectMarkdown)
+];
 const markdownLinkPattern = /\[[^\]]+\]\((?!https?:\/\/|mailto:|#)([^)]+)\)/g;
 for (const file of markdownFiles) {
-  const text = fs.readFileSync(file, "utf8");
+  const text = fs.readFileSync(file, "utf8").replace(/```[\s\S]*?```/g, "");
   let match;
   while ((match = markdownLinkPattern.exec(text)) !== null) {
     const target = match[1].split("#")[0];

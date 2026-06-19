@@ -37,7 +37,7 @@ if (collector.flush().length === 0) {
 
   if (resolvedSprint && fs.existsSync(resolvedSprint)) {
     const sprint = readJson(resolvedSprint);
-    validateSprintData(sprint, { root, collector, owner: expectedPointer });
+    validateSprintData(sprint, { root, collector, owner: expectedPointer, isCurrent: Boolean(projectState.currentSprint) });
 
     if (projectState.currentSprint && sprint.status === "verified") {
       collector.fail("verified sprint cannot remain in currentSprint; move it to lastVerifiedSprint or clear the active pointer");

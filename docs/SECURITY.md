@@ -30,7 +30,7 @@ Production operations require:
 
 ## Reporting
 
-Report vulnerabilities privately through the security contact documented in the repository root `SECURITY.md` before opening a public issue.
+Report vulnerabilities through the private GitHub Security Advisory channel linked in the repository root `SECURITY.md`.
 
 ## Dependency Safety
 

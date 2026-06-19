@@ -78,18 +78,21 @@
           "criterion": "CI uses ubuntu-latest and windows-latest.",
           "command": "npm test",
           "exitCode": 0,
+          "status": "passed",
           "result": "Workflow contract tests passed."
         },
         {
           "criterion": "CI runs npm run doctor, npm run validate and git diff --check.",
           "command": "npm run validate",
           "exitCode": 0,
+          "status": "passed",
           "result": "Validation chain passed."
         },
         {
           "criterion": "Deploy binds the selected GitHub Environment and stays contract-only.",
           "command": "npm test",
           "exitCode": 0,
+          "status": "passed",
           "result": "Deploy workflow contract test passed."
         }
       ]
@@ -174,18 +177,21 @@
           "criterion": "Codex installer copies codex-layer to .codex.",
           "command": "npm test",
           "exitCode": 0,
+          "status": "passed",
           "result": "Codex installer E2E passed."
         },
         {
           "criterion": "Generic IDE installer does not create .codex.",
           "command": "npm test",
           "exitCode": 0,
+          "status": "passed",
           "result": "Generic IDE installer E2E passed."
         },
         {
           "criterion": "Backups are created and ignored by git.",
           "command": "npm run validate:adapters",
           "exitCode": 0,
+          "status": "passed",
           "result": "Adapter docs and mappings align with backup policy."
         }
       ]
@@ -264,7 +270,8 @@
       "verification": {
         "commands": [
           "npm run validate",
-          "npm test"
+          "npm test",
+          "npm run validate:state"
         ]
       },
       "evidence": [
@@ -272,18 +279,21 @@
           "criterion": "Ranges outside file bounds are rejected.",
           "command": "npm test",
           "exitCode": 0,
+          "status": "passed",
           "result": "Negative range test passed."
         },
         {
           "criterion": "current.txt and project-state.json are validated together.",
           "command": "npm run validate:state",
           "exitCode": 0,
+          "status": "passed",
           "result": "State validation passed."
         },
         {
           "criterion": "validate includes doctor, state, workflows, adapters, docs, license and tests.",
           "command": "npm run validate",
           "exitCode": 0,
+          "status": "passed",
           "result": "Full validation chain passed."
         }
       ]
