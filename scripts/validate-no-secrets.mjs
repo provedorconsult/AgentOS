@@ -19,18 +19,22 @@ const patterns = [
   [/[a-z]+:\/\/[^/\s:@]+:[^/\s:@]+@[^/\s]+/i, "basic-auth URL"],
   [/\b(?:postgres(?:ql)?|mysql|sqlserver):\/\/[^/\s:@]+:[^/\s:@]+@[^/\s]+/i, "connection string"],
   [/-----BEGIN PRIVATE KEY-----/, "PKCS#8 private key"],
-  [/\b(password|secret|token|api[_-]?key)\s*=\s*['"]?[^'"\s]{12,}/i, "secret assignment"]
+  [/\b[A-Za-z0-9_-]*(?:password|secret|token|api[_-]?key)\s*=\s*['"]?[A-Za-z0-9_./:+-]{12,}/i, "secret assignment"]
 ];
 let failures = 0;
 
 export function isSafePlaceholder(match) {
-  const value = String(match).trim();
+  const raw = String(match).trim();
+  const value = raw.includes("=")
+    ? raw.slice(raw.indexOf("=") + 1).trim().replace(/^['"]|['"]$/g, "")
+    : raw;
   return [
     /^sk-example(?:-[A-Za-z0-9_-]+)*$/i,
     /^sk-x{8,}$/i,
     /^ghp_example(?:_[A-Za-z0-9_-]+)*$/i,
     /^ghp_x{8,}$/i,
-    /^(?:REPLACE_ME|YOUR_TOKEN_HERE|<token>|x{8,})$/i
+    /^(?:REPLACE_ME|YOUR_TOKEN_HERE|<token>|x{8,})$/i,
+    /^\$\{[^}]+\}/
   ].some((pattern) => pattern.test(value));
 }
 

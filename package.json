@@ -8,7 +8,7 @@
     "doctor": "node scripts/doctor.mjs",
     "test": "node --test tests/*.test.mjs",
     "validate": "npm run doctor && npm run validate:templates && npm run validate:context && npm run validate:state && npm run validate:secrets && npm run validate:workflows && npm run validate:adapters && npm run validate:docs && npm run validate:license && npm test",
-    "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json .harness/sprints/2026-06-19-agentos-audit-hardening.json .harness/sprints/2026-06-19-agentos-rc-trust-gates.json",
+    "validate:templates": "node scripts/validate-sprint-json.mjs .harness/templates/task.json .harness/templates/sprint.json .harness/sprints/2026-06-19-agentos-audit-hardening.json .harness/sprints/2026-06-19-agentos-rc-trust-gates.json .harness/sprints/2026-06-19-agentos-post-audit-corrections.json",
     "validate:context": "node scripts/validate-context-ranges.mjs --spec docs/SPEC.md .harness/sprints",
     "validate:state": "node scripts/validate-state.mjs",
     "validate:secrets": "node scripts/validate-no-secrets.mjs",
@@ -43,6 +43,7 @@
   },
   "author": "provedorconsult",
   "dependencies": {
+    "ajv": "8.20.0",
     "yaml": "2.9.0"
   }
 }

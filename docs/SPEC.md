@@ -17,6 +17,9 @@ In scope:
 - validate active sprint state, project state, context ranges, workflow manifest, docs and license metadata;
 - harden evidence semantics, secret scanning and closed repository paths;
 - parse and validate `agentos.yaml` with the pinned `yaml` package;
+- execute Draft 2020-12 schemas with Ajv before semantic validation;
+- reject forbidden-directory symlink aliases and foreign absolute path syntax;
+- run dependency auditing and least-privilege CI policy remotely;
 - reconcile release-candidate docs, changelog and review evidence;
 - keep deploy contract-only and fail closed when no real target exists.
 
@@ -101,6 +104,16 @@ Acceptance criteria:
 - placeholders cannot suppress another secret occurrence in the same file;
 - operational paths cannot resolve outside the repository, including through symlinks;
 - `agentGoal`, sprint state, project state and YAML values are validated before completion.
+
+### R7 - Executable Contracts and Post-Audit Integrity
+
+Acceptance criteria:
+
+- task, sprint, project-state and AgentOS configuration schemas execute through Ajv;
+- nested additional properties and invalid scalar types are rejected;
+- verification flags must be literal booleans and cannot silently disable policy;
+- prefixed secret assignments such as `DB_PASSWORD` are detected;
+- CI runs dependency audit with read-only permissions, timeout and concurrency controls.
 
 ## Constraints
 

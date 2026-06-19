@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { lineCount, loadAgentosConfig, readJson, resolveFromRoot, resolveInsideRoot, toPosix } from "./agentos-config.mjs";
+import { createSchemaValidator } from "./json-schema.mjs";
 
 const allowedFileActions = new Set(["create", "modify", "delete"]);
 const allowedTaskStatuses = new Set(["pending", "in-progress", "blocked", "verified", "done"]);
@@ -26,6 +27,13 @@ export function loadSchemas(root = process.cwd()) {
     sprint: readJson(path.join(root, "core", "schemas", "sprint.schema.json")),
     projectState: readJson(path.join(root, "core", "schemas", "project-state.schema.json"))
   };
+}
+
+function validateSchema(schemaId, data, schemas, owner, collector) {
+  const validator = createSchemaValidator(schemas);
+  for (const failure of validator.validate(schemaId, data)) {
+    collector.fail(`${owner}${failure}`);
+  }
 }
 
 function ensureRequiredFields(data, required, owner, collector) {
@@ -66,7 +74,7 @@ function validateRangeReference(owner, ref, root, config, collector) {
 
   let safePath;
   try {
-    safePath = resolveInsideRoot(root, ref.path);
+    safePath = resolveInsideRoot(root, ref.path, { forbiddenDirs: config.context.forbiddenDirs });
   } catch (error) {
     collector.fail(`${owner}: ${error.message}`);
     return;
@@ -176,7 +184,7 @@ function validateAgentGoal(agentGoal, owner, root, collector) {
   for (const boundary of Array.isArray(agentGoal.boundaries) ? agentGoal.boundaries : []) {
     if (/^[a-z][a-z0-9+.-]*:\/\//i.test(boundary)) continue;
     try {
-      resolveInsideRoot(root, boundary);
+      resolveInsideRoot(root, boundary, { forbiddenDirs: loadAgentosConfig(root).context.forbiddenDirs });
     } catch (error) {
       collector.fail(`${owner}.agentGoal.boundaries: ${error.message}`);
     }
@@ -196,6 +204,7 @@ export function validateTaskData(task, options = {}) {
   }
 
   if ("codexGoal" in task) collector.fail(`${owner}: uses rejected legacy field codexGoal`);
+  validateSchema("https://agentos.local/schemas/task.schema.json", task, schemas, owner, collector);
   ensureRequiredFields(task, schemas.task.required || [], owner, collector);
   ensureAllowedFields(task, schemas.task, owner, collector);
 
@@ -235,14 +244,19 @@ export function validateTaskData(task, options = {}) {
       collector.fail(`${owner}.files[${index}]: path is under forbidden directory ${file.path}`);
     }
     try {
-      editablePaths.add(resolveInsideRoot(root, file.path));
+      const editablePath = resolveInsideRoot(root, file.path, { forbiddenDirs: config.context.forbiddenDirs });
+      if (editablePath === ".") {
+        collector.fail(`${owner}.files[${index}]: repository root cannot be an editable file`);
+      } else {
+        editablePaths.add(editablePath);
+      }
     } catch (error) {
       collector.fail(`${owner}.files[${index}]: ${error.message}`);
     }
   }
   for (const [index, ref] of readOnly.entries()) {
     try {
-      const readOnlyPath = resolveInsideRoot(root, ref.path);
+      const readOnlyPath = resolveInsideRoot(root, ref.path, { forbiddenDirs: config.context.forbiddenDirs });
       if (editablePaths.has(readOnlyPath)) {
         collector.fail(`${owner}: ${ref.path} cannot be both read-only and editable`);
       }
@@ -284,6 +298,7 @@ export function validateSprintData(data, options = {}) {
   }
 
   ensureRequiredFields(data, schemas.sprint.required || [], owner, collector);
+  validateSchema("https://agentos.local/schemas/sprint.schema.json", data, schemas, owner, collector);
   ensureAllowedFields(data, schemas.sprint, owner, collector);
   if (!allowedSprintStatuses.has(data.status)) collector.fail(`${owner}: invalid status ${data.status}`);
   if (data.status === "blocked" && (typeof data.blocker !== "string" || data.blocker.trim().length === 0)) {
@@ -321,6 +336,7 @@ export function validateProjectStateData(data, options = {}) {
   }
 
   ensureRequiredFields(data, schemas.projectState.required || [], owner, collector);
+  validateSchema("https://agentos.local/schemas/project-state.schema.json", data, schemas, owner, collector);
   ensureAllowedFields(data, schemas.projectState, owner, collector);
   if (!["active", "maintenance", "archived"].includes(data.project?.status)) collector.fail(`${owner}: invalid project.status`);
   if (data.agentos?.specEngine !== "specpilot") collector.fail(`${owner}: agentos.specEngine must be specpilot`);
@@ -338,7 +354,7 @@ export function validateProjectStateData(data, options = {}) {
   for (const field of ["currentSprint", "lastVerifiedSprint"]) {
     if (data[field] == null) continue;
     try {
-      resolveInsideRoot(root, data[field]);
+      resolveInsideRoot(root, data[field], { forbiddenDirs: config.context.forbiddenDirs });
     } catch (error) {
       collector.fail(`${owner}.${field}: ${error.message}`);
     }

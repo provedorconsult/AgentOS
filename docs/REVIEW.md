@@ -6,7 +6,7 @@
 - Branch: `fix/agentos-2-rc-trust-gates`.
 - Pull request: [#7](https://github.com/provedorconsult/AgentOS/pull/7).
 - Result: local gates and PR CI are green; branch protection and private vulnerability reporting are enabled.
-- Release status: formal external review is still required before merge, tag and prerelease.
+- Release status: PR #7 was merged through an explicitly authorized administrative bypass because the repository had no eligible external collaborator. Branch protection subsequently remained configured with one required approval and last-push approval.
 
 ## Evidence
 
@@ -18,7 +18,7 @@
 | `npm run validate` | Windows local | 0 | Passed | Templates, context, state, secrets, workflows, adapters, docs, license and tests passed. | Full local contract gate. | Local environment only. | None. |
 | `npm test` | Windows local | 0 | Passed | `21` tests passed, `0` failed. | Positive and negative trust-gate coverage. | Node test suite only. | None known. |
 | `git diff --check` | Windows local | 0 | Passed | No whitespace errors. | Diff hygiene. | CRLF warnings are informational. | None. |
-| `gh pr checks 7 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Passed | Run `27828111862`: Ubuntu `13s`, Windows `39s`; checklist run `27828111860` passed. | Cross-platform CI. | Applies to commit `066275d`; documentation evidence commit requires a new run. | Wait for latest-head checks. |
+| `gh run view 27829243822 --repo provedorconsult/AgentOS` | GitHub Actions | 0 | Passed | Post-merge `main` run: Ubuntu and Windows passed on merge `2d0c6ef`. | Cross-platform post-merge CI. | Historical evidence for PR #7. | None for the recorded merge. |
 | `gh api repos/provedorconsult/AgentOS/branches/main/protection` | GitHub | 0 | Passed | Strict Ubuntu, Windows and checklist checks; one approval; last-push approval; admin enforcement; force-push/deletion disabled. | Governance issue `#6`. | Requires an eligible external reviewer. | PR cannot merge until approval. |
 | `gh api repos/provedorconsult/AgentOS/private-vulnerability-reporting` | GitHub | 0 | Passed | Private vulnerability reporting is enabled. | Concrete security reporting channel. | GitHub availability. | None. |
 
@@ -37,6 +37,17 @@
 
 - Issues `#5` and `#6` closed with implementation evidence.
 - `main` branch protection is active.
-- Formal review: pending.
+- Formal review on PR #7: absent; administrative merge authorization was supplied by the repository owner.
+- Governance behavior: merge was blocked by the approval rule before the temporary administrative bypass; the approval rule was restored after merge.
 - Tag/release: not created.
 - Real deployment: not executed; `AGENTOS_DEPLOY_COMMAND` remains fail-closed.
+
+## Post-Audit Correction Evidence
+
+- Pull request: [#8](https://github.com/provedorconsult/AgentOS/pull/8).
+- Head before evidence commit: `d11b9f176952a218524eb8e96978412b1f705127`.
+- CI: run `27832195989`; Ubuntu and Windows passed.
+- Checklist: run `27832195969`; passed.
+- Governance proof: GitHub reported `mergeStateStatus=BLOCKED` and `reviewDecision=REVIEW_REQUIRED` after all checks passed.
+- Protection readback: strict required checks, one approval, last-push approval, admin enforcement, force-push disabled and deletion disabled.
+- Merge policy: the repository owner explicitly authorized the documented administrative exception because no eligible external collaborator exists.

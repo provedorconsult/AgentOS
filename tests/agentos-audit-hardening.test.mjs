@@ -73,43 +73,10 @@ test("state validation rejects current pointer drift and verified sprint ambigui
   const tempDir = makeTempDir("state");
   fs.mkdirSync(path.join(tempDir, ".harness", "sprints"), { recursive: true });
   fs.mkdirSync(path.join(tempDir, "core", "schemas"), { recursive: true });
-  fs.writeFileSync(
-    path.join(tempDir, "agentos.yaml"),
-    "agentos:\n  version: 2.0.0-rc.1\n  spec_engine: specpilot\ncontext:\n  max_spec_range_lines: 120\n  max_readonly_files_per_task: 3\n  max_acceptance_criteria_per_task: 5\n  forbidden_dirs:\n    - node_modules\nverification:\n  require_exit_code: true\n  require_evidence_per_criterion: true\n  require_review_file: true\n  require_no_secrets_scan: true\nextensions: {}\nadapters:\n  default: generic-ide\n  available:\n    - generic-ide\n"
-  );
-  fs.writeFileSync(
-    path.join(tempDir, "core", "schemas", "task.schema.json"),
-    JSON.stringify(
-      {
-        required: ["id", "status", "title", "goal", "agentGoal", "specRefs", "context", "files", "acceptanceCriteria", "verification", "evidence"],
-        properties: { status: { enum: ["pending", "in-progress", "blocked", "verified", "done"] } }
-      },
-      null,
-      2
-    )
-  );
-  fs.writeFileSync(
-    path.join(tempDir, "core", "schemas", "sprint.schema.json"),
-    JSON.stringify(
-      {
-        required: ["id", "status", "title", "tasks"],
-        properties: {}
-      },
-      null,
-      2
-    )
-  );
-  fs.writeFileSync(
-    path.join(tempDir, "core", "schemas", "project-state.schema.json"),
-    JSON.stringify(
-      {
-        required: ["project", "agentos"],
-        properties: {}
-      },
-      null,
-      2
-    )
-  );
+  fs.copyFileSync(path.join(repoRoot, "agentos.yaml"), path.join(tempDir, "agentos.yaml"));
+  for (const schema of ["agentos-config.schema.json", "task.schema.json", "sprint.schema.json", "project-state.schema.json"]) {
+    fs.copyFileSync(path.join(repoRoot, "core", "schemas", schema), path.join(tempDir, "core", "schemas", schema));
+  }
   fs.writeFileSync(path.join(tempDir, ".harness", "current.txt"), ".harness/sprints/current.json\n");
   fs.writeFileSync(
     path.join(tempDir, ".harness", "project-state.json"),

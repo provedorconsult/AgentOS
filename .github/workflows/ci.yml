@@ -1,5 +1,12 @@
 name: AgentOS CI
 
+permissions:
+  contents: read
+
+concurrency:
+  group: agentos-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
   push:
@@ -8,6 +15,7 @@ on:
 
 jobs:
   validate:
+    timeout-minutes: 10
     strategy:
       matrix:
         os:
@@ -21,6 +29,8 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm ci
+      - name: Dependency audit
+        run: npm audit --audit-level=moderate
       - name: Doctor
         run: npm run doctor
       - name: Validate
