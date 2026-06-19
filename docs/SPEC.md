@@ -20,6 +20,10 @@ In scope:
 - execute Draft 2020-12 schemas with Ajv before semantic validation;
 - reject forbidden-directory symlink aliases and foreign absolute path syntax;
 - run dependency auditing and least-privilege CI policy remotely;
+- compare real Git diff paths and actions with sprint-declared editable scope;
+- discover harness templates, sprints and archive files automatically instead of relying on hardcoded package lists;
+- scan structured secret assignments with quoted values, special characters and base64-like values;
+- require formal GitHub review before merge, tag or prerelease;
 - reconcile release-candidate docs, changelog and review evidence;
 - keep deploy contract-only and fail closed when no real target exists.
 
@@ -114,6 +118,16 @@ Acceptance criteria:
 - verification flags must be literal booleans and cannot silently disable policy;
 - prefixed secret assignments such as `DB_PASSWORD` are detected;
 - CI runs dependency audit with read-only permissions, timeout and concurrency controls.
+
+### R8 - Final RC Traceability
+
+Acceptance criteria:
+
+- `validate-edit-scope.mjs` rejects undeclared changed files, wrong create/modify/delete actions, unsafe paths and undeclared renames;
+- `validate-sprint-json.mjs --discover` validates templates, sprints and archive JSON files without package hardcoding;
+- `validate-no-secrets.mjs` detects structured assignments such as `DB_PASSWORD`, `SERVICE_SECRET`, `CUSTOM_TOKEN`, `API_KEY`, `PRIVATE_KEY`, `ACCESS_TOKEN` and `CLIENT_SECRET`;
+- `docs/REVIEW.md` records current commit, PR, governance, CI, local verification, negative tests, scope validation, dependency audit, security and release decision;
+- no tag or GitHub prerelease is created until CI is green and a formal non-bypass `APPROVE` review exists.
 
 ## Constraints
 

@@ -4,12 +4,29 @@
 
 1. green CI on Windows and Linux;
 2. branch protection and required checks confirmed on `main`;
-3. formal `APPROVE` review on the PR;
-4. changelog and review evidence updated;
-5. create the next unused `v2.0.0-rc.N` tag;
-6. publish a GitHub prerelease from `CHANGELOG.md` and `docs/REVIEW.md`.
+3. `npm audit --audit-level=moderate`;
+4. `npm run validate:scope`;
+5. harness discovery through `npm run validate:templates`;
+6. formal `APPROVE` review on the PR;
+7. clean worktree;
+8. changelog and review evidence updated;
+9. create the next unused `v2.0.0-rc.N` annotated tag;
+10. publish a GitHub prerelease from `CHANGELOG.md` and `docs/REVIEW.md`.
 
-If the repository has no eligible external reviewer, an administrative merge is allowed only with explicit owner authorization, proof that the approval rule blocked the merge first, immediate restoration of the rule, and an accurate record in `docs/REVIEW.md`. This exception does not count as a formal review.
+For final RC hardening, an administrative merge is not an acceptable substitute for formal review. If the repository has no eligible external reviewer, mark the release decision `BLOCKED`, do not merge, do not tag and do not publish a prerelease.
+
+## Required Checks
+
+- CI Windows: required.
+- CI Ubuntu: required.
+- Dependency audit: required.
+- Scope validation: required.
+- Sprint discovery: required.
+- Branch protection: required.
+- Formal review: required.
+- Clean worktree: required.
+- Changelog and REVIEW: required.
+- Tag and prerelease: release-only after all prior gates pass.
 
 ## Rollback
 

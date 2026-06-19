@@ -7,11 +7,11 @@
     "version": "2.0.0-rc.1",
     "specEngine": "specpilot"
   },
-  "currentSprint": null,
+  "currentSprint": ".harness/sprints/2026-06-19-agentos-rc-final-hardening.json",
   "lastVerifiedSprint": ".harness/sprints/2026-06-19-agentos-post-audit-corrections.json",
   "goalPolicy": {
     "field": "agentGoal",
     "rejectLegacyField": "codexGoal",
-    "currentPointerMode": "lastVerifiedSprint"
+    "currentPointerMode": "currentSprint"
   }
 }
