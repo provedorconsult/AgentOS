@@ -75,4 +75,4 @@ codex-layer/          canonical source for installed Codex material
 
 ## Status
 
-AgentOS 2.0.0 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local, mechanical and dependency-free.
+AgentOS 2.0.0-rc.1 is the current release-candidate baseline. The candidate is merged on `main`, remains untagged, and keeps the platform file-first, markdown-first, git-friendly, IDE-neutral, local, mechanical and dependency-free.

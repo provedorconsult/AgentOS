@@ -37,7 +37,7 @@
           },
           {
             "path": "docs/ARCHITECTURE.md",
-            "range": "1-120"
+            "range": "1-98"
           }
         ],
         "contracts": [
@@ -129,7 +129,7 @@
           },
           {
             "path": "docs/ARCHITECTURE.md",
-            "range": "82-107"
+            "range": "82-98"
           }
         ],
         "contracts": [
@@ -227,7 +227,7 @@
           },
           {
             "path": "docs/ARCHITECTURE.md",
-            "range": "1-120"
+            "range": "1-98"
           }
         ],
         "contracts": [

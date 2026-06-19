@@ -8,6 +8,8 @@ Promote AgentOS 2.0 from an alpha-shaped scaffold to a release-candidate-ready l
 
 `docs/ARCHITECTURE.md` remains the canonical source for AgentOS Architecture 2.0. This SPEC narrows the short-horizon hardening slice required for `2.0.0-rc.1`.
 
+The slice defined below is complete and merged on `main`. It remains the verified contract for the current release-candidate baseline until a newer SPEC supersedes it.
+
 ## Scope
 
 In scope:
@@ -91,6 +93,12 @@ Expected behavior:
 Acceptance criteria:
 
 - `docs/GITHUB_SETUP.md`, `docs/INDEX.md`, `docs/REVIEW.md`, `docs/RELEASE.md`, `docs/MIGRATION.md`, `CHANGELOG.md`, `CONTRIBUTING.md` and root `SECURITY.md` reflect the current release-candidate contract.
+
+## Current State
+
+- the hardening slice defined above is merged on `main`;
+- GitHub CI is green on `main`;
+- issue `#5`, issue `#6` and the missing `v2.0.0-rc.1` tag remain as governance follow-up outside this completed SPEC.
 
 ## Constraints
 

@@ -7,6 +7,10 @@ function read(path) {
   return fs.readFileSync(path, "utf8");
 }
 
+function readNormalized(path) {
+  return read(path).replace(/\r\n/g, "\n");
+}
+
 test("architecture 2.0 is published as the canonical source", () => {
   const spec = read("docs/SPEC.md");
   const plan = read("docs/PLAN.md");
@@ -22,7 +26,7 @@ test("architecture 2.0 is published as the canonical source", () => {
 });
 
 test("project .codex layer has no drift from the canonical codex-layer", () => {
-  assert.equal(read(".codex/config.toml"), read("codex-layer/config.toml"));
+  assert.equal(readNormalized(".codex/config.toml"), readNormalized("codex-layer/config.toml"));
 });
 
 test("deploy script fails closed unless a real deployment command is configured", () => {
