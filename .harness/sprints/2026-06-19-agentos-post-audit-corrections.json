@@ -1,0 +1,88 @@
+{
+  "id": "2026-06-19-agentos-post-audit-corrections",
+  "status": "in-progress",
+  "title": "Close AgentOS post-merge audit findings",
+  "tasks": [
+    {
+      "id": "task-001-post-audit-enforcement",
+      "status": "in-progress",
+      "title": "Enforce schemas, configuration, paths, security and release integrity",
+      "goal": "Close the P0 and P1 findings from the post-merge trust-gate audit.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Close AgentOS post-merge audit findings with executable contracts and verified CI.",
+        "outcome": "Invalid schemas, YAML, paths and secret assignments fail closed, with accurate release evidence.",
+        "verificationSurface": "npm audit, npm run validate, npm test, GitHub Actions and branch protection",
+        "constraints": [
+          "Do not add medium or long-term product functionality.",
+          "Do not execute a real deployment."
+        ],
+        "boundaries": [
+          "core/schemas/",
+          "scripts/",
+          "tests/",
+          ".github/",
+          ".harness/",
+          "docs/"
+        ],
+        "iterationPolicy": "Implement each correction from a failing regression test and preserve existing semantic validators.",
+        "blockedStopCondition": "Stop after three identical blockers or an unavailable external GitHub capability."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-20"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "range": "1-30"
+          },
+          {
+            "path": "docs/PLAN.md",
+            "range": "1-30"
+          }
+        ],
+        "contracts": [
+          "agentos.post-audit.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/lib/json-schema.mjs",
+          "action": "create"
+        },
+        {
+          "path": "scripts/lib/agentos-config.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/lib/agentos-contracts.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "tests/agentos-post-audit-corrections.test.mjs",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "JSON Schemas reject invalid scalar, nested and additional fields.",
+        "AgentOS YAML rejects policy type bypasses and malformed semantic sections.",
+        "Closed paths reject forbidden symlink aliases, repository root edits and foreign absolute syntax.",
+        "Secret scanning detects prefixed assignment names.",
+        "CI, dependency policy and release documentation match the verified state."
+      ],
+      "verification": {
+        "commands": [
+          "npm audit --audit-level=moderate",
+          "npm run validate",
+          "npm test",
+          "git diff --check"
+        ]
+      },
+      "evidence": []
+    }
+  ]
+}

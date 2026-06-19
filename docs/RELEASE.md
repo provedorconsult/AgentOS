@@ -9,6 +9,8 @@
 5. create the next unused `v2.0.0-rc.N` tag;
 6. publish a GitHub prerelease from `CHANGELOG.md` and `docs/REVIEW.md`.
 
+If the repository has no eligible external reviewer, an administrative merge is allowed only with explicit owner authorization, proof that the approval rule blocked the merge first, immediate restoration of the rule, and an accurate record in `docs/REVIEW.md`. This exception does not count as a formal review.
+
 ## Rollback
 
 - revert the release-candidate commit or restore backed-up adapter files;

@@ -13,7 +13,7 @@ Current release candidate: AgentOS 2.0.0-rc.1.
 - `adapters/generic-ide/`: optional IDE-neutral instructions that work without `.codex/`.
 - `adapters/claude-code/`: future placeholder only.
 - `extensions/` and `packs/`: honest placeholders only.
-- `scripts/`: local validation and setup commands with no external dependencies.
+- `scripts/`: local validation and setup commands backed by pinned, audited dependencies.
 
 ## What Is Not Implemented In This Phase
 
@@ -28,6 +28,7 @@ Current release candidate: AgentOS 2.0.0-rc.1.
 ## Quick Start
 
 ```powershell
+npm ci
 npm run doctor
 npm run validate
 npm run agentos:init
@@ -75,4 +76,4 @@ codex-layer/          canonical source for installed Codex material
 
 ## Status
 
-AgentOS 2.0.0 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local and mechanical, with one pinned YAML parsing dependency.
+AgentOS 2.0.0-rc.1 is a file-first, markdown-first, git-friendly and IDE-neutral operating system for agentic development. The short horizon keeps the platform local and mechanical, with pinned YAML and JSON Schema validation dependencies.

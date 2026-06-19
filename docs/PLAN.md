@@ -36,6 +36,12 @@ Close the 2026-06-19 RC trust-gate delta in strict priority order while preservi
 - Editable files: `.env.example`, `.github/workflows/ci.yml`, `README.md`, `docs/*.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`
 - Verification: `npm run validate:secrets`, `npm run validate:docs`, `npm run validate:license`
 
+### Task 006 - Post-Audit Executable Enforcement
+
+- Goal: execute JSON Schemas, complete YAML semantics, close path/secret bypasses and reconcile governance/release evidence.
+- Editable files: `core/schemas/*`, `scripts/lib/*`, `scripts/validate-no-secrets.mjs`, `.github/*`, `.harness/*`, `README.md`, `CHANGELOG.md`, `docs/*`
+- Verification: `npm audit --audit-level=moderate`, `npm run validate`, `npm test`, `git diff --check`
+
 ## Risks
 
 - real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;
