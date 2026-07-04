@@ -2,19 +2,21 @@
 
 - `ARCHITECTURE.md`: canonical source for AgentOS Architecture 2.0.
 - `../CHANGELOG.md`: release-candidate change history.
-- `../CONTRIBUTING.md`: contribution and local gate expectations.
+- `../CONTRIBUTING.md`: contribution, language policy and local gate expectations.
 - `../SECURITY.md`: vulnerability reporting policy.
 - `AGENT_ROSTER.md`: agent list, responsibilities, and handoffs.
-- `OPERATING_MODEL.md`: how work flows from intent to deployment.
-- `ORCHESTRATION.md`: when to spawn agents and how to split work.
 - `QUALITY.md`: testing and review expectations.
-- `SECURITY.md`: guardrails, secret handling, and deployment safety.
-- `OBSERVABILITY.md`: signals to collect and how agents should use them.
+- `SECURITY_GUARDRAILS.md`: operational guardrails, secret handling, and deployment safety.
 - `GITHUB_SETUP.md`: publication instructions for GitHub.
 - `TROUBLESHOOTING.md`: validation and installation troubleshooting.
-- `RELEASE.md`: release candidate process and rollback expectations.
+- `RELEASE.md`: release candidate process, governance and rollback expectations.
 - `MIGRATION.md`: migration notes for repositories adopting AgentOS 2.0 RCs.
-- `../codex-layer/`: source layer to install as `.codex/`.
+- `AUDIT_CLAUDE.md`: 2026-07-04 technical audit report and errata.
+- `AUDIT_CORRECTION_PLAN.md`: phased implementation plan for the audit corrections.
+- `AUDIT_OPEN_QUESTIONS.md`: decisions raised by the audit for the team.
+- `AUDIT_RESPONSES.md`: consolidated decisions for the audit questions.
+- `../codex-layer/`: canonical source layer installed as `.codex/`.
 - `DECISIONS/`: architecture decision records.
 - `EXEC_PLANS/`: active and completed implementation plans.
-- `PLAYBOOKS/`: reusable operating procedures.
+- `superpowers/plans/`: historical sprint execution plans.
+- `legacy/`: archived control-plane era documents kept for historical context only.

@@ -31,7 +31,8 @@ Out of scope:
 
 - real deployment without an approved `AGENTOS_DEPLOY_COMMAND`;
 - dashboard, database, scheduler, channels, remote runtime, executable memory, heartbeats, routines or knowledge-db;
-- functional Claude Code or Antigravity adapters;
+- functional Antigravity adapters;
+- Claude Code `.claude/` agents, skills or runtime generation (the `CLAUDE.md` instructions surface is in scope through R9);
 - product/runtime dependencies unrelated to validation.
 
 ## Requirements
@@ -128,6 +129,43 @@ Acceptance criteria:
 - `validate-no-secrets.mjs` detects structured assignments such as `DB_PASSWORD`, `SERVICE_SECRET`, `CUSTOM_TOKEN`, `API_KEY`, `PRIVATE_KEY`, `ACCESS_TOKEN` and `CLIENT_SECRET`;
 - `docs/REVIEW.md` records current commit, PR, governance, CI, local verification, negative tests, scope validation, dependency audit, security and release decision;
 - no tag or GitHub prerelease is created until CI is green and a formal non-bypass `APPROVE` review exists.
+
+### R9 - Claude Code VSCode Coexistence
+
+Authorized by the 2026-07-04 user request to add Claude Code compatibility in VSCode coexisting with Codex.
+
+Expected behavior:
+
+- the `claude-code` adapter installs a `CLAUDE.md` instructions surface;
+- Claude Code and Codex can drive the same repository without conflicting files;
+- AgentOS core stays independent from `.claude/` and `CLAUDE.md`.
+
+Acceptance criteria:
+
+- `npm run agentos:install-adapter -- claude-code` installs only `CLAUDE.md`, with backup of an existing destination;
+- installing `codex` and `claude-code` into the same target keeps `.codex/` and `AGENTS.md` byte-identical to the Codex install;
+- the repository root `CLAUDE.md` mirrors the `AGENTS.md` source order;
+- adapter, IDE compatibility and architecture docs reflect the new supported status without stale placeholder claims.
+
+### R10 - Audit Correction Phases 1-3
+
+Authorized by the 2026-07-04 decisions recorded in `docs/AUDIT_RESPONSES.md` over `docs/AUDIT_CORRECTION_PLAN.md`.
+
+Expected behavior:
+
+- the environment-health workflow runs the canonical Node doctor with SHA-pinned actions;
+- doctor fails with an actionable `npm ci` hint when pinned dependencies are missing;
+- control-plane era documents and duplicated PowerShell helpers are fenced as legacy;
+- the operational security guardrails document no longer collides with the root security policy;
+- codex-layer hooks have POSIX shims delegating to the canonical validators;
+- `AGENTS.md` and `CLAUDE.md` source order cannot drift silently.
+
+Acceptance criteria:
+
+- no workflow references `scripts/doctor.ps1` and every workflow `uses:` is pinned by immutable SHA;
+- `npm run validate:adapters` fails when `CLAUDE.md` source order drifts from `AGENTS.md`;
+- archived documents carry a legacy banner and are indexed under `docs/legacy/`;
+- the deprecated numbered workflows remain in place; their removal is announced and gated on one release cycle after the `2.0.0-rc.1` prerelease.
 
 ## Constraints
 

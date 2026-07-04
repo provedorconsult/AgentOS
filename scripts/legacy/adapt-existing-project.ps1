@@ -1,3 +1,6 @@
+# DEPRECATED (2026-07-04): legacy control-plane era helper without a canonical Node equivalent yet.
+# Kept under scripts/legacy/ for reference only. Prefer the canonical flows documented in README.md and docs/ARCHITECTURE.md.
+
 param(
   [Parameter(Mandatory = $true)]
   [string]$ProjectPath

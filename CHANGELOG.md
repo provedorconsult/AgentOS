@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- added the supported `claude-code` adapter instructions surface: `npm run agentos:install-adapter -- claude-code` installs `CLAUDE.md` with backup support and coexists with the Codex adapter in the same repository;
+- added a root `CLAUDE.md` so Claude Code in VSCode follows the same AgentOS source order as Codex;
+- extended doctor, adapter validation and regression tests to cover the Claude Code surfaces;
+- implemented the audit correction plan phases 1-3 per `docs/AUDIT_RESPONSES.md`: canonical Node doctor in the environment-health workflow, SHA-pinned actions in all workflows, accurate SpecPilot validators index, refreshed `codex-layer/README.md`;
+- doctor now fails with an `npm ci` hint instead of a raw module-not-found stack when pinned dependencies are missing;
+- archived control-plane era documents under `docs/legacy/`, removed the binary EvoNexus PRD `.docx`, and marked ADR 0001 as superseded;
+- removed the duplicated PowerShell doctor/validate/review/install helpers and moved the remaining control-plane helpers to `scripts/legacy/` as deprecated;
+- renamed `docs/SECURITY.md` to `docs/SECURITY_GUARDRAILS.md` and promoted the short normative rules to `core/rules/security.md`;
+- added POSIX hook shims for the codex-layer secret and exec-plan hooks;
+- added a Source Order drift gate between `AGENTS.md` and `CLAUDE.md` to `npm run validate:adapters`;
+- documented the Codex configuration policy, the self-declared evidence limitation, the closed-sprint immutability rule, the temporary owner-merge governance exception and the English-first language policy;
+- removed the empty `data` skills domain until a real skill exists;
+- deprecation notice: the numbered compatibility workflows (`core/workflows/04-implement.md`, `05-verify.md`, `06-finish.md`, `07-release.md`, `08-deploy.md`, `09-improve.md`) will be removed one release cycle after the `2.0.0-rc.1` prerelease is published.
+
 ## 2.0.0-rc.1 - 2026-06-19
 
 - added edit-scope enforcement that compares Git diff paths and actions against sprint `task.files[]`;

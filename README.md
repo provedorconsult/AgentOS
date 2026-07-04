@@ -13,7 +13,7 @@ Formal GitHub prerelease status: not published until edit-scope validation, spri
 - `.harness/`: runtime templates and active sprint state.
 - `adapters/codex/`: optional Codex installer that generates `.codex/` only when requested.
 - `adapters/generic-ide/`: optional IDE-neutral instructions that work without `.codex/`.
-- `adapters/claude-code/`: future placeholder only.
+- `adapters/claude-code/`: optional Claude Code instructions surface (`CLAUDE.md`) that coexists with the Codex adapter.
 - `extensions/` and `packs/`: honest placeholders only.
 - `scripts/`: local validation and setup commands backed by pinned, audited dependencies.
 
@@ -24,7 +24,7 @@ Formal GitHub prerelease status: not published until edit-scope validation, spri
 - No scheduler.
 - No channels.
 - No remote runtime.
-- No functional Claude Code adapter.
+- No Claude Code `.claude/` agents or skills generation; the `claude-code` adapter installs a `CLAUDE.md` instructions surface only.
 - No functional Antigravity adapter.
 
 ## Quick Start
@@ -36,6 +36,7 @@ npm run validate
 npm run agentos:init
 npm run agentos:install-adapter -- codex
 npm run agentos:install-adapter -- generic-ide
+npm run agentos:install-adapter -- claude-code
 ```
 
 ## Execution Model

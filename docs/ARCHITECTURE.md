@@ -93,7 +93,7 @@ Agent definitions are operating contracts, not daemon processes.
 
 - `adapters/codex/` installs or documents the Codex path.
 - `adapters/generic-ide/` provides IDE-neutral instructions that work without `.codex/`.
-- `adapters/claude-code/` is an experimental placeholder.
+- `adapters/claude-code/` installs the `CLAUDE.md` instructions surface and coexists with the Codex adapter; `.claude/` generation remains future work.
 - `adapters/antigravity/` is an experimental placeholder.
 
 Adapters may consume `core/`, `docs/`, `specpilot/` and `.harness/`. The core must not consume adapters.
@@ -136,7 +136,7 @@ Architecture 2.0 does not include:
 - scheduler;
 - remote control plane;
 - channels;
-- functional Claude Code adapter;
+- Claude Code `.claude/` agents, skills or runtime generation;
 - functional Antigravity adapter;
 - automatic pack activation;
 - real deploy without explicit configuration.

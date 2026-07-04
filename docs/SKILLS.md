@@ -8,7 +8,6 @@ AgentOS skills are markdown-first procedures stored under `core/skills/`. They a
 - `security`: safety checks and secret handling.
 - `product`: PRD and product-to-SPEC translation.
 - `ops`: retro, handoff and operational loops.
-- `data`: reserved for future data workflows.
 - `docs`: documentation and handoff procedures.
 
 ## Required Format

@@ -8,7 +8,7 @@ const dryRun = process.argv.includes("--dry-run");
 const targetIndex = cliArgs.findIndex((arg) => arg === "--target");
 const targetRoot = targetIndex >= 0 ? path.resolve(cliArgs[targetIndex + 1]) : process.cwd();
 if (!adapter) {
-  console.error("Usage: node scripts/agentos-install-adapter.mjs <codex|generic-ide> [--target <dir>] [--dry-run]");
+  console.error("Usage: node scripts/agentos-install-adapter.mjs <codex|generic-ide|claude-code> [--target <dir>] [--dry-run]");
   process.exit(2);
 }
 
@@ -20,6 +20,9 @@ const definitions = {
   "generic-ide": [
     { from: path.join("adapters", "generic-ide", "templates", "AGENTS.md"), to: "AGENTS.md" },
     { from: path.join("adapters", "generic-ide", "templates", "IDE_AGENT_GUIDE.md"), to: "IDE_AGENT_GUIDE.md" }
+  ],
+  "claude-code": [
+    { from: path.join("adapters", "claude-code", "templates", "CLAUDE.md"), to: "CLAUDE.md" }
   ]
 };
 

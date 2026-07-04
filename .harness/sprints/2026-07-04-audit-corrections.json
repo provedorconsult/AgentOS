@@ -1,0 +1,195 @@
+{
+  "id": "2026-07-04-audit-corrections",
+  "status": "verified",
+  "title": "Audit correction phases 1-3",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [
+      "docs/REVIEW.md",
+      ".harness/current.txt",
+      ".harness/project-state.json"
+    ],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-audit-corrections-p1-p3",
+      "status": "verified",
+      "title": "Implement decided audit corrections with claude-code carryover scope",
+      "goal": "Execute the audit correction plan phases 1-3 as decided in docs/AUDIT_RESPONSES.md: trust reconciliation (canonical doctor in CI health, pinned actions, accurate validators index, codex-layer README), legacy hygiene (doctor bootstrap hint, docs/legacy archive, PowerShell deprecation, SECURITY_GUARDRAILS rename) and refinements (POSIX hook shims, data domain removal, language policy), plus the AGENTS/CLAUDE source-order drift gate. The uncommitted claude-code coexistence slice files remain declared as carryover scope.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Implement audit correction phases 1-3 per docs/AUDIT_RESPONSES.md with mechanical gates green and the deprecated workflow removal still gated on the prerelease.",
+        "outcome": "Health and review workflows run the canonical Node doctor with SHA-pinned actions, doctor gives an npm ci hint on missing dependencies, control-plane legacy is fenced under docs/legacy and scripts/legacy, the guardrails doc no longer collides with root SECURITY.md, POSIX hook shims delegate to canonical validators, and CLAUDE.md cannot drift from AGENTS.md silently.",
+        "verificationSurface": "npm run doctor, npm run validate:adapters, npm test, npm run validate, git diff --check and docs/REVIEW.md evidence",
+        "constraints": [
+          "Do not remove the deprecated numbered workflows before one release cycle after the 2.0.0-rc.1 prerelease.",
+          "Do not edit verified or archived sprint JSON records; discrepancies become errata.",
+          "Do not add dependencies.",
+          "Keep deploy.ps1 as the deploy workflow wrapper."
+        ],
+        "boundaries": [
+          ".github/",
+          "scripts/",
+          "codex-layer/",
+          "docs/",
+          "core/",
+          "tests/",
+          ".harness/",
+          "adapters/",
+          "specpilot/",
+          "CLAUDE.md",
+          "README.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md"
+        ],
+        "iterationPolicy": "Use the smallest change that satisfies the failing verification.",
+        "blockedStopCondition": "Stop if a gate cannot pass without touching a closed historical record or removing the gated deprecated workflows."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "150-169"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "AGENTS.md",
+            "range": "1-53"
+          },
+          {
+            "path": "adapters/codex/mapping.yaml",
+            "range": "1-8"
+          }
+        ],
+        "contracts": [
+          "agentos.audit-corrections.v1"
+        ]
+      },
+      "files": [
+        { "path": ".github/workflows/agent-review.yml", "action": "modify" },
+        { "path": ".github/workflows/environment-health.yml", "action": "modify" },
+        { "path": "CHANGELOG.md", "action": "modify" },
+        { "path": "CONTRIBUTING.md", "action": "modify" },
+        { "path": "README.md", "action": "modify" },
+        { "path": "adapters/claude-code/README.md", "action": "modify" },
+        { "path": "adapters/claude-code/mapping.yaml", "action": "modify" },
+        { "path": "codex-layer/README.md", "action": "modify" },
+        { "path": "core/rules/security.md", "action": "modify" },
+        { "path": "docs/ADAPTERS.md", "action": "modify" },
+        { "path": "docs/AGENT_ROSTER.md", "action": "modify" },
+        { "path": "docs/ARCHITECTURE.md", "action": "modify" },
+        { "path": "docs/DECISIONS/0001-agentos-control-plane.md", "action": "modify" },
+        { "path": "docs/EVONEXUS_ALIGNMENT.md", "action": "modify" },
+        { "path": "docs/IDE_COMPATIBILITY.md", "action": "modify" },
+        { "path": "docs/INDEX.md", "action": "modify" },
+        { "path": "docs/PLAN.md", "action": "modify" },
+        { "path": "docs/RELEASE.md", "action": "modify" },
+        { "path": "docs/REVIEW.template.md", "action": "modify" },
+        { "path": "docs/SKILLS.md", "action": "modify" },
+        { "path": "docs/SPEC.md", "action": "modify" },
+        { "path": "docs/SPECPILOT_ENGINE.md", "action": "modify" },
+        { "path": "scripts/agentos-install-adapter.mjs", "action": "modify" },
+        { "path": "scripts/doctor.mjs", "action": "modify" },
+        { "path": "scripts/validate-adapters.mjs", "action": "modify" },
+        { "path": "specpilot/validators/README.md", "action": "modify" },
+        { "path": "core/skills/data/.gitkeep", "action": "delete" },
+        { "path": "docs/PRD_AGENTOS_EVONEXUS_ALIGNMENT.docx", "action": "delete" },
+        { "path": "scripts/doctor.ps1", "action": "delete" },
+        { "path": "scripts/install-codex-layer.ps1", "action": "delete" },
+        { "path": "scripts/review-local.ps1", "action": "delete" },
+        { "path": "scripts/validate.ps1", "action": "delete" },
+        { "path": "docs/SECURITY.md", "action": "delete" },
+        { "path": "docs/SECURITY_GUARDRAILS.md", "action": "create" },
+        { "path": "docs/MIGRATION_MAP.md", "action": "delete" },
+        { "path": "docs/legacy/MIGRATION_MAP.md", "action": "create" },
+        { "path": "docs/OBSERVABILITY.md", "action": "delete" },
+        { "path": "docs/legacy/OBSERVABILITY.md", "action": "create" },
+        { "path": "docs/OPERATING_MODEL.md", "action": "delete" },
+        { "path": "docs/legacy/OPERATING_MODEL.md", "action": "create" },
+        { "path": "docs/ORCHESTRATION.md", "action": "delete" },
+        { "path": "docs/legacy/ORCHESTRATION.md", "action": "create" },
+        { "path": "docs/PLAYBOOKS/existing-project.md", "action": "delete" },
+        { "path": "docs/legacy/PLAYBOOKS/existing-project.md", "action": "create" },
+        { "path": "docs/PLAYBOOKS/new-project.md", "action": "delete" },
+        { "path": "docs/legacy/PLAYBOOKS/new-project.md", "action": "create" },
+        { "path": "scripts/adapt-existing-project.ps1", "action": "delete" },
+        { "path": "scripts/legacy/adapt-existing-project.ps1", "action": "create" },
+        { "path": "scripts/bootstrap-project.ps1", "action": "delete" },
+        { "path": "scripts/legacy/bootstrap-project.ps1", "action": "create" },
+        { "path": "scripts/create-github-repo.ps1", "action": "delete" },
+        { "path": "scripts/legacy/create-github-repo.ps1", "action": "create" },
+        { "path": "docs/legacy/README.md", "action": "create" },
+        { "path": "codex-layer/hooks/check-no-secrets.sh", "action": "create" },
+        { "path": "codex-layer/hooks/check-exec-plan.sh", "action": "create" },
+        { "path": "tests/agentos-audit-corrections.test.mjs", "action": "create" },
+        { "path": "tests/agentos-doctor-bootstrap.test.mjs", "action": "create" },
+        { "path": "docs/AUDIT_RESPONSES.md", "action": "create" },
+        { "path": "docs/AUDIT_CLAUDE.md", "action": "create" },
+        { "path": "docs/AUDIT_CORRECTION_PLAN.md", "action": "create" },
+        { "path": "docs/AUDIT_OPEN_QUESTIONS.md", "action": "create" },
+        { "path": "CLAUDE.md", "action": "create" },
+        { "path": "adapters/claude-code/install.sh", "action": "create" },
+        { "path": "adapters/claude-code/templates/CLAUDE.md", "action": "create" },
+        { "path": "tests/agentos-claude-code-adapter.test.mjs", "action": "create" },
+        { "path": ".harness/sprints/2026-07-04-claude-code-vscode-compat.json", "action": "create" },
+        { "path": ".harness/sprints/2026-07-04-audit-corrections.json", "action": "create" }
+      ],
+      "acceptanceCriteria": [
+        "Health and review workflows run the canonical doctor with SHA-pinned actions.",
+        "Doctor fails with an npm ci hint when pinned dependencies are missing.",
+        "Control-plane era docs and duplicated PowerShell helpers are fenced as legacy with updated index and gates.",
+        "CLAUDE.md source order cannot drift from AGENTS.md without failing adapter validation.",
+        "POSIX hook shims delegate to the canonical Node validators."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate:adapters",
+          "npm test",
+          "npm run validate",
+          "git diff --check"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Health and review workflows run the canonical doctor with SHA-pinned actions.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Regression asserts environment-health runs npm ci plus npm run doctor and that every uses: entry in both workflows is a 40-hex SHA."
+        },
+        {
+          "criterion": "Doctor fails with an npm ci hint when pinned dependencies are missing.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Bootstrap regression runs the copied doctor in a temp directory without node_modules and asserts exit 1 with the npm ci message and no raw module-not-found stack."
+        },
+        {
+          "criterion": "Control-plane era docs and duplicated PowerShell helpers are fenced as legacy with updated index and gates.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Full validation green after the docs/legacy and scripts/legacy moves, SECURITY_GUARDRAILS rename, index update and workflow gate updates."
+        },
+        {
+          "criterion": "CLAUDE.md source order cannot drift from AGENTS.md without failing adapter validation.",
+          "command": "npm run validate:adapters",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Adapter validation compares the numbered Source Order lists of AGENTS.md and CLAUDE.md and passes with the aligned surfaces."
+        },
+        {
+          "criterion": "POSIX hook shims delegate to the canonical Node validators.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Regression executes codex-layer/hooks/check-no-secrets.sh through sh and observes the canonical scanner output with exit 0."
+        }
+      ]
+    }
+  ]
+}

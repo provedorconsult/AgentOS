@@ -1,9 +1,13 @@
 adapter:
   id: claude-code
-  status: experimental
-  target_tool: Claude Code
+  status: supported
+  target_tool: Claude Code (VSCode extension and CLI)
   core_dependency: false
 maps:
+  instructions:
+    from: adapters/claude-code/templates/CLAUDE.md
+    to: CLAUDE.md
+    status: supported
   agents:
     from: core/agents
     to: .claude/agents
@@ -12,11 +16,7 @@ maps:
     from: core/skills
     to: .claude/skills
     status: planned
-  instructions:
-    from: AGENTS.md
-    to: CLAUDE.md
-    status: planned
 notes:
-  - This adapter is a placeholder.
-  - Do not make AgentOS depend on Claude Code.
+  - Installs CLAUDE.md only; it coexists with the Codex adapter and never touches .codex/ or AGENTS.md.
+  - Do not make AgentOS core depend on Claude Code or .claude/.
   - Core files must remain IDE-neutral.

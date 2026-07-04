@@ -1,3 +1,5 @@
+> **LEGACY (archived 2026-07-04).** This document describes the pre-Architecture 2.0 control-plane era and is kept for historical context only. It must not guide current work; the canonical sources are `docs/ARCHITECTURE.md`, `docs/SPEC.md`, `docs/PLAN.md` and `AGENTS.md`.
+
 # Operating Model
 
 AgentOS is based on a simple loop:

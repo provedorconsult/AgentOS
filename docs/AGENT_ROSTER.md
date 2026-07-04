@@ -1,6 +1,6 @@
 # Agent Roster
 
-AgentOS uses custom Codex agents stored in `codex-layer/agents/`. Install the layer into `.codex/` with `scripts/install-codex-layer.ps1`.
+AgentOS defines its agent roster in `core/agents/` (IDE-neutral operating contracts) with Codex-specific translations in `codex-layer/agents/`. Install the Codex layer into `.codex/` with `npm run agentos:install-adapter -- codex`.
 
 ## Orchestration
 
