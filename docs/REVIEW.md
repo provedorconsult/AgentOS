@@ -4,21 +4,21 @@
 
 - Package metadata: `2.0.0-rc.1`.
 - Formal prerelease: not published.
-- Release decision: ready for owner-approved merge after branch protection removes required review and required checks remain green.
+- Release decision: pending owner release action after the current workflow-refresh reconciliation is merged and the release gates are explicitly reviewed.
 
 ## Current Commit
 
-- Base commit: `d190752ea30eb25ace03f0af84d795186034ac67`.
-- Base source: merge commit for PR #8, `fix: close AgentOS post-audit findings`.
-- Working branch: `fix/agentos-rc-final-hardening`.
-- Published head before governance evidence update: `163b0447bcb57a486be533fadf914dcf039dccd9`.
+- Current `main`: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
+- Current main source: merge commit for PR [#14](https://github.com/provedorconsult/AgentOS/pull/14), `fix: reconcile audit follow-up and adapter support`.
+- Working branch: `fix/agentos-workflow-refresh`.
+- Published baseline before the workflow refresh: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
 
 ## Current Pull Request
 
-- PR: [#11](https://github.com/provedorconsult/AgentOS/pull/11).
-- PR author: `provedorconsult`.
-- Review decision before governance change: `REVIEW_REQUIRED`.
-- Merge state before governance change: `BLOCKED`.
+- PR: pending for the workflow-refresh slice.
+- PR author: pending.
+- Review decision: pending.
+- Merge state: pending.
 - Merge commit: pending.
 - Tag: not created.
 - GitHub prerelease: not created.
@@ -26,20 +26,19 @@
 ## Governance
 
 - `main` branch protection must require Ubuntu and Windows validation checks plus checklist status.
-- Required review is disabled while the repository has only the owner as eligible maintainer.
+- Required review is currently disabled; the 2026-07-04 branch protection readback shows required status checks plus conversation resolution, with no active required-review rule.
 - Owner-approved merge is allowed after required checks pass and conversation resolution is clean.
 - Administrative bypass remains unnecessary for normal development flow.
 - Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) is superseded by this governance policy change.
-- PR #7 and PR #8 remain historical evidence only.
+- PR #7, PR #8 and PR #11 remain historical evidence only.
 
 ## CI Evidence
 
-- PR checks before governance evidence update:
-  - checklist: passed, run `27834630266`.
-  - AgentOS CI: passed, run `27834630272`.
-  - `validate (ubuntu-latest)`: passed, job `82379573516`.
-  - `validate (windows-latest)`: passed, job `82379573530`.
-- CI executed `npm ci`, dependency audit, doctor, validate, diff hygiene and clean-worktree checks.
+- Current mainline baseline:
+  - PR [#14](https://github.com/provedorconsult/AgentOS/pull/14): merged at `2026-07-04T11:56:19Z`.
+  - Merge commit: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
+  - Ubuntu, Windows and checklist checks passed before merge.
+- The workflow-refresh slice will add its own PR evidence below once the branch is published.
 
 ## Local Verification
 

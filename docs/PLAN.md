@@ -62,6 +62,12 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - Editable files: `.github/workflows/*`, `scripts/*`, `codex-layer/*`, `docs/*`, `core/rules/security.md`, `core/skills/*`, `specpilot/validators/README.md`, `tests/*`, `CONTRIBUTING.md`, `CHANGELOG.md`, `.harness/*`
 - Verification: `npm run doctor`, `npm run validate:adapters`, `npm test`, `npm run validate`, `git diff --check`
 
+### Task 010 - Workflow Action Refresh and Review Reconciliation
+
+- Goal: absorb the pending GitHub Actions SHA refreshes through declared sprint scope, keep every workflow pinned by immutable SHA, and reconcile `docs/REVIEW.md` with the post-PR-14 repository state.
+- Editable files: `.github/workflows/*`, `docs/REVIEW.md`, `CHANGELOG.md`, `docs/PLAN.md`, `.harness/*`
+- Verification: `npm run doctor`, `npm run validate:templates`, `npm run validate:context`, `npm run validate:state`, `npm run validate:secrets`, `npm run validate:scope`, `npm run validate:workflows`, `npm run validate:adapters`, `npm run validate:docs`, `npm run validate:license`, `git diff --check`, `gh pr checks`
+
 ## Risks
 
 - real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;

@@ -1,0 +1,127 @@
+{
+  "id": "2026-07-04-workflow-action-refresh",
+  "status": "pending",
+  "title": "Workflow action refresh and review reconciliation",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [
+      "docs/REVIEW.md",
+      ".harness/current.txt",
+      ".harness/project-state.json"
+    ],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-workflow-refresh-review",
+      "status": "pending",
+      "title": "Refresh workflow action SHAs and reconcile review state",
+      "goal": "Absorb the pending GitHub Actions SHA refreshes through declared sprint scope, keep every workflow pinned by immutable SHA, and reconcile review evidence with the post-PR-14 repository state.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Refresh the pinned workflow action SHAs and reconcile docs/REVIEW.md with the post-PR-14 repository state, verified by local non-test validators and GitHub PR checks.",
+        "outcome": "The open workflow SHA bumps no longer fail validate:scope, workflows remain pinned by immutable SHA, and docs/REVIEW.md reflects the current mainline baseline instead of the old PR #11 snapshot.",
+        "verificationSurface": "npm run doctor, npm run validate:templates, npm run validate:context, npm run validate:state, npm run validate:secrets, npm run validate:scope, npm run validate:workflows, npm run validate:adapters, npm run validate:docs, npm run validate:license, git diff --check and gh pr checks",
+        "constraints": [
+          "Do not run npm test or npm run validate locally on this workstation.",
+          "Do not add dependencies.",
+          "Do not perform a deploy or publish a release."
+        ],
+        "boundaries": [
+          ".github/",
+          "docs/",
+          "CHANGELOG.md",
+          ".harness/"
+        ],
+        "iterationPolicy": "Declare only the files needed for the workflow refresh and review-state reconciliation, then verify with the light local gates plus GitHub CI.",
+        "blockedStopCondition": "Stop if the refresh requires files outside the declared scope or if GitHub CI fails for a root cause unrelated to the workflow SHA updates."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "40-51"
+        },
+        {
+          "path": "docs/SPEC.md",
+          "range": "92-131"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/RELEASE.md",
+            "range": "1-32"
+          }
+        ],
+        "contracts": [
+          "agentos.workflow-action-refresh.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": ".github/workflows/agent-review.yml",
+          "action": "modify"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "action": "modify"
+        },
+        {
+          "path": ".github/workflows/deploy.yml",
+          "action": "modify"
+        },
+        {
+          "path": ".github/workflows/environment-health.yml",
+          "action": "modify"
+        },
+        {
+          "path": "docs/REVIEW.md",
+          "action": "modify"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/current.txt",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/project-state.json",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/sprints/2026-07-04-workflow-action-refresh.json",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "The pending workflow action refreshes are absorbed through declared sprint scope while every workflow keeps immutable SHA pins.",
+        "Review evidence and changelog reflect the post-PR-14 baseline and the new workflow-refresh slice instead of keeping the old PR #11 snapshot as the current state.",
+        "Git diff scope and the light local validators pass for the workflow-refresh branch, and GitHub PR checks pass before merge."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate:templates",
+          "npm run validate:context",
+          "npm run validate:state",
+          "npm run validate:secrets",
+          "npm run validate:scope",
+          "npm run validate:workflows",
+          "npm run validate:adapters",
+          "npm run validate:docs",
+          "npm run validate:license",
+          "git diff --check",
+          "gh pr checks"
+        ]
+      },
+      "evidence": []
+    }
+  ]
+}
