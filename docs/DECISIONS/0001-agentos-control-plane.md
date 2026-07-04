@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by AgentOS Architecture 2.0 (`docs/ARCHITECTURE.md`) on 2026-07-04. Kept as an immutable historical record.
 
 ## Context
 

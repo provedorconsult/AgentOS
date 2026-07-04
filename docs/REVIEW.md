@@ -93,3 +93,32 @@
 ## Release Decision
 
 `READY FOR OWNER MERGE` after required checks are green and branch protection confirms required reviews are disabled.
+
+## 2026-07-04 Claude Code VSCode Coexistence
+
+Sprint: `.harness/sprints/2026-07-04-claude-code-vscode-compat.json`. Authorized by the 2026-07-04 user request; SPEC R9 records the slice.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| `npm test` | Linux local | 0 | `40` tests passed. | New claude-code regression proves `.codex/config.toml` and `AGENTS.md` stay byte-identical after installing `codex` then `claude-code` into the same target. | Coexistence with Codex. | Node test suite only. | None known. |
+| `npm run doctor` | Linux local | 0 | AgentOS doctor passed. | `CLAUDE.md` and `adapters/claude-code/templates/CLAUDE.md` added to the required surfaces. | Root CLAUDE.md present. | Local host only. | None known. |
+| `npm run validate:adapters` | Linux local | 0 | Adapter validation passed. | claude-code README, mapping and template checks enforce CLAUDE.md mapping, coexistence and backup guidance. | Adapter documentation contract. | Regex-based checks only. | None known. |
+| `npm run validate` | Linux local | 0 | Full validation passed. | Templates, context, state, secrets, edit scope, workflows, adapters, docs, license and tests green after the documentation updates. | Docs reflect the slice. | Local host only; Windows and Ubuntu CI reruns happen at PR time. | CI must confirm on Windows and Ubuntu. |
+
+## 2026-07-04 Audit Correction Phases 1-3
+
+Sprint: `.harness/sprints/2026-07-04-audit-corrections.json`. Decisions: `docs/AUDIT_RESPONSES.md`. SPEC R10 records the slice.
+
+Governance note (Q9): owner-approved merge remains a temporary exception; required review must be re-enabled for `main` when a second eligible maintainer exists. Automated agent review complements but never replaces human review for merges to `main` or release publication.
+
+Errata (Q11 policy applied): audit finding 12.8 in `docs/AUDIT_CLAUDE.md` claimed `docs/superpowers/plans/2026-06-19-agentos-rc-final-hardening.md` was missing; the file exists and the finding was annulled in place. The historical sprint record was not modified. Closed sprints are immutable; later discrepancies become errata like this one.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| `npm run doctor` | Linux local | 0 | AgentOS doctor passed. | New surfaces (guardrails doc, legacy index, POSIX shims, new tests) required and present. | Doctor gate. | Local host only. | None known. |
+| `npm run validate:adapters` | Linux local | 0 | Adapter validation passed. | Source Order drift gate between `AGENTS.md` and `CLAUDE.md` active and green. | Instruction surface alignment. | Regex/structure comparison only. | None known. |
+| `npm test` | Linux local | 0 | `45` tests passed. | Doctor bootstrap hint, pinned-action workflows, POSIX shim delegation and legacy fencing regressions green. | Correction regressions. | Node test suite only. | None known. |
+| `npm run validate` | Linux local | 0 | Full validation passed. | Doctor, discovery, context, state, secrets, edit scope, workflows, adapters, docs, license and tests green after the corrections. | Complete local validation. | Local host only; Windows and Ubuntu CI reruns happen at PR time. | CI must confirm on Windows and Ubuntu. |
+| `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean after archive moves. | Diff hygiene. | Local diff only. | None known. |
+
+Gated items intentionally not executed: deprecated numbered workflow removal (Q5, waits one release cycle after the `2.0.0-rc.1` prerelease); tag and prerelease publication (Q1, owner action after this reconciliation merges).

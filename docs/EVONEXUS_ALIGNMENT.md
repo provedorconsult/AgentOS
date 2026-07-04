@@ -37,12 +37,12 @@ AgentOS remains the platform. SpecPilot remains the SPEC-driven engine for SPEC,
 
 ## Claude Code Coupling Risk
 
-Claude Code is represented only by `adapters/claude-code/` as an experimental future adapter. Core files must not require `.claude/`, Claude-specific commands or Claude-specific skill formats. The current official initial adapter remains Codex.
+Claude Code is supported through `adapters/claude-code/`, which installs only a `CLAUDE.md` instructions surface and coexists with the Codex adapter in the same repository. Core files must not require `.claude/`, Claude-specific commands or Claude-specific skill formats. Codex remains the initial supported adapter.
 
 ## Incremental Plan
 
 1. Establish docs, goals, skills, layers, solutioning and retro.
 2. Keep extensions as documented placeholders until a future task defines executable behavior.
 3. Keep packs optional and manually selected.
-4. Promote Claude Code only after an adapter task proves generated files and validation without coupling `core/`.
+4. Expand Claude Code beyond the `CLAUDE.md` instructions surface only after an adapter task proves generated `.claude/` files and validation without coupling `core/`.
 5. Add real integrations only through explicit PRDs, tests and security review.

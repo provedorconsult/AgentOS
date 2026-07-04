@@ -15,6 +15,8 @@
 
 AgentOS is currently maintained by the repository owner. Owner-approved merge is allowed when all required checks pass and branch protection does not require an independent reviewer. Administrative bypass should not be used for normal development flow; instead, keep required checks enabled and remove the required-review rule when no eligible reviewer exists.
 
+This owner-approved merge policy is a temporary governance exception, not a target state. When a second eligible maintainer exists, required review must be re-enabled for `main`. Automated agent review may complement human review but never replaces it for merges to `main` or release publication.
+
 ## Required Checks
 
 - CI Windows: required.

@@ -1,0 +1,197 @@
+{
+  "id": "2026-07-04-claude-code-vscode-compat",
+  "status": "verified",
+  "title": "Claude Code VSCode coexistence with Codex",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [
+      "docs/REVIEW.md",
+      ".harness/current.txt",
+      ".harness/project-state.json"
+    ],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-claude-code-vscode-compat",
+      "status": "verified",
+      "title": "Install CLAUDE.md instructions surface coexisting with Codex",
+      "goal": "Provide a supported claude-code adapter that installs CLAUDE.md so Claude Code and Codex can drive the same repository in VSCode without conflicting files, keeping core/ independent from .claude/.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Add Claude Code VSCode compatibility coexisting with Codex through a CLAUDE.md instructions surface verified by doctor, adapter validation and regression tests.",
+        "outcome": "The claude-code adapter installs only CLAUDE.md with backup support, the repository root has a CLAUDE.md mirroring the AGENTS.md source order, and installing codex plus claude-code into the same target leaves .codex/ and AGENTS.md intact.",
+        "verificationSurface": "npm run doctor, npm run validate:adapters, npm test, npm run validate and docs/REVIEW.md evidence",
+        "constraints": [
+          "Do not make core/ depend on .claude/ or CLAUDE.md.",
+          "Do not create .claude/ agents or skills generation in this slice.",
+          "Do not modify codex-layer/ or .codex/."
+        ],
+        "boundaries": [
+          "adapters/claude-code/",
+          "scripts/",
+          "tests/",
+          "docs/",
+          ".harness/",
+          "CLAUDE.md",
+          "README.md",
+          "CHANGELOG.md"
+        ],
+        "iterationPolicy": "Use the smallest change that satisfies the failing verification.",
+        "blockedStopCondition": "Stop if coexistence cannot be proven without touching .codex/ or AGENTS.md."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "133-149"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "adapters/codex/mapping.yaml",
+            "range": "1-8"
+          },
+          {
+            "path": "AGENTS.md",
+            "range": "1-53"
+          }
+        ],
+        "contracts": [
+          "agentos.claude-code-adapter.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "CLAUDE.md",
+          "action": "create"
+        },
+        {
+          "path": "adapters/claude-code/templates/CLAUDE.md",
+          "action": "create"
+        },
+        {
+          "path": "adapters/claude-code/README.md",
+          "action": "modify"
+        },
+        {
+          "path": "adapters/claude-code/mapping.yaml",
+          "action": "modify"
+        },
+        {
+          "path": "adapters/claude-code/install.sh",
+          "action": "create"
+        },
+        {
+          "path": "scripts/agentos-install-adapter.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/validate-adapters.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "scripts/doctor.mjs",
+          "action": "modify"
+        },
+        {
+          "path": "tests/agentos-claude-code-adapter.test.mjs",
+          "action": "create"
+        },
+        {
+          "path": "docs/SPEC.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/ARCHITECTURE.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/ADAPTERS.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/IDE_COMPATIBILITY.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/EVONEXUS_ALIGNMENT.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/AUDIT_CLAUDE.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/AUDIT_CORRECTION_PLAN.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/AUDIT_OPEN_QUESTIONS.md",
+          "action": "create"
+        },
+        {
+          "path": "README.md",
+          "action": "modify"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/sprints/2026-07-04-claude-code-vscode-compat.json",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "The claude-code adapter installs CLAUDE.md without modifying AGENTS.md or .codex/ in the same target.",
+        "The repository root CLAUDE.md mirrors the AGENTS.md source order for Claude Code in VSCode.",
+        "Adapter README, mapping and template declare the supported CLAUDE.md mapping and Codex coexistence.",
+        "SPEC, PLAN, architecture, adapter and IDE compatibility docs reflect the Claude Code slice without stale placeholder claims."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate:adapters",
+          "npm test",
+          "npm run validate"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "The claude-code adapter installs CLAUDE.md without modifying AGENTS.md or .codex/ in the same target.",
+          "command": "npm test",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "40 tests passed, including the claude-code coexistence regression that installs codex then claude-code into one target and asserts .codex/config.toml and AGENTS.md stay byte-identical."
+        },
+        {
+          "criterion": "The repository root CLAUDE.md mirrors the AGENTS.md source order for Claude Code in VSCode.",
+          "command": "npm run doctor",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "AgentOS doctor passed with CLAUDE.md and adapters/claude-code/templates/CLAUDE.md added to the required surfaces."
+        },
+        {
+          "criterion": "Adapter README, mapping and template declare the supported CLAUDE.md mapping and Codex coexistence.",
+          "command": "npm run validate:adapters",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Adapter validation passed with claude-code README, mapping and template checks for CLAUDE.md, coexistence and backup guidance."
+        },
+        {
+          "criterion": "SPEC, PLAN, architecture, adapter and IDE compatibility docs reflect the Claude Code slice without stale placeholder claims.",
+          "command": "npm run validate",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Full validation passed, covering templates, context ranges, state, secrets, edit scope, workflows, adapters, docs, license and the test suite after the documentation updates."
+        }
+      ]
+    }
+  ]
+}

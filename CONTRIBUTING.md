@@ -1,5 +1,9 @@
 # Contributing
 
+## Language Policy
+
+English is the canonical language for new architecture, contract and operational documents (`docs/`, `core/`, `specpilot/`, `adapters/`). Portuguese is acceptable only in transitory artifacts, audits or explicitly local material. Existing Portuguese documents may be converted gradually.
+
 ## Local Gates
 
 Run before opening a pull request:

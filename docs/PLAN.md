@@ -50,6 +50,18 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - Editable files: `scripts/validate-edit-scope.mjs`, `scripts/validate-sprint-json.mjs`, `scripts/validate-no-secrets.mjs`, `scripts/doctor.mjs`, `core/schemas/sprint.schema.json`, `tests/*.test.mjs`, `.harness/*`, `.github/workflows/ci.yml`, `package.json`, `README.md`, `CHANGELOG.md`, `docs/*.md`
 - Verification: `npm ci`, `npm audit --audit-level=moderate`, `npm run doctor`, `npm run validate`, `npm test`, `git diff --check`, `git status --porcelain`
 
+### Task 008 - Claude Code VSCode Coexistence
+
+- Goal: install a `CLAUDE.md` instructions surface through the `claude-code` adapter so Claude Code and Codex coexist in VSCode, without coupling `core/` to `.claude/`.
+- Editable files: `adapters/claude-code/*`, `scripts/agentos-install-adapter.mjs`, `scripts/validate-adapters.mjs`, `scripts/doctor.mjs`, `CLAUDE.md`, `tests/agentos-claude-code-adapter.test.mjs`, `docs/*.md`, `README.md`, `CHANGELOG.md`, `.harness/*`
+- Verification: `npm run doctor`, `npm run validate:adapters`, `npm test`, `npm run validate`
+
+### Task 009 - Audit Correction Phases 1-3
+
+- Goal: implement the decided audit corrections (trust reconciliation, legacy hygiene and refinements) per `docs/AUDIT_RESPONSES.md`, keeping the deprecated workflow removal gated on the prerelease.
+- Editable files: `.github/workflows/*`, `scripts/*`, `codex-layer/*`, `docs/*`, `core/rules/security.md`, `core/skills/*`, `specpilot/validators/README.md`, `tests/*`, `CONTRIBUTING.md`, `CHANGELOG.md`, `.harness/*`
+- Verification: `npm run doctor`, `npm run validate:adapters`, `npm test`, `npm run validate`, `git diff --check`
+
 ## Risks
 
 - real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;

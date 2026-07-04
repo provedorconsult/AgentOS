@@ -1,6 +1,6 @@
-# Security Policy
+# Security Guardrails
 
-AgentOS favors explicit, auditable automation.
+Operational security guardrails for agents and humans working on AgentOS repositories. The vulnerability reporting policy lives in the repository root `SECURITY.md`; the short normative rules for agents live in `core/rules/security.md`.
 
 ## Secrets
 

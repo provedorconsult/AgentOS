@@ -10,6 +10,10 @@ Codex e suportado pelo adaptador `adapters/codex/`, que instala `.codex/` e inst
 
 O adaptador `adapters/generic-ide/` instala `AGENTS.md` e `IDE_AGENT_GUIDE.md` sem criar `.codex/`.
 
+## Claude Code
+
+Claude Code (extensao VSCode ou CLI) e suportado pelo adaptador `adapters/claude-code/`, que instala apenas `CLAUDE.md` sem tocar `.codex/` ou `AGENTS.md`. Os adaptadores `codex` e `claude-code` podem ser instalados no mesmo repositorio, permitindo Codex e Claude Code lado a lado no VSCode. A geracao de `.claude/` continua planejada para uma SPEC futura.
+
 ## Antigravity
 
 `adapters/antigravity/` existe como placeholder experimental. Ele documenta a intencao, mas nao promete instalacao completa nesta fase.

@@ -1,7 +1,23 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import { spawnSync } from "node:child_process";
-import { loadAgentosConfig } from "./lib/agentos-config.mjs";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const missingDependencies = ["yaml", "ajv"].filter((dependency) => {
+  try {
+    require.resolve(dependency);
+    return false;
+  } catch {
+    return true;
+  }
+});
+if (missingDependencies.length > 0) {
+  console.error(`missing pinned dependencies: ${missingDependencies.join(", ")}. Run npm ci before npm run doctor.`);
+  process.exit(1);
+}
+
+const { loadAgentosConfig } = await import("./lib/agentos-config.mjs");
 
 const required = [
   "AGENTS.md",
@@ -74,6 +90,8 @@ const required = [
   "adapters/antigravity/README.md",
   "adapters/claude-code/README.md",
   "adapters/claude-code/mapping.yaml",
+  "adapters/claude-code/templates/CLAUDE.md",
+  "CLAUDE.md",
   "extensions/README.md",
   "extensions/memory/README.md",
   "extensions/heartbeats/README.md",
@@ -104,6 +122,13 @@ const required = [
   ,"tests/agentos-edit-scope.test.mjs"
   ,"tests/agentos-harness-discovery.test.mjs"
   ,"tests/agentos-secret-scan-extended.test.mjs"
+  ,"tests/agentos-claude-code-adapter.test.mjs"
+  ,"tests/agentos-doctor-bootstrap.test.mjs"
+  ,"tests/agentos-audit-corrections.test.mjs"
+  ,"docs/SECURITY_GUARDRAILS.md"
+  ,"docs/legacy/README.md"
+  ,"codex-layer/hooks/check-no-secrets.sh"
+  ,"codex-layer/hooks/check-exec-plan.sh"
 ];
 
 let failures = 0;

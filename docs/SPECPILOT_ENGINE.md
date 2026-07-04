@@ -33,6 +33,14 @@ Cada task declara `specRefs`, arquivos somente leitura com ranges, contratos rel
 
 Uma task so pode ir para `done` depois de evidencia objetiva em `docs/REVIEW.md`.
 
+## Limites de Evidencia
+
+A evidencia registrada em sprints e `docs/REVIEW.md` e auto-declarada: os validadores garantem consistencia interna (comando declarado, exit code 0, criterio coberto e resultado sem termos de falha), mas nao reexecutam os comandos. A prova final de execucao e o CI multi-OS. Nao trate evidencia local como prova criptografica de execucao. Um runner que executa `verification.commands` e grava a evidencia automaticamente e uma evolucao futura registrada no plano de correcoes da auditoria.
+
+## Imutabilidade de Sprints Fechados
+
+Sprints `verified`, `done` ou arquivados sao registros historicos imutaveis. Discrepancias descobertas depois viram errata em `docs/REVIEW.md` ou no documento de auditoria correspondente, nunca reescrita do JSON historico.
+
 ## Relacao com AgentOS e Adaptadores
 
 AgentOS e a plataforma. SpecPilot Engine e o motor de execucao SPEC-driven. Adaptadores, como Codex ou Generic IDE, traduzem esse contrato para ferramentas especificas sem alterar o nucleo.
