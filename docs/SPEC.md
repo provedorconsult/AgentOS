@@ -23,7 +23,7 @@ In scope:
 - compare real Git diff paths and actions with sprint-declared editable scope;
 - discover harness templates, sprints and archive files automatically instead of relying on hardcoded package lists;
 - scan structured secret assignments with quoted values, special characters and base64-like values;
-- require formal GitHub review before merge, tag or prerelease;
+- require explicit GitHub governance before merge, tag or prerelease, with formal review whenever branch protection requires it;
 - reconcile release-candidate docs, changelog and review evidence;
 - keep deploy contract-only and fail closed when no real target exists.
 
@@ -128,7 +128,7 @@ Acceptance criteria:
 - `validate-sprint-json.mjs --discover` validates templates, sprints and archive JSON files without package hardcoding;
 - `validate-no-secrets.mjs` detects structured assignments such as `DB_PASSWORD`, `SERVICE_SECRET`, `CUSTOM_TOKEN`, `API_KEY`, `PRIVATE_KEY`, `ACCESS_TOKEN` and `CLIENT_SECRET`;
 - `docs/REVIEW.md` records current commit, PR, governance, CI, local verification, negative tests, scope validation, dependency audit, security and release decision;
-- no tag or GitHub prerelease is created until CI is green and a formal non-bypass `APPROVE` review exists.
+- no tag or GitHub prerelease is created until CI is green and the release governance documented in `docs/RELEASE.md` and `docs/REVIEW.md` is satisfied; when branch protection requires review, that approval must be a non-bypass `APPROVE`.
 
 ### R9 - Claude Code VSCode Coexistence
 

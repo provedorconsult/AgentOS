@@ -15,6 +15,7 @@
 - documented the Codex configuration policy, the self-declared evidence limitation, the closed-sprint immutability rule, the temporary owner-merge governance exception and the English-first language policy;
 - removed the empty `data` skills domain until a real skill exists;
 - refreshed the SHA-pinned `actions/checkout` and `actions/setup-node` references across the workflow set through a declared sprint so the Dependabot updates no longer fail `validate:scope`;
+- reconciled residual canonical docs after PR #15 so release, review and prerelease wording matches the current owner-approved governance contract;
 - deprecation notice: the numbered compatibility workflows (`core/workflows/04-implement.md`, `05-verify.md`, `06-finish.md`, `07-release.md`, `08-deploy.md`, `09-improve.md`) will be removed one release cycle after the `2.0.0-rc.1` prerelease is published.
 
 ## 2.0.0-rc.1 - 2026-06-19

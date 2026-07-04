@@ -4,22 +4,22 @@
 
 - Package metadata: `2.0.0-rc.1`.
 - Formal prerelease: not published.
-- Release decision: ready for owner-approved merge of PR #15; prerelease publication remains a separate owner action after release-gate review.
+- Release decision: merge work is complete on `main`; prerelease publication remains a separate explicit owner action after release-gate review.
 
 ## Current Commit
 
-- Current `main`: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
-- Current main source: merge commit for PR [#14](https://github.com/provedorconsult/AgentOS/pull/14), `fix: reconcile audit follow-up and adapter support`.
-- Working branch: `fix/agentos-workflow-refresh`.
-- Published baseline before the workflow refresh: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
+- Current `main`: `34dfce1e279c7045ce8e02cc57d7e58bccfb8ef4`.
+- Current main source: merge commit for PR [#15](https://github.com/provedorconsult/AgentOS/pull/15), `chore: refresh workflow pins and review state`.
+- Working branch: none required for the current mainline baseline.
+- Previous merged baseline: `96927ff14798bc98442a3acf5fe014d1cac4700b` from PR #14.
 
 ## Current Pull Request
 
-- PR: [#15](https://github.com/provedorconsult/AgentOS/pull/15).
-- PR author: `provedorconsult`.
-- Review decision: none recorded.
-- Merge state: `CLEAN`.
-- Merge commit: pending.
+- PR: none active for the current mainline baseline.
+- Latest merged PR: [#15](https://github.com/provedorconsult/AgentOS/pull/15).
+- Latest PR author: `provedorconsult`.
+- Latest merge decision: owner-approved merge after required checks passed.
+- Latest merge commit: `34dfce1e279c7045ce8e02cc57d7e58bccfb8ef4`.
 - Tag: not created.
 - GitHub prerelease: not created.
 
@@ -31,15 +31,17 @@
 - Administrative bypass remains unnecessary for normal development flow.
 - Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) is superseded by this governance policy change.
 - PR #7, PR #8 and PR #11 remain historical evidence only.
-- Dependabot PRs #9 and #10 remain open but are superseded by the declared workflow-refresh slice because they failed `validate:scope` outside an active sprint.
+- Dependabot PRs #9 and #10 were closed as superseded by PR #15 because they failed `validate:scope` outside an active sprint.
 
 ## CI Evidence
 
 - Current mainline baseline:
-  - PR [#14](https://github.com/provedorconsult/AgentOS/pull/14): merged at `2026-07-04T11:56:19Z`.
-  - Merge commit: `96927ff14798bc98442a3acf5fe014d1cac4700b`.
+  - PR [#15](https://github.com/provedorconsult/AgentOS/pull/15): merged at `2026-07-04T12:14:22Z`.
+  - Merge commit: `34dfce1e279c7045ce8e02cc57d7e58bccfb8ef4`.
   - Ubuntu, Windows and checklist checks passed before merge.
-- The workflow-refresh slice will add its own PR evidence below once the branch is published.
+  - PR [#14](https://github.com/provedorconsult/AgentOS/pull/14) remains the previous merged baseline.
+
+The verification sections below are cumulative evidence across merged hardening slices. Only the `Current ...` sections above describe the live repository baseline.
 
 ## Local Verification
 
@@ -70,7 +72,7 @@
 - Scope source: `.harness/project-state.json` current sprint, then last verified sprint, then `.harness/current.txt`.
 - Required contract: every changed file must match `task.files[]` action unless explicitly allowed by `scopePolicy`.
 - Current sprint exceptions: `docs/REVIEW.md`, `.harness/current.txt`, `.harness/project-state.json`.
-- Latest local scope result: passed with `21` changed path records.
+- Latest verified scope result: passed with `10` changed path records for sprint `2026-07-04-workflow-action-refresh`.
 
 ## Dependency Audit
 
@@ -92,7 +94,7 @@
 
 ## Release Decision
 
-`READY FOR OWNER MERGE` after required checks are green and branch protection confirms required reviews are disabled.
+`MERGE WORK COMPLETE; OWNER RELEASE ACTION PENDING.` Required checks are green on the latest merged baseline, and prerelease publication remains an explicit owner decision.
 
 ## 2026-07-04 Claude Code VSCode Coexistence
 
@@ -141,3 +143,19 @@ Sprint: `.harness/sprints/2026-07-04-workflow-action-refresh.json`. Scope: absor
 | `npm run validate:license` | Linux local | 0 | AgentOS license and metadata validation passed. | Workflow refresh left metadata coherent. | Metadata contract. | Local host only. | None known. |
 | `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean for the workflow-refresh slice. | Diff hygiene. | Local diff only. | None known. |
 | `gh pr checks` | GitHub Actions | 0 | PR #15 passed checklist, Ubuntu and Windows validations. | Required remote checks are green for the workflow-refresh branch. | Remote CI gate. | Depends on GitHub-hosted runners. | None known. |
+
+## 2026-07-04 Residual Documentation Reconciliation
+
+Sprint: `.harness/sprints/2026-07-04-doc-residual-reconciliation.json`. Scope: remove stale canonical governance, prerelease and current-state wording after PR #15 without rewriting historical audit artifacts.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| `npm run doctor` | Linux local | 0 | AgentOS doctor passed. | Canonical docs and harness updates preserved required repository surfaces. | Doctor gate. | Local host only. | None known. |
+| `npm run validate:templates` | Linux local | 0 | Validated `15` harness JSON files. | New sprint declaration parsed and passed the sprint contract. | Sprint discovery. | Local host only. | None known. |
+| `npm run validate:context` | Linux local | 0 | Validated context ranges in `8` JSON files. | New sprint references resolve inside the declared files. | Context contract. | Local host only. | None known. |
+| `npm run validate:state` | Linux local | 0 | AgentOS state validation passed. | The slice was closed cleanly back to `lastVerifiedSprint`. | State contract. | Local host only. | None known. |
+| `npm run validate:secrets` | Linux local | 0 | No secrets detected. | Documentation edits introduced no secret-like assignments. | Secret scan. | Local host only. | None known. |
+| `npm run validate:scope` | Linux local | 0 | Edit scope validation passed with `9` changed path records. | The residual-doc updates stayed inside the declared sprint scope. | Edit scope gate. | Local host only. | None known. |
+| `npm run validate:docs` | Linux local | 0 | AgentOS documentation validation passed. | Canonical docs now align with the current owner-approved governance contract and the post-PR-15 baseline. | Documentation contract. | Local host only. | None known. |
+| `npm run validate:license` | Linux local | 0 | AgentOS license and metadata validation passed. | Documentation reconciliation left metadata coherent. | Metadata contract. | Local host only. | None known. |
+| `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean for the residual-doc slice. | Diff hygiene. | Local diff only. | None known. |
