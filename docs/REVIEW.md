@@ -4,7 +4,7 @@
 
 - Package metadata: `2.0.0-rc.1`.
 - Formal prerelease: not published.
-- Release decision: pending owner release action after the current workflow-refresh reconciliation is merged and the release gates are explicitly reviewed.
+- Release decision: ready for owner-approved merge of PR #15; prerelease publication remains a separate owner action after release-gate review.
 
 ## Current Commit
 
@@ -15,10 +15,10 @@
 
 ## Current Pull Request
 
-- PR: pending for the workflow-refresh slice.
-- PR author: pending.
-- Review decision: pending.
-- Merge state: pending.
+- PR: [#15](https://github.com/provedorconsult/AgentOS/pull/15).
+- PR author: `provedorconsult`.
+- Review decision: none recorded.
+- Merge state: `CLEAN`.
 - Merge commit: pending.
 - Tag: not created.
 - GitHub prerelease: not created.
@@ -31,6 +31,7 @@
 - Administrative bypass remains unnecessary for normal development flow.
 - Issue [#12](https://github.com/provedorconsult/AgentOS/issues/12) is superseded by this governance policy change.
 - PR #7, PR #8 and PR #11 remain historical evidence only.
+- Dependabot PRs #9 and #10 remain open but are superseded by the declared workflow-refresh slice because they failed `validate:scope` outside an active sprint.
 
 ## CI Evidence
 
@@ -121,3 +122,22 @@ Errata (Q11 policy applied): audit finding 12.8 in `docs/AUDIT_CLAUDE.md` claime
 | `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean after archive moves. | Diff hygiene. | Local diff only. | None known. |
 
 Gated items intentionally not executed: deprecated numbered workflow removal (Q5, waits one release cycle after the `2.0.0-rc.1` prerelease); tag and prerelease publication (Q1, owner action after this reconciliation merges).
+
+## 2026-07-04 Workflow Action Refresh and Review Reconciliation
+
+Sprint: `.harness/sprints/2026-07-04-workflow-action-refresh.json`. Scope: absorb the pending GitHub Actions SHA refreshes through declared sprint scope and reconcile `docs/REVIEW.md` with the post-PR-14 baseline.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| `npm run doctor` | Linux local | 0 | AgentOS doctor passed. | Workflow refresh edits preserved required surfaces and prerequisites. | Doctor gate. | Local host only. | None known. |
+| `npm run validate:templates` | Linux local | 0 | Validated `14` harness JSON files. | New sprint declaration parsed and passed the sprint contract. | Sprint discovery. | Local host only. | None known. |
+| `npm run validate:context` | Linux local | 0 | Validated context ranges in `7` JSON files. | New sprint references resolve inside the declared files. | Context contract. | Local host only. | None known. |
+| `npm run validate:state` | Linux local | 0 | AgentOS state validation passed. | Active sprint pointer closed cleanly back to `lastVerifiedSprint`. | State contract. | Local host only. | None known. |
+| `npm run validate:secrets` | Linux local | 0 | No secrets detected. | Workflow and docs edits introduced no secret-like assignments. | Secret scan. | Local host only. | None known. |
+| `npm run validate:scope` | Linux local | 0 | Edit scope validation passed with `10` changed path records. | The SHA refreshes and review-state updates are now declared in sprint scope, unlike the failing Dependabot PRs. | Edit scope gate. | Local host only. | None known. |
+| `npm run validate:workflows` | Linux local | 0 | AgentOS workflow validation passed. | Workflow manifest stayed canonical after the SHA refresh. | Workflow contract. | Does not execute GitHub Actions locally. | GitHub CI still required. |
+| `npm run validate:adapters` | Linux local | 0 | Adapter validation passed. | Workflow updates did not regress adapter contracts. | Adapter contract. | Local host only. | None known. |
+| `npm run validate:docs` | Linux local | 0 | AgentOS documentation validation passed. | `docs/REVIEW.md` and `CHANGELOG.md` stayed link-clean after the reconciliation. | Documentation contract. | Local host only. | None known. |
+| `npm run validate:license` | Linux local | 0 | AgentOS license and metadata validation passed. | Workflow refresh left metadata coherent. | Metadata contract. | Local host only. | None known. |
+| `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean for the workflow-refresh slice. | Diff hygiene. | Local diff only. | None known. |
+| `gh pr checks` | GitHub Actions | 0 | PR #15 passed checklist, Ubuntu and Windows validations. | Required remote checks are green for the workflow-refresh branch. | Remote CI gate. | Depends on GitHub-hosted runners. | None known. |
