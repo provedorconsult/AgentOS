@@ -1,0 +1,142 @@
+{
+  "id": "2026-07-04-doc-residual-reconciliation",
+  "status": "verified",
+  "title": "Residual documentation reconciliation",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [
+      "docs/REVIEW.md",
+      ".harness/current.txt",
+      ".harness/project-state.json"
+    ],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-doc-residual-reconciliation",
+      "status": "verified",
+      "title": "Reconcile stale canonical governance and PR state wording",
+      "goal": "Remove stale governance, prerelease and pull-request wording from canonical docs after PR #15 while leaving historical audit and sprint artifacts untouched.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Reconcile residual canonical documentation wording after PR #15 so release, governance and current-state text matches the repository reality, verified by the light local gates.",
+        "outcome": "Canonical docs stop referring to mandatory formal APPROVE review when branch protection does not require it, and docs/REVIEW.md no longer presents PR #15 as still pending.",
+        "verificationSurface": "npm run doctor, npm run validate:templates, npm run validate:context, npm run validate:state, npm run validate:secrets, npm run validate:scope, npm run validate:docs, npm run validate:license and git diff --check",
+        "constraints": [
+          "Do not rewrite historical audit reports or old sprint artifacts just because they mention older governance assumptions.",
+          "Do not run npm test or npm run validate locally on this workstation.",
+          "Do not add dependencies."
+        ],
+        "boundaries": [
+          "README.md",
+          "docs/",
+          "CHANGELOG.md",
+          ".harness/"
+        ],
+        "iterationPolicy": "Only change current canonical sources and the sprint state needed to declare the slice.",
+        "blockedStopCondition": "Stop if the fix would require rewriting historical evidence instead of clarifying current canonical docs."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "92-131"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "docs/RELEASE.md",
+            "range": "1-32"
+          },
+          {
+            "path": "CONTRIBUTING.md",
+            "range": "1-20"
+          }
+        ],
+        "contracts": [
+          "agentos.doc-residual-reconciliation.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "README.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/SPEC.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/GITHUB_SETUP.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/REVIEW.md",
+          "action": "modify"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/current.txt",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/project-state.json",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/sprints/2026-07-04-doc-residual-reconciliation.json",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "Canonical docs no longer present formal APPROVE review as universally mandatory when branch protection does not require it.",
+        "docs/REVIEW.md reflects the current mainline state after PR #15 instead of describing that PR as still pending.",
+        "The new documentation slice is fully declared in sprint scope and passes the light local validators."
+      ],
+      "verification": {
+        "commands": [
+          "npm run doctor",
+          "npm run validate:templates",
+          "npm run validate:context",
+          "npm run validate:state",
+          "npm run validate:secrets",
+          "npm run validate:scope",
+          "npm run validate:docs",
+          "npm run validate:license",
+          "git diff --check"
+        ]
+      },
+      "evidence": [
+        {
+          "criterion": "Canonical docs no longer present formal APPROVE review as universally mandatory when branch protection does not require it.",
+          "command": "npm run validate:docs",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Documentation validation passed after reconciling README, SPEC, PLAN and GITHUB_SETUP with the current owner-approved governance contract."
+        },
+        {
+          "criterion": "docs/REVIEW.md reflects the current mainline state after PR #15 instead of describing that PR as still pending.",
+          "command": "npm run validate:docs",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "docs/REVIEW.md now records main at 34dfce1, treats PR #15 as the latest merged PR and removes the stale pending-pull-request wording."
+        },
+        {
+          "criterion": "The new documentation slice is fully declared in sprint scope and passes the light local validators.",
+          "command": "npm run validate:scope",
+          "exitCode": 0,
+          "status": "passed",
+          "result": "Edit scope validation passed with 9 changed path records, and templates/context/state/docs/license validators all passed for the declared slice."
+        }
+      ]
+    }
+  ]
+}

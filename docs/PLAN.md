@@ -68,9 +68,15 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - Editable files: `.github/workflows/*`, `docs/REVIEW.md`, `CHANGELOG.md`, `docs/PLAN.md`, `.harness/*`
 - Verification: `npm run doctor`, `npm run validate:templates`, `npm run validate:context`, `npm run validate:state`, `npm run validate:secrets`, `npm run validate:scope`, `npm run validate:workflows`, `npm run validate:adapters`, `npm run validate:docs`, `npm run validate:license`, `git diff --check`, `gh pr checks`
 
+### Task 011 - Residual Documentation Reconciliation
+
+- Goal: remove stale governance, PR-state and prerelease wording from canonical docs after PR #15, without touching historical audit artifacts.
+- Editable files: `README.md`, `docs/SPEC.md`, `docs/PLAN.md`, `docs/GITHUB_SETUP.md`, `docs/REVIEW.md`, `CHANGELOG.md`, `.harness/*`
+- Verification: `npm run doctor`, `npm run validate:templates`, `npm run validate:context`, `npm run validate:state`, `npm run validate:secrets`, `npm run validate:scope`, `npm run validate:docs`, `npm run validate:license`, `git diff --check`
+
 ## Risks
 
 - real deploy remains intentionally blocked without `AGENTOS_DEPLOY_COMMAND`;
-- branch protection and formal review requirements still depend on GitHub-side settings;
-- tag and prerelease publication remain blocked until the PR has formal review and required Windows/Linux checks;
-- if no eligible reviewer exists, the final RC hardening PR must remain unmerged and the release decision must be `BLOCKED`.
+- branch protection remains a GitHub-side dependency and can still drift from the documented governance contract;
+- tag and prerelease publication remain blocked until required checks are green and the owner completes the explicit release action;
+- if branch protection re-enables required review before a second eligible maintainer exists, release publication can become operationally blocked again.

@@ -15,5 +15,5 @@ Target repository: `provedorconsult/AgentOS`
 2. run `npm run doctor`, `npm run validate`, `npm test` and `git diff --check`;
 3. push the branch;
 4. open a PR with Summary, Verification, Risks, Migration, Rollback and Files Changed;
-5. wait for required review and green checks;
+5. wait for green checks and any branch-protection review requirement that is actually enabled; when no eligible second maintainer exists, follow the owner-approved merge policy documented in `docs/RELEASE.md`;
 6. tag the approved release candidate when governance gates are satisfied.

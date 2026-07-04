@@ -4,7 +4,7 @@ AgentOS is the platform. SpecPilot is the internal SPEC-driven engine. Adapters 
 
 Current release candidate package metadata: AgentOS 2.0.0-rc.1.
 
-Formal GitHub prerelease status: not published until edit-scope validation, sprint discovery, CI, formal `APPROVE` review, tag and prerelease gates are complete.
+Formal GitHub prerelease status: not published until edit-scope validation, sprint discovery, CI, branch-protection checks, review evidence and explicit owner release action are complete.
 
 ## Short-Horizon Surface
 
