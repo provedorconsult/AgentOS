@@ -35,3 +35,7 @@ This owner-approved merge policy is a temporary governance exception, not a targ
 
 - revert the release-candidate commit or restore backed-up adapter files;
 - do not run a deploy unless `AGENTOS_DEPLOY_COMMAND` is explicitly configured and approved.
+
+## Observed enforcement gap — F0-AUD-003
+
+On 2026-11-11, main at `e2eedcc6249e08c389aef6282bcb13ae40d2f76a` reports `protected=false`. The policy above remains required but is not proven enforced. The integration cannot read or change detailed protection (HTTP 403, no administration permission). [The remediation record](F0-AUD-003.md) specifies the administrative gate. Do not merge, tag or publish a release while the required protection is unverified.

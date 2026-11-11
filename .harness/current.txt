@@ -1,1 +1,1 @@
-.harness/sprints/2026-07-04-doc-residual-reconciliation.json
+.harness/sprints/2026-11-11-f0-aud-003.json

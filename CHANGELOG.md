@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- remediate F0-AUD-003: update transitive fast-uri in the lockfile from 3.1.2 to 3.1.9; record actual branch-protection drift and keep merge/release blocked pending administrative enforcement and independent review;
+
 - added the supported `claude-code` adapter instructions surface: `npm run agentos:install-adapter -- claude-code` installs `CLAUDE.md` with backup support and coexists with the Codex adapter in the same repository;
 - added a root `CLAUDE.md` so Claude Code in VSCode follows the same AgentOS source order as Codex;
 - extended doctor, adapter validation and regression tests to cover the Claude Code surfaces;
