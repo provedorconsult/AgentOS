@@ -20,3 +20,24 @@ test('workflow policy rejects event interpolation into a shell and ambiguous YAM
   assert.ok(validateWorkflowSecurity(base.replace('test -f AGENTS.md', 'echo "${{ github.event.pull_request.title }}"')).length);
   assert.ok(validateWorkflowSecurity(base + '\npermissions: {}\n').length);
 });
+
+test('workflow policy rejects dynamic environment names in scalar and mapping forms', () => {
+  for (const environment of ['${{ inputs.environment }}', '${{ matrix.target }}', '{ name: "${{ inputs.environment }}", url: "https://example.invalid" }']) {
+    const candidate = base.replace('    runs-on: ubuntu-latest', `    environment: ${environment}\n    runs-on: ubuntu-latest`);
+    assert.ok(validateWorkflowSecurity(candidate).some(error => /environment/i.test(error)), environment);
+  }
+});
+
+test('workflow policy rejects unverified fixed environments until administrative readback', () => {
+  for (const environment of ['staging', 'production', '{ name: staging }']) {
+    const candidate = base.replace('    runs-on: ubuntu-latest', `    environment: ${environment}\n    runs-on: ubuntu-latest`);
+    assert.ok(validateWorkflowSecurity(candidate).some(error => /environment/i.test(error)), environment);
+  }
+});
+
+test('workflow policy rejects environment selectors including choice and environment types', () => {
+  for (const type of ['string', 'choice', 'environment']) {
+    const candidate = base.replace('  pull_request:', `  workflow_dispatch:\n    inputs:\n      environment:\n        type: ${type}\n        options: [staging]\n        default: staging`);
+    assert.ok(validateWorkflowSecurity(candidate).some(error => /environment/i.test(error)), type);
+  }
+});

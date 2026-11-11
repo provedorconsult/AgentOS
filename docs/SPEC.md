@@ -180,3 +180,7 @@ Executar auditoria de exposição pública, histórico alcançável, documentaç
 ### Complemento R11 — coordenação e governança da PR #21
 
 Consolidar sem merge o conteúdo legítimo da PR #20 em #21; comprovar identidade das dependências e preservar a rastreabilidade das evidências/pontas de sprint. Inventariar cada configuração como CONFIRMED, NOT CONFIGURED, UNKNOWN ou NOT ACCESSIBLE. Não alterar administração ou inferir ausência de bypass de campos omitidos. Publicar novo SHA, CI Linux/Windows e solicitação independente, mantendo Draft e Hermes F1 bloqueada.
+
+### R11 — bloqueio de ambientes de deploy não verificados
+
+Até readback administrativo e autorização/revisão independentes, nenhum workflow deve selecionar ou referenciar GitHub Environment, mesmo por nome fixo. O workflow manual Deploy deve falhar explicitamente sem checkout, secrets ou chamada de deploy. Validar formas escalares/mapping/dinâmicas e seletores de ambiente; não criar ambientes nem configurar comando operacional nesta rodada.

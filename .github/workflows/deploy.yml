@@ -4,32 +4,20 @@ permissions:
   contents: read
 
 concurrency:
-  group: agentos-deploy-${{ inputs.environment }}
+  group: agentos-deploy-blocked
   cancel-in-progress: false
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: "Deployment environment"
-        required: true
-        default: "staging"
 
 jobs:
-  deploy:
+  deployment-blocked:
     if: github.ref == 'refs/heads/main'
     timeout-minutes: 10
-    environment: ${{ inputs.environment }}
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
-        with:
-          node-version: 22
-      - name: Contract-only deploy gate
+      # No checkout, environment reference, secrets, or deployment command.
+      # Do not restore execution until protections and authorization are reviewed.
+      - name: Deployment disabled pending independent administrative readback
         shell: pwsh
-        env:
-          REQUESTED_ENVIRONMENT: ${{ inputs.environment }}
-        run: ./scripts/deploy.ps1 -Environment $env:REQUESTED_ENVIRONMENT
+        run: throw "Deployment is disabled pending verified environment protections, human authorization, and independent review."

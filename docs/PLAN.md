@@ -94,3 +94,7 @@ Remediate the vulnerable transitive fast-uri lockfile entry and document current
 ## Coordenação PR #20/#21 e readback de governança
 
 Inspecionar os dois diffs fixados; comparar dependências por blob; simular conflitos sem merge; consolidar evidência histórica e resolver ponteiros para a sprint pública; consultar somente APIs acessíveis; registrar pendências administrativas; validar combinação final localmente e no CI do novo SHA; solicitar reauditoria. Escopo complementar declarado na sprint pública.
+
+## Correção do workflow Deploy — revisão de fc64ffd
+
+Reproduzir aceitação indevida de environments no validador; remover seleção livre/referência ao GitHub Environment e chamada operacional; manter workflow manual com falha explícita; bloquear referências até readback/autorização; adicionar regressões, executar suíte completa/CI novo e solicitar nova revisão. Gates humanos da coordenação/bypass/reviewer permanecem abertos.

@@ -1,5 +1,9 @@
 # Handoff ao Checker — auditoria pública AgentOS
 
+## Atualização — correção de seleção de ambiente
+
+REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass, política humana e aceitação da consolidação continuam pendentes.
+
 ## Rodada de coordenação/governança
 
 A correção de fallback em a894409 foi validada pela revisão independente 5860100288 (COMMENTED); não foi aprovação integral. A rodada seguinte consolida a PR #20 sem merge e publica novo readback. [Relatório](COORDINATION_GOVERNANCE.md) · [evidências e comandos](COORDINATION_EVIDENCE.json). O SHA final e CI novos constam no handoff externo. Aprovação humana mínima zero no ruleset visível; bypass global permanece UNKNOWN. READY_FOR_CHECKER_REAUDIT é entrega para revisão, não autorização.

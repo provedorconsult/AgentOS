@@ -1,5 +1,9 @@
 # Postura de segurança — AgentOS público
 
+## Atualização — correção de seleção de ambiente
+
+REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass, política humana e aceitação da consolidação continuam pendentes.
+
 ## Escopo observado
 
 Repositório público confirmado por API, baseline e2eedcc6249e08c389aef6282bcb13ae40d2f76a. Auditoria estática/local não destrutiva; nenhuma alteração administrativa, credencial operacional, conexão SSH ou teste de produção. O público pode copiar commits antes de qualquer remediação; remover um arquivo do checkout não revoga segredo nem o remove do histórico.

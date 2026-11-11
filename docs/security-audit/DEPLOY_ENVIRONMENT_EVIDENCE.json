@@ -1,0 +1,206 @@
+{
+  "initialHead": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
+  "base": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+  "observedAt": "2026-11-11T15:32:14.324Z",
+  "state": "local-validation-pass; final CI and SHA recorded in PR handoff",
+  "red": {
+    "command": "node --test tests/agentos-workflow-security.test.mjs (new regressions, old policy)",
+    "tests": 7,
+    "passed": 4,
+    "failed": 3,
+    "exitCode": 1
+  },
+  "focusedGreen": {
+    "command": "node --test tests/agentos-workflow-security.test.mjs tests/agentos-audit-hardening.test.mjs",
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0
+  },
+  "policy": "No environment references or selectors before verified protections and separate authorization; manual workflow fails without deployment",
+  "administrativeReadback": [
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355",
+      "result": {
+        "id": 27031355,
+        "name": "F0-AUD-003 - Protect main",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "provedorconsult/AgentOS",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/main"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 0,
+              "dismiss_stale_reviews_on_push": false,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "merge",
+                "squash",
+                "rebase"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "validate (ubuntu-latest)"
+                },
+                {
+                  "context": "validate (windows-latest)"
+                }
+              ]
+            }
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "deletion"
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5Iz_kSzgGcdzs",
+        "created_at": "2026-11-11T09:41:53.814-03:00",
+        "updated_at": "2026-11-11T09:41:53.869-03:00",
+        "current_user_can_bypass": "never",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355"
+          },
+          "html": {
+            "href": "https://github.com/provedorconsult/AgentOS/rules/27031355"
+          }
+        }
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/environments",
+      "result": {
+        "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)",
+        "error_code": "INVALID_ARGUMENT"
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/branches/main/protection",
+      "result": {
+        "error": "GitHub API error 403: {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/branches/branch-protection#get-branch-protection\",\"status\":\"403\"}",
+        "error_code": "FORBIDDEN",
+        "error_data": {
+          "message": "Resource not accessible by integration",
+          "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+          "status": "403"
+        }
+      }
+    }
+  ],
+  "administrativeWrites": false,
+  "workflowDispatchExecuted": false,
+  "deployExecuted": false,
+  "rawValuesPublished": false,
+  "validation": [
+    {
+      "command": "npm run doctor",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    },
+    {
+      "command": "npm run validate",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "\u2139 tests 69",
+        "\u2139 pass 69",
+        "\u2139 fail 0",
+        "\u2139 skipped 0"
+      ]
+    },
+    {
+      "command": "node --test tests/agentos-public-security.test.mjs",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "\u2139 tests 17",
+        "\u2139 pass 17",
+        "\u2139 fail 0",
+        "\u2139 skipped 0"
+      ]
+    },
+    {
+      "command": "npm run validate:secrets:history",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "Reachable history: 59 commits; 547 unique blobs; 1 immutable binary review exceptions. Scope: locally available refs only."
+      ]
+    },
+    {
+      "command": "npm audit --audit-level=moderate --json --registry=https://registry.npmjs.org --userconfig=/workspace/work/agentos-a003/empty-user.npmrc --globalconfig=/workspace/work/agentos-a003/empty-global.npmrc --cache=/workspace/work/agentos-public-audit/npm-cache",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    },
+    {
+      "command": "bash scripts/run-gitleaks.sh",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "Gitleaks 8.30.1: no findings in locally reachable history. Not proof of absence."
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    }
+  ],
+  "ci": "pending on final SHA",
+  "fullSuite": {
+    "tests": 69,
+    "passed": 69,
+    "failed": 0,
+    "skipped": 0
+  },
+  "auditVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "historyScope": "59 commits/547 unique blobs reachable locally before publication; not complete remote coverage",
+  "environment": "Linux; Node 24.19.0/npm 11.9.0/Git 2.52.0",
+  "unchangedSurfaces": [
+    "scanner and exceptions",
+    "fallback regression tests",
+    "dependency files",
+    "local deploy contracts"
+  ]
+}

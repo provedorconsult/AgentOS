@@ -36,10 +36,12 @@ test("ci workflow uses canonical multi-os validation gates", () => {
   assert.doesNotMatch(ci, /validate\.ps1/);
 });
 
-test("deploy workflow binds the selected GitHub Environment", () => {
+test("deploy workflow cannot create an unverified environment or invoke deployment", () => {
   const deploy = read(".github/workflows/deploy.yml");
 
-  assert.match(deploy, /environment:\s*\$\{\{\s*inputs\.environment\s*\}\}/);
+  assert.doesNotMatch(deploy, /^\s*environment\s*:/m);
+  assert.doesNotMatch(deploy, /inputs\.|scripts[\\/]deploy\.|AGENTOS_DEPLOY_COMMAND/);
+  assert.match(deploy, /run:\s*throw\s/);
 });
 
 test("validate command includes doctor and dedicated hardening validators", () => {

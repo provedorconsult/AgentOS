@@ -13,7 +13,15 @@ export function validateWorkflowSecurity(text) {
   if (data.permissions) checkPermissions(data.permissions);
   const events = typeof data.on === 'string' ? [data.on] : Array.isArray(data.on) ? data.on : Object.keys(data.on ?? {});
   if (events.includes('pull_request_target') || events.includes('workflow_run')) errors.push('privileged cross-trust trigger is not permitted by this repository policy');
+  // No GitHub Environment has an independently verified protection readback yet.
+  // Fixed names also auto-create an unprotected environment when it is absent.
+  // Re-enabling references requires a separately reviewed policy change.
+  const inputs = data.on?.workflow_dispatch?.inputs ?? {};
+  if (Object.entries(inputs).some(([name, input]) => name === 'environment' || input?.type === 'environment')) {
+    errors.push('environment selection is disabled pending administrative protection readback');
+  }
   for (const job of Object.values(data.jobs ?? {})) {
+    if (Object.hasOwn(job, 'environment')) errors.push('environment references are disabled pending administrative protection readback');
     if (job.permissions) checkPermissions(job.permissions);
     if (!Number.isInteger(job['timeout-minutes']) || job['timeout-minutes'] <= 0) errors.push('job timeout required');
     for (const step of job.steps ?? []) {

@@ -1,6 +1,25 @@
 # REVIEW
 
-## Rodada atual — coordenação e governança PR #21
+## Rodada atual — bloqueio de deploy sem ambientes verificados
+
+HEAD inicial fc64ffd3890340810af1d682ef2900d5d5a47f84 recebeu REQUEST_CHANGES pelo environment dinâmico. [Correção](security-audit/DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências](security-audit/DEPLOY_ENVIRONMENT_EVIDENCE.json) documentam a rodada atual; os blocos seguintes permanecem históricos. Nenhum deploy ou administração executado.
+
+
+### Verificações locais da correção de ambiente
+
+| Comando | Exit code | Resultado |
+|---|---:|---|
+| `npm run doctor` | 0 | PASS |
+| `npm run validate` | 0 | PASS |
+| `node --test tests/agentos-public-security.test.mjs` | 0 | PASS |
+| `npm run validate:secrets:history` | 0 | PASS |
+| `npm audit --audit-level=moderate --json` | 0 | PASS |
+| `bash scripts/run-gitleaks.sh` | 0 | PASS |
+| `git diff --check` | 0 | PASS |
+
+69/69 testes completos, 17/17 de segurança pública, zero falhas/skip. Histórico 59/547 refs locais antes da publicação, não cobertura remota integral. CI do SHA final no handoff externo; nenhum workflow Deploy disparado ou write administrativo.
+
+## Rodada anterior — coordenação e governança PR #21
 
 HEAD inicial a89440920fe8382ceff21807df6a9e06f67173cd; PR #20 fixada em 9b30bec1ec72d861c984dda1e24e5e80adafa4e6. Consolidação documental/evidencial, sem merge; dependências byte a byte idênticas. [Relatório corrente](security-audit/COORDINATION_GOVERNANCE.md) e [comandos/exit codes](security-audit/COORDINATION_EVIDENCE.json) superam as afirmações antigas de estado/CI abaixo. Validação local concluída: 66/66 testes completos e 17/17 de segurança pública, zero falhas/skip; CI do SHA final será conferido no handoff externo. Bypass global UNKNOWN; mínimo humano zero no ruleset visível; Draft e Hermes F1 bloqueada.
 

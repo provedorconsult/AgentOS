@@ -1,5 +1,9 @@
 # Coordenação PR #20/#21 e governança — 2026-11-11
 
+## Atualização — correção de seleção de ambiente
+
+REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass, política humana e aceitação da consolidação continuam pendentes.
+
 Estado Maker: validação local concluída; READY_FOR_CHECKER_REAUDIT condicionado à conferência do CI do novo SHA no handoff externo. Não é aprovação. PR #21 Draft; Hermes F1 BLOQUEADA.
 
 ## Identidade e fontes
