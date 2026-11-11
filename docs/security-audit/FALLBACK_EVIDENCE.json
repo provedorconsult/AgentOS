@@ -1,0 +1,78 @@
+{
+  "auditedParent": "b9b8b440846365b854dee3bfc82bf8009f2a278b",
+  "state": "local-validation-pass-awaiting-independent-review",
+  "rawValuesPublished": false,
+  "red": {
+    "command": "node --test tests/agentos-public-security.test.mjs (new tests, old scanner)",
+    "exitCode": 1,
+    "tests": 17,
+    "passed": 12,
+    "failed": 5
+  },
+  "scope": "supported parameter expansion operators; real scanner in temporary tree and Git history",
+  "environment": "Linux; Node 24.19.0; npm 11.9.0; Git 2.52.0",
+  "green": {
+    "focusedTests": 17,
+    "fullSuiteTests": 66,
+    "failed": 0,
+    "skipped": 0
+  },
+  "verification": [
+    {
+      "command": "npm run doctor",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "npm run validate",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "npm run validate:secrets",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "npm run validate:secrets:history",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "npm run validate:scope -- --base e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "npm audit --package-lock-only --ignore-scripts --json --registry=https://registry.npmjs.org --userconfig=/workspace/work/agentos-a003/empty-user.npmrc --globalconfig=/workspace/work/agentos-a003/empty-global.npmrc --cache=/workspace/work/agentos-public-audit/npm-cache",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "bash scripts/run-gitleaks.sh",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false
+    }
+  ],
+  "history": {
+    "commits": 57,
+    "blobs": 528,
+    "scope": "local reachable refs; pre-publication"
+  },
+  "ci": "pending on new SHA",
+  "localScopeBase": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+  "administrativeChanges": false
+}

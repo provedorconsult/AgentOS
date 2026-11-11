@@ -29,6 +29,10 @@ Metadados de autoria Git são parte intencional do histórico público; valores 
 
 Foram analisados 31 blobs YAML históricos de workflows: 13 versões omitiam permissions explícitas e quatro ocorrências usavam action mutável. Não foram encontradas referências secrets nem triggers pull_request_target/workflow_run nessas versões. Classificação PUB-009 / LOW: versões antigas continuam alcançáveis e não são endurecidas retroativamente. Não executar manualmente workflows em refs legadas; usar somente SHA revisado. Alterações da branch corrigem os quatro workflows atuais; não foram apagadas branches ou reescrito histórico para ocultar versões antigas. O default de token histórico efetivo é desconhecido e não é inferido do YAML.
 
+## PUB-010 — MEDIUM / bloqueador de revisão: fallback literal
+
+O Checker encontrou um falso negativo de classificação: expansão com word literal era aceita como placeholder. Não foi confirmada credencial real neste caso; a reprodução usa dados sintéticos. Causa raiz e correção em FALLBACK_REMEDIATION.md. A mudança deve passar a nova auditoria no SHA exato; não confundir remediação Maker com aprovação.
+
 ## Condições de parada
 
 Nenhum bloqueador de credencial real/dado pessoal foi confirmado na triagem. Qualquer novo candidato plausível não classificado deve parar a implementação e ser escalado privadamente ao proprietário; não revogar, rotacionar, reescrever histórico ou alterar visibilidade sem autorização específica.

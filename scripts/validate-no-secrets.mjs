@@ -27,17 +27,23 @@ const patterns = [
 ];
 let failures = 0;
 
-export function isSafePlaceholder(match) {
-  const raw = String(match).trim();
-  const value = raw;
-  return [
+export function isSafePlaceholder(match, depth = 0) {
+  const value = String(match).trim();
+  if (depth > 8) return false;
+  if ([
     /^sk-example-openai-key$/i,
     /^sk-x{8,}$/i,
     /^ghp_example_github_token$/i,
     /^ghp_x{8,}$/i,
-    /^(?:REPLACE_ME|YOUR_TOKEN_HERE|<token>|x{8,})$/i,
-    /^\$\{[^}]+\}$/
-  ].some((pattern) => pattern.test(value));
+    /^(?:REPLACE_ME|YOUR_TOKEN_HERE|<token>|x{8,})$/i
+  ].some((pattern) => pattern.test(value))) return true;
+  // A simple variable reference carries no literal default. Never evaluate it.
+  if (/^\$\{[A-Za-z_][A-Za-z0-9_]*\}$/.test(value)) return true;
+  // For default/assignment/alternate/error expansions, validate the word itself.
+  // Unknown syntax and arbitrary literal words are not placeholders, even short ones.
+  const expansion = value.match(/^\$\{[A-Za-z_][A-Za-z0-9_]*(:?[-=+?])([\s\S]*)\}$/);
+  if (!expansion) return false;
+  return expansion[2].trim() === '' || isSafePlaceholder(expansion[2], depth + 1);
 }
 
 const fingerprintKey = randomBytes(32);
@@ -91,6 +97,9 @@ function isSensitiveAssignmentName(name) {
 
 function isSuspiciousValue(value) {
   const text = String(value).trim();
+  // Check expansions before generic length/source-code exemptions: a short or
+  // code-looking fallback can still contain a literal secret.
+  if (/^\$\{[A-Za-z_][A-Za-z0-9_]*(?::?[-=+?])/.test(text)) return !isSafePlaceholder(text);
   if (text.length < 12) return false;
   if (isSafePlaceholder(text)) return false;
   if (/^\[|^\{|\.join\(|Buffer\.from\(/.test(text)) return false;

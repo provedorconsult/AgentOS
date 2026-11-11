@@ -131,3 +131,61 @@ test('embedded equals cannot hide a literal behind a placeholder suffix', t => {
   fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE_SECRET=', 'prefix=', 'REPLACE_ME\n'].join(''));
   assert.equal(scan(dir).status, 1);
 });
+
+const expansion = (operator, fallback, variable = 'SERVICE_SECRET') => '${' + variable + operator + fallback + '}';
+const literalFallback = ['literal', 'default', 'value', 'that', 'is', 'not', 'a', 'placeholder'].join('-');
+
+test('literal environment fallback is rejected in the tree for all supported operators', t => {
+  for (const operator of [':-', '-', ':=', '=', ':+', '+', ':?', '?']) {
+    for (const quote of ['', '"', "'"]) {
+      const dir = temp(t);
+      const candidate = expansion(operator, literalFallback);
+      fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + quote + candidate + quote + '\n');
+      const r = scan(dir);
+      assert.equal(r.status, 1, operator);
+      assert.ok(!(r.stdout + r.stderr).includes(literalFallback));
+    }
+  }
+});
+
+test('removed literal fallbacks are rejected in reachable history', t => {
+  for (const operator of [':-', '-', ':=', '=', ':+', '+', ':?', '?']) {
+    const dir = temp(t);
+    git(dir, 'init', '-q');
+    fs.writeFileSync(path.join(dir, 'removed.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + expansion(operator, literalFallback) + '\n'); commit(dir);
+    fs.unlinkSync(path.join(dir, 'removed.txt'));
+    fs.writeFileSync(path.join(dir, 'README.md'), '# Clean\n'); commit(dir);
+    assert.equal(scan(dir).status, 0);
+    const r = scan(dir, '--history');
+    assert.equal(r.status, 1, operator);
+    assert.ok(!(r.stdout + r.stderr).includes(literalFallback));
+  }
+});
+
+test('simple references, empty defaults and explicit placeholders remain safe', t => {
+  for (const candidate of [expansion('', ''), expansion(':-', ''), expansion(':-', 'REPLACE_ME'), expansion('-', expansion('', '', 'OTHER_VAR'))]) {
+    const dir = temp(t);
+    fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + candidate + '\n');
+    assert.equal(scan(dir).status, 0);
+  }
+});
+
+test('short, nested, malformed and unsupported expansion words fail closed', t => {
+  const nested = expansion(':-', expansion(':=', 'small'));
+  const candidates = [expansion(':-', 'x', 'A'), nested, expansion(':-', 'Buffer.from(data)'), '${BAD-NAME}', '${SERVICE_SECRET', '${!SERVICE_SECRET}'];
+  for (const candidate of candidates) {
+    const dir = temp(t);
+    fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + candidate + '\n');
+    assert.equal(scan(dir).status, 1);
+  }
+});
+
+test('safe defaults remain safe in history without masking a different literal default', t => {
+  const dir = temp(t);
+  git(dir, 'init', '-q');
+  fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + expansion(':-', 'REPLACE_ME') + '\n'); commit(dir);
+  assert.equal(scan(dir, '--history').status, 0);
+  fs.writeFileSync(path.join(dir, 'config.txt'), ['SERVICE', 'SECRET'].join('_') + '=' + expansion(':-', literalFallback) + '\n'); commit(dir);
+  fs.unlinkSync(path.join(dir, 'config.txt')); commit(dir);
+  assert.equal(scan(dir, '--history').status, 1);
+});

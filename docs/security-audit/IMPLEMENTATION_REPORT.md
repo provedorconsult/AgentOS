@@ -23,3 +23,7 @@ Comandos/resultados finais em EVIDENCE.json. Testes executados com AGENTOS_DEPLO
 Sem validação de credenciais na rede. Mirror cobre refs anunciadas, não objetos inalcançáveis nem caches/forks externos. Scanners não são prova de ausência, binário revisado é uma exceção auditável e settings GitHub omitidos não são PASS. CI do novo SHA e Checker devem repetir/conferir as evidências. Aprovação global Hermes F0/F1 não está implícita.
 
 Nenhuma mudança administrativa, Ruleset, visibilidade, segredo/variable GitHub, credencial, permissão, merge, release/tag, exclusão/reescrita de histórico, produção ou outro repositório foi realizada.
+
+## Correção posterior de fallback
+
+REQUEST_CHANGES no SHA b9b8b440846365b854dee3bfc82bf8009f2a278b: gramática de placeholder corrigida e cinco regressões adicionadas. Consultar FALLBACK_REMEDIATION.md e FALLBACK_EVIDENCE.json; não inferir aprovação nem reutilizar CI do SHA anterior. Exceções e workflows preservados.

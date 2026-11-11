@@ -1,5 +1,9 @@
 # Handoff ao Checker — auditoria pública AgentOS
 
+## Atualização após REQUEST_CHANGES
+
+A revisão do SHA b9b8b440846365b854dee3bfc82bf8009f2a278b encontrou falso negativo em fallback de variável. A correção e os novos testes estão em [FALLBACK_REMEDIATION.md](FALLBACK_REMEDIATION.md) e [FALLBACK_EVIDENCE.json](FALLBACK_EVIDENCE.json). A revisão anterior não aprovou a entrega; solicitação de nova revisão e novo SHA constam no handoff externo da PR. Não usar os 61 testes antigos como evidência do novo HEAD.
+
 Estado local: READY_FOR_CHECKER dentro do escopo acessível; CI do SHA final e settings externos devem ser conferidos independentemente. READY_FOR_CHECKER significará apenas entrega revisável, nunca aprovação de segurança/merge.
 
 - SHA inicial: e2eedcc6249e08c389aef6282bcb13ae40d2f76a.
