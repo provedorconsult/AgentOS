@@ -1,0 +1,158 @@
+{
+  "initialSha": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+  "date": "2026-11-11",
+  "scope": "AgentOS only; complete mirror of advertised refs at baseline",
+  "versions": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "git": "2.52.0",
+    "gitleaks": "8.30.1"
+  },
+  "localVerification": [
+    {
+      "command": "npm run doctor",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published."
+    },
+    {
+      "command": "npm run validate",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Final rerun after complete-placeholder hardening: PASS.",
+      "testCounts": [
+        "tests 61",
+        "pass 61",
+        "fail 0",
+        "skipped 0"
+      ]
+    },
+    {
+      "command": "npm run validate:secrets",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published."
+    },
+    {
+      "command": "npm run validate:secrets:history",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published."
+    },
+    {
+      "command": "npm audit --package-lock-only --ignore-scripts --json --registry=https://registry.npmjs.org --userconfig=/workspace/work/agentos-a003/empty-user.npmrc --globalconfig=/workspace/work/agentos-a003/empty-global.npmrc --cache=/workspace/work/agentos-public-audit/npm-cache",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published.",
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      }
+    },
+    {
+      "command": "bash scripts/run-gitleaks.sh",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published."
+    },
+    {
+      "command": "git diff --check",
+      "environment": "local Linux; Node 24.19.0, npm 11.9.0, Git 2.52.0",
+      "exitCode": 0,
+      "status": "PASS",
+      "summary": "Completed; raw stdout/stderr kept outside Git, not published."
+    }
+  ],
+  "baselineHistory": {
+    "reachableCommits": 56,
+    "uniqueBlobs": 500,
+    "branches": 10,
+    "tags": 0,
+    "shallow": false,
+    "gitleaksHistoryFindings": 0,
+    "gitleaksTreeFindings": 0,
+    "reviewedBinaryBlobs": 1,
+    "rawReportsPublished": false
+  },
+  "historicalWorkflows": {
+    "workflowBlobs": 31,
+    "implicitPermissionsVersions": 13,
+    "mutableActionOccurrences": 4,
+    "privilegedTriggerVersions": 0,
+    "secretReferenceVersions": 0
+  },
+  "regression": {
+    "red": {
+      "command": "node --test tests/agentos-public-security.test.mjs (new tests, old scanner)",
+      "exitCode": 1,
+      "summary": "Seven new regression tests failed against the original scanner before corrections; additional boundary/symlink/shallow regressions added afterwards."
+    },
+    "green": {
+      "command": "npm run validate (includes npm test)",
+      "tests": 61,
+      "passed": 61,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "dependencies": {
+    "changedPackage": "fast-uri",
+    "from": "3.1.2",
+    "to": "3.1.9",
+    "directPinsChanged": false,
+    "before": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 1,
+      "critical": 0,
+      "total": 1
+    },
+    "after": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "externalQueries": {
+    "visibility": "public",
+    "mainProtected": true,
+    "rulesetId": 27031355,
+    "enforcementConfigured": "active",
+    "bypassActors": "UNKNOWN (not returned)",
+    "destructiveEnforcementTests": "NOT_RUN (prohibited)",
+    "securityFeatures": "UNKNOWN (not returned)",
+    "actionsPermissionsEndpoint": "connector unsupported 400"
+  },
+  "ci": {
+    "status": "NOT_REACHED before publication",
+    "exactShaAndRuns": "recorded in PR handoff after publication"
+  },
+  "limitations": [
+    "Scanners are bounded and do not prove absence.",
+    "Refs not announced, unreachable objects and external caches/forks not covered.",
+    "Raw reports and values not published.",
+    "No administrative changes or operational credentials."
+  ],
+  "finalCurrentTreeGitleaksFindings": 0,
+  "finalHistoryRecheck": {
+    "command": "npm run validate:secrets:history",
+    "exitCode": 0,
+    "commits": 56,
+    "uniqueBlobs": 500,
+    "reviewedBinaryExceptions": 1
+  }
+}

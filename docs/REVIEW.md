@@ -1,5 +1,16 @@
 # REVIEW
 
+## Auditoria pública 2026-11-11 — estado atual para esta branch
+
+Os registros abaixo deste bloco são históricos e não provam estado atual. Base main: e2eedcc6249e08c389aef6282bcb13ae40d2f76a. Branch security/public-exposure-hardening. Evidências completas, riscos e comandos em [handoff de segurança](security-audit/CHECKER_HANDOFF.md). main agora retorna protected=true e Ruleset 27031355 active, sem comprovação global de ausência de bypass actors. A antiga observação de main desprotegida foi superada pela consulta atual, sem reescrever a evidência histórica.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---|---|---|---|---|---|
+| Checks locais de segurança | workspace isolado | ver EVIDENCE.json | ver evidências | docs/security-audit/EVIDENCE.json | Auditoria pública | Sem comprovação de produção | Scanners não provam ausência |
+
+## Registros históricos preservados
+
+
 ## Current Release Candidate
 
 - Package metadata: `2.0.0-rc.1`.

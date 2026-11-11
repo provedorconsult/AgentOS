@@ -172,3 +172,7 @@ Acceptance criteria:
 - Keep dependencies minimal, pinned and audit-clean.
 - Do not remove compatibility files unless they are clearly deprecated.
 - Do not perform a real deploy.
+
+## R11 - Auditoria pública e hardening (ordem 2026-11-11)
+
+Executar auditoria de exposição pública, histórico alcançável, documentação, Actions, dependências e governança. Corrigir scanner, workflows e dependência vulnerável com regressões e evidências. Os sete entregáveis em docs/security-audit são obrigatórios. Não alterar Ruleset 27031355, visibilidade, permissões/secrets GitHub, credenciais, histórico, produção ou outros repositórios; sem merge, deploy ou release. Distinguir configuração de enforcement e ausência de alertas de ausência comprovada de segredos.

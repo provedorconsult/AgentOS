@@ -80,3 +80,7 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - branch protection remains a GitHub-side dependency and can still drift from the documented governance contract;
 - tag and prerelease publication remain blocked until required checks are green and the owner completes the explicit release action;
 - if branch protection re-enables required review before a second eligible maintainer exists, release publication can become operationally blocked again.
+
+## Auditoria de exposição pública — 2026-11-11
+
+Ordem: baseline completo antes de correções; varreduras independentes e classificação; plano; correções autorizadas de scanner/Actions/dependências; validação local e CI; Checker. Escopo exato em .harness/sprints/2026-11-11-public-security-audit.json. Mantidos todos os limites administrativos. Sobreposição da correção fast-uri com PR #20 deve ser reconciliada por revisão/rebase, sem merge automático.

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs";
+import { validateWorkflowSecurity } from "./lib/workflow-security.mjs";
 
 const required = [
   "core/workflows/01-discover.md",
@@ -44,5 +45,11 @@ for (const file of deprecated) {
   }
 }
 
+for (const name of fs.readdirSync('.github/workflows').filter(name => /\.ya?ml$/.test(name))) {
+  for (const error of validateWorkflowSecurity(fs.readFileSync(`.github/workflows/${name}`, 'utf8'))) {
+    console.error(`${name}: ${error}`);
+    failures += 1;
+  }
+}
 if (failures > 0) process.exit(1);
 console.log("AgentOS workflow validation passed.");

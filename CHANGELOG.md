@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- auditoria pública autorizada em 2026-11-11: histórico real e redaction total no scanner, regras de leitura/checkout/input nos workflows, Gitleaks independente pinado, regressões e documentação de postura/incidentes; correção mínima de fast-uri sem alterar pins diretos; nenhuma alteração administrativa ou implantação.
+
 - added the supported `claude-code` adapter instructions surface: `npm run agentos:install-adapter -- claude-code` installs `CLAUDE.md` with backup support and coexists with the Codex adapter in the same repository;
 - added a root `CLAUDE.md` so Claude Code in VSCode follows the same AgentOS source order as Codex;
 - extended doctor, adapter validation and regression tests to cover the Claude Code surfaces;
