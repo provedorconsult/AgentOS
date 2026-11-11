@@ -1,5 +1,24 @@
 # REVIEW
 
+## Current audit override — 2026-11-11 F0-AUD-003
+
+This section supersedes previous current-state and zero-vulnerability claims below, which are retained as historical evidence. Base main: `e2eedcc6249e08c389aef6282bcb13ae40d2f76a`. Working branch: `fix/f0-aud-003-governance-dependency`. New commit/PR and CI identifiers are reported in the PR handoff after publication.
+
+- main currently reports `protected=false`; detailed protection read/write is unavailable to this integration (403).
+- The current lockfile audit identifies transitive `fast-uri@3.1.2` as high severity. A lockfile-only update selects 3.1.9; the post-update audit reports zero vulnerabilities at this time.
+- Only fast-uri metadata changes in the dependency graph; direct dependency pins remain unchanged. No local dependency installation or lifecycle scripts executed.
+- CI at the new HEAD is pending publication. Full local doctor/validate/tests are NOT_RUN; dependencies were not installed. CI must prove Windows/Linux behavior.
+- Status: BLOCKED pending administrative enforcement and independent review. No merge, release, SSH or Hermes integration authorized.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| npm audit --package-lock-only --ignore-scripts --json (baseline) | managed workspace, npm registry | 1 | fast-uri high severity | docs/F0-AUD-003-audit-before.json | Identify dependency | Current advisory database; not proof of runtime exploitation | High until fixed |
+| npm update fast-uri --package-lock-only --ignore-scripts | isolated workspace | 0 | 3.1.2 to 3.1.9; no node_modules | lockfile diff | Minimal repair | No local runtime tests | CI pending |
+| npm audit --package-lock-only --ignore-scripts --json (updated) | managed workspace, npm registry | 0 | zero vulnerabilities | docs/F0-AUD-003-audit-after.json | Audit clean | Time-dependent database | Future advisories possible |
+| branch main metadata / detailed protection API | GitHub read-only | — | protected=false / HTTP 403 | docs/F0-AUD-003.md | Governance observed | Cannot apply protection | Administrative gate BLOCKED |
+
+[Detailed audit record and administrative proposal](F0-AUD-003.md).
+
 ## Current Release Candidate
 
 - Package metadata: `2.0.0-rc.1`.

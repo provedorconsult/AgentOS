@@ -1,0 +1,123 @@
+{
+  "id": "2026-11-11-f0-aud-003",
+  "status": "blocked",
+  "blocker": "Branch protection needs an administrator and independent readback; no merge or release is authorized.",
+  "title": "F0-AUD-003 dependency and governance remediation",
+  "scopePolicy": {
+    "allowDeclaredFiles": true,
+    "allowEvidenceFiles": [],
+    "allowGeneratedFiles": [],
+    "allowPatterns": []
+  },
+  "tasks": [
+    {
+      "id": "task-001-f0-aud-003",
+      "status": "blocked",
+      "blocker": "Administrative branch-protection application and independent review pending.",
+      "title": "Repair the vulnerable lockfile and document governance drift",
+      "goal": "Resolve the dependency alert and prepare exact branch-protection requirements without enabling Hermes or changing production.",
+      "agentGoal": {
+        "needed": true,
+        "draft": "/goal Remediate F0-AUD-003 in a separate AgentOS PR with an audited lockfile and explicit administrative gate.",
+        "outcome": "The vulnerable transitive dependency is updated; required protection is specified and independently verified before closing the finding.",
+        "verificationSurface": "npm audit, AgentOS CI on Windows and Linux, administrator protection readback, and docs/REVIEW.md.",
+        "constraints": [
+          "No SSH, deploy, merge, release, branch-protection bypass or Hermes integration.",
+          "Do not install dependencies locally; use lockfile-only audit/update and existing GitHub CI."
+        ],
+        "boundaries": [
+          "package-lock.json",
+          "docs/F0-AUD-003.md",
+          "docs/F0-AUD-003-audit-before.json",
+          "docs/F0-AUD-003-audit-after.json",
+          "docs/REVIEW.md",
+          "docs/RELEASE.md",
+          "docs/PLAN.md",
+          "CHANGELOG.md",
+          ".harness/current.txt",
+          ".harness/project-state.json",
+          ".harness/sprints/2026-11-11-f0-aud-003.json"
+        ],
+        "iterationPolicy": "Change only the lockfile, governance evidence and declared harness state.",
+        "blockedStopCondition": "Stop at missing administrative capability; do not claim the protection gate passed."
+      },
+      "specRefs": [
+        {
+          "path": "docs/SPEC.md",
+          "range": "1-60"
+        }
+      ],
+      "context": {
+        "readOnly": [
+          {
+            "path": "CONTRIBUTING.md",
+            "range": "1-20"
+          }
+        ],
+        "contracts": [
+          "agentos.f0-aud-003.v1"
+        ]
+      },
+      "files": [
+        {
+          "path": "package-lock.json",
+          "action": "modify"
+        },
+        {
+          "path": "docs/F0-AUD-003.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/F0-AUD-003-audit-before.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/F0-AUD-003-audit-after.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/REVIEW.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/RELEASE.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/PLAN.md",
+          "action": "modify"
+        },
+        {
+          "path": "CHANGELOG.md",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/current.txt",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/project-state.json",
+          "action": "modify"
+        },
+        {
+          "path": ".harness/sprints/2026-11-11-f0-aud-003.json",
+          "action": "create"
+        }
+      ],
+      "acceptanceCriteria": [
+        "The audited lockfile has no moderate-or-higher vulnerabilities at verification time.",
+        "Windows and Linux CI passes the declared validators and test suite.",
+        "An administrator applies and independently verifies required branch protection before the finding is closed."
+      ],
+      "verification": {
+        "commands": [
+          "npm audit --package-lock-only --audit-level=moderate",
+          "npm run validate",
+          "npm test",
+          "git diff --check"
+        ]
+      },
+      "evidence": []
+    }
+  ]
+}

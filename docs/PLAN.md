@@ -80,3 +80,7 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - branch protection remains a GitHub-side dependency and can still drift from the documented governance contract;
 - tag and prerelease publication remain blocked until required checks are green and the owner completes the explicit release action;
 - if branch protection re-enables required review before a second eligible maintainer exists, release publication can become operationally blocked again.
+
+## Separate audit slice — F0-AUD-003 (2026-11-11)
+
+Remediate the vulnerable transitive fast-uri lockfile entry and document current governance drift under SPEC R4/R7. Scope is declared in `.harness/sprints/2026-11-11-f0-aud-003.json`. Keep the slice blocked until administrative protection readback and independent review; do not add Hermes runtime scope or modify closed sprints. Verification: lockfile-only npm audit, complete existing Windows/Linux CI, diff hygiene and external protection readback.
