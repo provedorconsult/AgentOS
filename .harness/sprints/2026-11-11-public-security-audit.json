@@ -54,7 +54,14 @@
           "tests/agentos-rc-trust-gates.test.mjs",
           "tests/agentos-workflow-security.test.mjs",
           "docs/security-audit/FALLBACK_REMEDIATION.md",
-          "docs/security-audit/FALLBACK_EVIDENCE.json"
+          "docs/security-audit/FALLBACK_EVIDENCE.json",
+          ".harness/sprints/2026-11-11-f0-aud-003.json",
+          "docs/F0-AUD-003.md",
+          "docs/F0-AUD-003-audit-before.json",
+          "docs/F0-AUD-003-audit-after.json",
+          "docs/RELEASE.md",
+          "docs/security-audit/COORDINATION_GOVERNANCE.md",
+          "docs/security-audit/COORDINATION_EVIDENCE.json"
         ],
         "iterationPolicy": "Corrigir causa raiz e reproduzir regress\u00f5es; manter limita\u00e7\u00f5es expl\u00edcitas.",
         "blockedStopCondition": "Escalar ao propriet\u00e1rio quando surgir condi\u00e7\u00e3o de bloqueio da ordem."
@@ -199,6 +206,34 @@
         },
         {
           "path": "docs/security-audit/FALLBACK_EVIDENCE.json",
+          "action": "create"
+        },
+        {
+          "path": ".harness/sprints/2026-11-11-f0-aud-003.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/F0-AUD-003.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/F0-AUD-003-audit-before.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/F0-AUD-003-audit-after.json",
+          "action": "create"
+        },
+        {
+          "path": "docs/RELEASE.md",
+          "action": "modify"
+        },
+        {
+          "path": "docs/security-audit/COORDINATION_GOVERNANCE.md",
+          "action": "create"
+        },
+        {
+          "path": "docs/security-audit/COORDINATION_EVIDENCE.json",
           "action": "create"
         }
       ],

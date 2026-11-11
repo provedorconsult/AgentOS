@@ -1,6 +1,26 @@
 # REVIEW
 
-## Auditoria pública 2026-11-11 — estado atual para esta branch
+## Rodada atual — coordenação e governança PR #21
+
+HEAD inicial a89440920fe8382ceff21807df6a9e06f67173cd; PR #20 fixada em 9b30bec1ec72d861c984dda1e24e5e80adafa4e6. Consolidação documental/evidencial, sem merge; dependências byte a byte idênticas. [Relatório corrente](security-audit/COORDINATION_GOVERNANCE.md) e [comandos/exit codes](security-audit/COORDINATION_EVIDENCE.json) superam as afirmações antigas de estado/CI abaixo. Validação local concluída: 66/66 testes completos e 17/17 de segurança pública, zero falhas/skip; CI do SHA final será conferido no handoff externo. Bypass global UNKNOWN; mínimo humano zero no ruleset visível; Draft e Hermes F1 bloqueada.
+
+
+### Comandos da combinação final — rodada atual
+
+| Comando | Exit code | Resultado |
+|---|---:|---|
+| `npm ci --ignore-scripts` | 0 | PASS |
+| `npm run doctor` | 0 | PASS |
+| `npm run validate` | 0 | PASS |
+| `node --test tests/agentos-public-security.test.mjs` | 0 | PASS |
+| `npm run validate:secrets:history` | 0 | PASS |
+| `npm audit --audit-level=moderate --json` | 0 | PASS |
+| `bash scripts/run-gitleaks.sh` | 0 | PASS |
+| `git diff --check` | 0 | PASS |
+
+Limites: Linux local; sem lifecycle scripts; histórico somente refs locais (58/536 antes da publicação); CI novo ainda a conferir no handoff externo. Administração não alterada.
+
+## Auditoria pública 2026-11-11 — estado da entrega inicial
 
 Os registros abaixo deste bloco são históricos e não provam estado atual. Base main: e2eedcc6249e08c389aef6282bcb13ae40d2f76a. Branch security/public-exposure-hardening. Evidências completas, riscos e comandos em [handoff de segurança](security-audit/CHECKER_HANDOFF.md). main agora retorna protected=true e Ruleset 27031355 active, sem comprovação global de ausência de bypass actors. A antiga observação de main desprotegida foi superada pela consulta atual, sem reescrever a evidência histórica.
 
@@ -170,3 +190,26 @@ Sprint: `.harness/sprints/2026-07-04-doc-residual-reconciliation.json`. Scope: r
 | `npm run validate:docs` | Linux local | 0 | AgentOS documentation validation passed. | Canonical docs now align with the current owner-approved governance contract and the post-PR-15 baseline. | Documentation contract. | Local host only. | None known. |
 | `npm run validate:license` | Linux local | 0 | AgentOS license and metadata validation passed. | Documentation reconciliation left metadata coherent. | Metadata contract. | Local host only. | None known. |
 | `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean for the residual-doc slice. | Diff hygiene. | Local diff only. | None known. |
+
+## Registro histórico preservado da PR #20
+
+O texto abaixo descreve o momento da PR #20; a leitura atual está no relatório de coordenação/governança, que o supera como estado corrente.
+
+## Current audit override — 2026-11-11 F0-AUD-003
+
+This section supersedes previous current-state and zero-vulnerability claims below, which are retained as historical evidence. Base main: `e2eedcc6249e08c389aef6282bcb13ae40d2f76a`. Working branch: `fix/f0-aud-003-governance-dependency`. New commit/PR and CI identifiers are reported in the PR handoff after publication.
+
+- main currently reports `protected=false`; detailed protection read/write is unavailable to this integration (403).
+- The current lockfile audit identifies transitive `fast-uri@3.1.2` as high severity. A lockfile-only update selects 3.1.9; the post-update audit reports zero vulnerabilities at this time.
+- Only fast-uri metadata changes in the dependency graph; direct dependency pins remain unchanged. No local dependency installation or lifecycle scripts executed.
+- CI at the new HEAD is pending publication. Full local doctor/validate/tests are NOT_RUN; dependencies were not installed. CI must prove Windows/Linux behavior.
+- Status: BLOCKED pending administrative enforcement and independent review. No merge, release, SSH or Hermes integration authorized.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| npm audit --package-lock-only --ignore-scripts --json (baseline) | managed workspace, npm registry | 1 | fast-uri high severity | docs/F0-AUD-003-audit-before.json | Identify dependency | Current advisory database; not proof of runtime exploitation | High until fixed |
+| npm update fast-uri --package-lock-only --ignore-scripts | isolated workspace | 0 | 3.1.2 to 3.1.9; no node_modules | lockfile diff | Minimal repair | No local runtime tests | CI pending |
+| npm audit --package-lock-only --ignore-scripts --json (updated) | managed workspace, npm registry | 0 | zero vulnerabilities | docs/F0-AUD-003-audit-after.json | Audit clean | Time-dependent database | Future advisories possible |
+| branch main metadata / detailed protection API | GitHub read-only | — | protected=false / HTTP 403 | docs/F0-AUD-003.md | Governance observed | Cannot apply protection | Administrative gate BLOCKED |
+
+[Detailed audit record and administrative proposal](F0-AUD-003.md).

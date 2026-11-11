@@ -176,3 +176,7 @@ Acceptance criteria:
 ## R11 - Auditoria pública e hardening (ordem 2026-11-11)
 
 Executar auditoria de exposição pública, histórico alcançável, documentação, Actions, dependências e governança. Corrigir scanner, workflows e dependência vulnerável com regressões e evidências. Os sete entregáveis em docs/security-audit são obrigatórios. Não alterar Ruleset 27031355, visibilidade, permissões/secrets GitHub, credenciais, histórico, produção ou outros repositórios; sem merge, deploy ou release. Distinguir configuração de enforcement e ausência de alertas de ausência comprovada de segredos.
+
+### Complemento R11 — coordenação e governança da PR #21
+
+Consolidar sem merge o conteúdo legítimo da PR #20 em #21; comprovar identidade das dependências e preservar a rastreabilidade das evidências/pontas de sprint. Inventariar cada configuração como CONFIRMED, NOT CONFIGURED, UNKNOWN ou NOT ACCESSIBLE. Não alterar administração ou inferir ausência de bypass de campos omitidos. Publicar novo SHA, CI Linux/Windows e solicitação independente, mantendo Draft e Hermes F1 bloqueada.

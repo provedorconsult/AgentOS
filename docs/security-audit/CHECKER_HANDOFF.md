@@ -1,5 +1,10 @@
 # Handoff ao Checker — auditoria pública AgentOS
 
+## Rodada de coordenação/governança
+
+A correção de fallback em a894409 foi validada pela revisão independente 5860100288 (COMMENTED); não foi aprovação integral. A rodada seguinte consolida a PR #20 sem merge e publica novo readback. [Relatório](COORDINATION_GOVERNANCE.md) · [evidências e comandos](COORDINATION_EVIDENCE.json). O SHA final e CI novos constam no handoff externo. Aprovação humana mínima zero no ruleset visível; bypass global permanece UNKNOWN. READY_FOR_CHECKER_REAUDIT é entrega para revisão, não autorização.
+
+
 ## Atualização após REQUEST_CHANGES
 
 A revisão do SHA b9b8b440846365b854dee3bfc82bf8009f2a278b encontrou falso negativo em fallback de variável. A correção e os novos testes estão em [FALLBACK_REMEDIATION.md](FALLBACK_REMEDIATION.md) e [FALLBACK_EVIDENCE.json](FALLBACK_EVIDENCE.json). A revisão anterior não aprovou a entrega; solicitação de nova revisão e novo SHA constam no handoff externo da PR. Não usar os 61 testes antigos como evidência do novo HEAD.

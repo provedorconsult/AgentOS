@@ -45,3 +45,7 @@ Não foi modificado o ruleset. O achado antigo de main desprotegida foi superado
 | Vulnerability reporting privado | link existente na política | disponibilidade UNKNOWN; confirmar canal antes de enviar informação confidencial |
 
 Pendente externo: leitura independente de bypass/settings/plano por pessoa autorizada. Não modificar serviços ou habilitar recursos sem a autorização administrativa correspondente.
+
+## Readback posterior — coordenação PR #20/#21
+
+[Inventário completo e reproduzível](COORDINATION_GOVERNANCE.md) · [consultas sanitizadas](COORDINATION_EVIDENCE.json). Confirmado novamente: ruleset active somente main, checks strict, zero aprovações humanas obrigatórias no ruleset visível, bypass_actors omitido. Proteção clássica 403; endpoints adicionais recusados pelo conector 400. Zero aprovações é NOT CONFIGURED nesse escopo, não apenas falta de prova. Bypass global permanece UNKNOWN e os demais settings têm classificação individual; nenhuma alteração administrativa.

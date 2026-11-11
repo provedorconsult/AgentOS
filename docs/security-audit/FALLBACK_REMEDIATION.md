@@ -32,3 +32,7 @@ Mudanças: scanner, regressões, este relatório/evidência e atualização do h
 Mantêm-se as pendências independentes: ausência de bypass actors não comprovada, settings parcialmente acessíveis e coordenação da alteração fast-uri com PR #20 antes de qualquer integração. Nenhum merge, deploy, release, teste SSH, rotação de credenciais ou alteração de Ruleset foi autorizado/executado.
 
 Próximo gate: CI do novo SHA, reprodução independente pelo Checker e decisão própria. CI verde não substitui revisão. EVIDENCE.json e relatórios originais continuam registros da entrega anterior; esta correção é identificada em FALLBACK_EVIDENCE.json e no novo SHA do handoff.
+
+## Atualização de escopo posterior
+
+O scanner e seus testes permanecem byte a byte iguais ao SHA a894409 validado pelo Checker. A rodada atual adiciona coordenação documental com PR #20 e [inventário de governança](COORDINATION_GOVERNANCE.md). FALLBACK_EVIDENCE.json permanece evidência histórica; os comandos da combinação final estão em COORDINATION_EVIDENCE.json e o CI do novo SHA no handoff externo.

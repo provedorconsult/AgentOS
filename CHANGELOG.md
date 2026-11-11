@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- remediate F0-AUD-003: update transitive fast-uri in the lockfile from 3.1.2 to 3.1.9; record actual branch-protection drift and keep merge/release blocked pending administrative enforcement and independent review;
+
 - auditoria pública autorizada em 2026-11-11: histórico real e redaction total no scanner, regras de leitura/checkout/input nos workflows, Gitleaks independente pinado, regressões e documentação de postura/incidentes; correção mínima de fast-uri sem alterar pins diretos; nenhuma alteração administrativa ou implantação.
 
 - added the supported `claude-code` adapter instructions surface: `npm run agentos:install-adapter -- claude-code` installs `CLAUDE.md` with backup support and coexists with the Codex adapter in the same repository;
