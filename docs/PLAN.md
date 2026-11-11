@@ -98,3 +98,7 @@ Inspecionar os dois diffs fixados; comparar dependências por blob; simular conf
 ## Correção do workflow Deploy — revisão de fc64ffd
 
 Reproduzir aceitação indevida de environments no validador; remover seleção livre/referência ao GitHub Environment e chamada operacional; manter workflow manual com falha explícita; bloquear referências até readback/autorização; adicionar regressões, executar suíte completa/CI novo e solicitar nova revisão. Gates humanos da coordenação/bypass/reviewer permanecem abertos.
+
+## Reconciliação documental — review 5861522382
+
+Preencher CI de 668254b/fc64ffd/a894409 por SHA, reconciliar decisões #6800325463/#6800362186, conferir permissões disponíveis sem solicitar reviews, preparar proposta administrativa limitada sem aplicá-la, validar documentos/escopo/scanners e CI próprio; reauditar novo SHA.

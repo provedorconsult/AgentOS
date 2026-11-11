@@ -184,3 +184,7 @@ Consolidar sem merge o conteúdo legítimo da PR #20 em #21; comprovar identidad
 ### R11 — bloqueio de ambientes de deploy não verificados
 
 Até readback administrativo e autorização/revisão independentes, nenhum workflow deve selecionar ou referenciar GitHub Environment, mesmo por nome fixo. O workflow manual Deploy deve falhar explicitamente sem checkout, secrets ou chamada de deploy. Validar formas escalares/mapping/dinâmicas e seletores de ambiente; não criar ambientes nem configurar comando operacional nesta rodada.
+
+### R11 — rastreabilidade de decisões, execução e enforcement
+
+Vincular evidências de CI ao SHA exato executado e remover marcadores pendentes quando o resultado é conhecido. Registrar aceitação humana da consolidação e mínimo de uma aprovação separadamente da aplicação administrativa não autorizada/executada. Nenhum campo ausente prova ausência de bypass; permissão de conta não comprova independência/aprovação. A reconciliação documental não modifica código e requer CI próprio do seu SHA antes de nova revisão.

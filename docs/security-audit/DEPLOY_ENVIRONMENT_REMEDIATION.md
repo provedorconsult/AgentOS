@@ -1,6 +1,6 @@
 # Correção de seleção de ambiente de deploy
 
-Data: 2026-11-11. PR #21, Draft. HEAD inicial auditado: `fc64ffd3890340810af1d682ef2900d5d5a47f84`; base main: `e2eedcc6249e08c389aef6282bcb13ae40d2f76a`. Novo SHA exato e CI constam no handoff externo da PR. Estado Maker: validação local concluída, aguardando CI do novo SHA no handoff externo; não aprovação. Hermes F1 BLOQUEADA.
+Data: 2026-11-11. PR #21, Draft. HEAD inicial auditado: `fc64ffd3890340810af1d682ef2900d5d5a47f84`; base main: `e2eedcc6249e08c389aef6282bcb13ae40d2f76a`. SHA técnico testado: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. CI #43049685631 e checklist #43049685619 concluídos com success; Linux/Windows 69/69 cada, zero falhas/skip. Não é aprovação global. Hermes F1 BLOQUEADA.
 
 ## Causa e decisão
 
@@ -29,8 +29,8 @@ Referência primária: [GitHub — Managing environments for deployment](https:/
 
 ## Limitações e entrega
 
-Readback completo de bypass ainda UNKNOWN; aprovação mínima zero no ruleset visível; política humana/reviewer elegível e aceitação da consolidação #20/#21 ainda pendentes. Não afirmar que o bloqueio do workflow resolve governança global. PR #20 permanece intacta e Draft. [Inventário administrativo](COORDINATION_GOVERNANCE.md) e evidências históricas foram preservados.
+Estratégia #20/#21 aceita pelo solicitante em [#6800325463](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463), mantendo gates; mínimo de uma aprovação decidido em [#6800362186](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186). Readback completo de bypass ainda UNKNOWN; aplicação administrativa não autorizada/executada e mínimo observado continua zero. Permissões de clovisjr (write) e provedorconsult (admin) confirmadas; suely35ramos UNKNOWN. Elegibilidade completa, independência e aprovação efetiva ainda não demonstradas. Não afirmar que o bloqueio do workflow resolve governança global. PR #20 permanece intacta e Draft. [Inventário administrativo](COORDINATION_GOVERNANCE.md) e evidências históricas foram preservados.
 
 Arquivos: workflow Deploy, política e regressões; sprint pública; SPEC/PLAN/REVIEW/CHANGELOG; atualizações de handoff/postura/contexto de coordenação; este relatório e evidência. Sem novas dependências, alteração do scanner ou de suas exceções, mudança administrativa ou outro repositório. Lista exata e SHA final no comentário de reauditoria.
 
-Próximo gate: CI do novo SHA e nova auditoria independente, mais decisões/readback humanos remanescentes. Manter Draft; sem merge, release, deploy, autoaprovação, SSH ou liberação de Hermes F1. Reversão: manter a PR sem merge e revisar a correção; não restaurar o environment dinâmico como solução operacional.
+Próximo gate: reauditoria da reconciliação documental e aplicação/readback administrativos sob autorização específica. CI de cada commit documental sucessor deve ser conferido por seu SHA, sem converter o CI de 668254b em evidência de outro commit. Manter Draft; sem merge, release, deploy, autoaprovação, SSH ou liberação de Hermes F1. Reversão: manter a PR sem merge e revisar a correção; não restaurar o environment dinâmico como solução operacional.

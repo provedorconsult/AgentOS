@@ -1,6 +1,6 @@
 {
   "auditedParent": "b9b8b440846365b854dee3bfc82bf8009f2a278b",
-  "state": "local-validation-pass-awaiting-independent-review",
+  "state": "execution-record-bound-to-tested-commit; no global approval",
   "rawValuesPublished": false,
   "red": {
     "command": "node --test tests/agentos-public-security.test.mjs (new tests, old scanner)",
@@ -72,7 +72,38 @@
     "blobs": 528,
     "scope": "local reachable refs; pre-publication"
   },
-  "ci": "pending on new SHA",
+  "ci": {
+    "commitSha": "a89440920fe8382ceff21807df6a9e06f67173cd",
+    "workflow": {
+      "id": 43035036962,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43035036962",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "checklist": {
+      "id": 43035036801,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43035036801",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "eachPlatform": {
+      "tests": 66,
+      "passed": 66,
+      "failed": 0,
+      "skipped": 0
+    },
+    "reachableHistory": {
+      "commits": 50,
+      "blobs": 527,
+      "scope": "locally reachable refs in that CI checkout, not full remote history"
+    },
+    "gitleaks": {
+      "linux": "PASS",
+      "windows": "conditional step skipped by policy"
+    },
+    "binding": "This evidence describes commitSha only, not a moving HEAD. Documentation-only successor CI is separately linked in the PR handoff."
+  },
   "localScopeBase": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
-  "administrativeChanges": false
+  "administrativeChanges": false,
+  "testedCommit": "a89440920fe8382ceff21807df6a9e06f67173cd"
 }

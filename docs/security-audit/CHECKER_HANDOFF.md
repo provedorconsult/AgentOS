@@ -1,30 +1,24 @@
-# Handoff ao Checker — auditoria pública AgentOS
+# Handoff ao Checker — AgentOS PR #21
 
-## Atualização — correção de seleção de ambiente
+## Estado corrente — decisões e evidências reconciliadas
 
-REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass, política humana e aceitação da consolidação continuam pendentes.
+Fonte técnica fixada: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. [CI #43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631): Linux e Windows 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades; Gitleaks PASS Linux, skip condicional Windows. [Checklist #43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success. Logs reconferidos. Essa evidência pertence ao SHA indicado, não a qualquer HEAD futuro.
 
-## Rodada de coordenação/governança
+Decisões humanas já recebidas: [estratégia #20/#21 aceita mantendo gates](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463); [mínimo de uma aprovação de reviewer distinto do autor](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186). Não estão pendentes de decisão. Aplicação administrativa NÃO autorizada nesta rodada nem executada; readback atual continua mínimo zero. Bypass global UNKNOWN. Consulta específica de permissões confirmou clovisjr=write e provedorconsult=admin; suely35ramos retornou null (UNKNOWN). Permissão/conta distinta do autor mkwdf1 não comprova independência humana ou aprovação efetiva.
 
-A correção de fallback em a894409 foi validada pela revisão independente 5860100288 (COMMENTED); não foi aprovação integral. A rodada seguinte consolida a PR #20 sem merge e publica novo readback. [Relatório](COORDINATION_GOVERNANCE.md) · [evidências e comandos](COORDINATION_EVIDENCE.json). O SHA final e CI novos constam no handoff externo. Aprovação humana mínima zero no ruleset visível; bypass global permanece UNKNOWN. READY_FOR_CHECKER_REAUDIT é entrega para revisão, não autorização.
+[Reconciliação e proposta administrativa concreta](TRACEABILITY_RECONCILIATION.md) separa decisões concluídas de aplicação/readback e reauditoria pendentes. Review 5861522382: REQUEST_CHANGES por rastreabilidade, sem sign-off global. Draft; Hermes F1 BLOQUEADA.
 
+## Evidências por execução
 
-## Atualização após REQUEST_CHANGES
+- [DEPLOY_ENVIRONMENT_EVIDENCE.json](DEPLOY_ENVIRONMENT_EVIDENCE.json): commit técnico 668254b, CI real e decisões humanas reconciliadas.
+- [COORDINATION_EVIDENCE.json](COORDINATION_EVIDENCE.json): execução fc64ffd, CI fixado, preservação de conteúdo #20.
+- [FALLBACK_EVIDENCE.json](FALLBACK_EVIDENCE.json): execução a894409, CI fixado e regressões do scanner.
+- BASELINE.md, EVIDENCE.json e relatórios iniciais continuam registros históricos de suas execuções. Não usar estado antigo ou campo de uma execução para afirmar enforcement/CI do HEAD corrente.
+- O SHA documental sucessor, seu CI e lista exata de arquivos são vinculados no comentário de reauditoria; o arquivo não pode conter o hash do próprio commit. Isso não altera os resultados já conhecidos de 668254b, que estão preenchidos aqui.
 
-A revisão do SHA b9b8b440846365b854dee3bfc82bf8009f2a278b encontrou falso negativo em fallback de variável. A correção e os novos testes estão em [FALLBACK_REMEDIATION.md](FALLBACK_REMEDIATION.md) e [FALLBACK_EVIDENCE.json](FALLBACK_EVIDENCE.json). A revisão anterior não aprovou a entrega; solicitação de nova revisão e novo SHA constam no handoff externo da PR. Não usar os 61 testes antigos como evidência do novo HEAD.
+## Gates
 
-Estado local: READY_FOR_CHECKER dentro do escopo acessível; CI do SHA final e settings externos devem ser conferidos independentemente. READY_FOR_CHECKER significará apenas entrega revisável, nunca aprovação de segurança/merge.
-
-- SHA inicial: e2eedcc6249e08c389aef6282bcb13ae40d2f76a.
-- Branch: security/public-exposure-hardening, derivada de main.
-- SHA final: consultar o SHA explícito no corpo/comentário de entrega da PR; deve corresponder ao HEAD. O hash de um commit não pode ser inscrito no próprio arquivo que ele contém.
-- Arquivos: consultar diff e sprint .harness/sprints/2026-11-11-public-security-audit.json; sem exceções amplas de escopo.
-- Achados corrigidos na branch: PUB-001..005; main não foi alterada.
-- Pendências externas: PUB-007/008 (settings/recursos/bypass ausentes na resposta API); não presumir ausência de atores ou disponibilidade de recursos.
-- Evidência: BASELINE.md, FINDINGS.md, REMEDIATION_PLAN.md, SECURITY_POSTURE.md, INCIDENT_RESPONSE.md, IMPLEMENTATION_REPORT.md e EVIDENCE.json. Relatórios brutos não são publicados.
-- Testes: comando, versão, código e resumo em EVIDENCE.json; evidência local separada de API e CI. Novo CI deve estar vinculado ao SHA final.
-- Riscos: cobertura limitada a refs/formatos acessíveis, falso negativo possível, exceção binária imutável, sobreposição do lockfile com PR #20 e controles GitHub não testados destrutivamente.
-- Autorização necessária: qualquer revogação/rotação, alteração administrativa/visibilidade/Ruleset, reescrita de histórico, merge, deploy ou release; nenhuma foi solicitada como necessária para esta correção de código.
+Decisões humanas de coordenação e mínimo uma aprovação: CONCLUÍDAS. Aplicação administrativa, readback completo de bypass e comprovação de reviewer/independência: PENDENTES; confira a proposta concreta em TRACEABILITY_RECONCILIATION.md. Revisão independente ainda obrigatória. Não fechar #20 antes do gate, não mergear #21, não alterar Draft nem executar deploy. Sem alteração de código/infra nesta reconciliação.
 
 ## Roteiro independente
 

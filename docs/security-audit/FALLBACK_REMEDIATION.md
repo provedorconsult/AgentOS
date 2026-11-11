@@ -36,3 +36,7 @@ Próximo gate: CI do novo SHA, reprodução independente pelo Checker e decisão
 ## Atualização de escopo posterior
 
 O scanner e seus testes permanecem byte a byte iguais ao SHA a894409 validado pelo Checker. A rodada atual adiciona coordenação documental com PR #20 e [inventário de governança](COORDINATION_GOVERNANCE.md). FALLBACK_EVIDENCE.json permanece evidência histórica; os comandos da combinação final estão em COORDINATION_EVIDENCE.json e o CI do novo SHA no handoff externo.
+
+## Evidência de CI reconciliada
+
+A execução fixada em a89440920fe8382ceff21807df6a9e06f67173cd teve CI #43035036962 e checklist #43035036801 success, 66 testes por plataforma, zero falhas/skip. FALLBACK_EVIDENCE.json agora registra esse resultado pelo SHA, sem marcador de CI pendente. O estado corrente de decisões/enforcement está em TRACEABILITY_RECONCILIATION.md; não inferir aprovação global da validação técnica.

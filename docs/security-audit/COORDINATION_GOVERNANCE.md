@@ -1,10 +1,20 @@
 # Coordenação PR #20/#21 e governança — 2026-11-11
 
+## Estado corrente — decisões e evidências reconciliadas
+
+Fonte técnica fixada: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. [CI #43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631): Linux e Windows 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades; Gitleaks PASS Linux, skip condicional Windows. [Checklist #43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success. Logs reconferidos. Essa evidência pertence ao SHA indicado, não a qualquer HEAD futuro.
+
+Decisões humanas já recebidas: [estratégia #20/#21 aceita mantendo gates](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463); [mínimo de uma aprovação de reviewer distinto do autor](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186). Não estão pendentes de decisão. Aplicação administrativa NÃO autorizada nesta rodada nem executada; readback atual continua mínimo zero. Bypass global UNKNOWN. Consulta específica de permissões confirmou clovisjr=write e provedorconsult=admin; suely35ramos retornou null (UNKNOWN). Permissão/conta distinta do autor mkwdf1 não comprova independência humana ou aprovação efetiva.
+
+[Reconciliação e proposta administrativa concreta](TRACEABILITY_RECONCILIATION.md) separa decisões concluídas de aplicação/readback e reauditoria pendentes. Review 5861522382: REQUEST_CHANGES por rastreabilidade, sem sign-off global. Draft; Hermes F1 BLOQUEADA.
+
+## Registro da implementação e consultas anteriores
+
 ## Atualização — correção de seleção de ambiente
 
-REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass, política humana e aceitação da consolidação continuam pendentes.
+REQUEST_CHANGES no SHA fc64ffd3890340810af1d682ef2900d5d5a47f84: workflow Deploy referenciava environment dinâmico sem readback administrativo. [Relatório da correção](DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências atuais](DEPLOY_ENVIRONMENT_EVIDENCE.json) superam esse comportamento. Nesta rodada o workflow fica bloqueado, sem seleção/referência de ambiente ou chamada de deploy. O conteúdo anterior abaixo é histórico; bypass e aplicação/readback da política continuam pendentes; as decisões humanas estão concluídas conforme o estado corrente acima.
 
-Estado Maker: validação local concluída; READY_FOR_CHECKER_REAUDIT condicionado à conferência do CI do novo SHA no handoff externo. Não é aprovação. PR #21 Draft; Hermes F1 BLOQUEADA.
+Estado Maker daquela rodada: validação local concluída; o CI efetivo está vinculado ao SHA correspondente em COORDINATION_EVIDENCE.json. Não é aprovação. PR #21 Draft; Hermes F1 BLOQUEADA.
 
 ## Identidade e fontes
 
@@ -28,7 +38,7 @@ A última instrução apenas calcula uma árvore de simulação, não move branc
 
 Estratégia adotada: consolidar o conteúdo legítimo de #20 em #21 em um commit normal descendente do HEAD inicial. Preservados byte a byte os quatro arquivos novos de #20 (sprint bloqueada, relatório técnico, audit-before e audit-after). Preservadas suas adições em CHANGELOG/PLAN/REVIEW/RELEASE, com rótulo histórico explícito e este readback corrente. Não apagar os registros de protected=false ou NOT_RUN originais, nem tratá-los como atuais. Mantidos os ponteiros de #21 para a sprint pública e o lastVerifiedSprint anterior; a sprint F0-AUD-003 permanece bloqueada. Isso resolve a disputa entre dois ponteiros singulares sem marcar nenhuma sprint aprovada. Scanner/workflows/testes de #21 permanecem intactos.
 
-Combinação final = árvore de #21 + quatro novos arquivos originais de #20 + adições documentais preservadas de #20 + estas evidências e declarações de escopo. Suíte e checks executam sobre essa combinação real, não apenas em cada PR isolada. Nenhuma branch remota de #20 foi alterada, fechada ou mergeada. Proposta para o Checker/proprietário: revisar a consolidação em #21 e, somente após sua decisão, encerrar #20 como substituída sem integrar seu commit. Não aplicar #20 depois de #21 sem reconciliar ponteiros e documentação novamente. Se algum HEAD/base mudar, a comparação e CI precisam ser refeitos. A aceitação dessa estratégia continua sendo gate de integração.
+Combinação final = árvore de #21 + quatro novos arquivos originais de #20 + adições documentais preservadas de #20 + estas evidências e declarações de escopo. Suíte e checks executam sobre essa combinação real, não apenas em cada PR isolada. Nenhuma branch remota de #20 foi alterada, fechada ou mergeada. Proposta para o Checker/proprietário: revisar a consolidação em #21 e, somente após sua decisão, encerrar #20 como substituída sem integrar seu commit. Não aplicar #20 depois de #21 sem reconciliar ponteiros e documentação novamente. Se algum HEAD/base mudar, a comparação e CI precisam ser refeitos. A estratégia recebeu aceitação humana em #6800325463; a revisão independente e os gates de integração continuam necessários.
 
 ## Inventário de controles e limitações
 
@@ -76,7 +86,7 @@ Referências oficiais para reprodução por administrador autorizado: [Rulesets 
 
 Solicitar a administrador autorizado readback sanitizado e datado das superfícies acima. Para bypass: lista completa explícita, actor_id/actor_type/bypass_mode, papéis efetivos e escopo de cada regra; verificar também proteção clássica e privilégios de alteração das regras. Ausência de bypass_actors no conector não pode ser convertida em lista vazia. Segredos, tokens e conteúdo de alertas não devem integrar a evidência pública.
 
-Aprovação humana: escolher explicitamente reviewer elegível e política de main (mínimo de aprovações, stale reviews, último push, code owners e exceções). Se for necessário alterar a configuração, requerer autorização humana específica para a proposta concreta e readback independente após a mudança. A contagem zero não satisfaz uma exigência de aprovação humana técnica. Não foi solicitado/aplicado write administrativo nesta entrega; revisão e autorização são gates distintos do sucesso do CI.
+Aprovação humana: política mínima já decidida em #6800362186 (uma aprovação por reviewer distinto do autor); candidatos indicados em #6800325463. Comprovar elegibilidade/independência e aplicação. Stale reviews, último push, code owners e exceções não receberam nova decisão/autorização de mudança. Se for necessário alterar a configuração, requerer autorização humana específica para a proposta concreta e readback independente após a mudança. A contagem zero não satisfaz uma exigência de aprovação humana técnica. Não foi solicitado/aplicado write administrativo nesta entrega; revisão e autorização são gates distintos do sucesso do CI.
 
 ## Verificação e entrega
 

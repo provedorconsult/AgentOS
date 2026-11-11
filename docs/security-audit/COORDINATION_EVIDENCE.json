@@ -363,7 +363,37 @@
       "summary": []
     }
   ],
-  "ci": "pending on final SHA",
+  "ci": {
+    "commitSha": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
+    "workflow": {
+      "id": 43042894497,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43042894497",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "checklist": {
+      "id": 43042894739,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43042894739",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "eachPlatform": {
+      "tests": 66,
+      "passed": 66,
+      "failed": 0,
+      "skipped": 0
+    },
+    "reachableHistory": {
+      "commits": 51,
+      "blobs": 538,
+      "scope": "locally reachable refs in that CI checkout, not full remote history"
+    },
+    "gitleaks": {
+      "linux": "PASS",
+      "windows": "conditional step skipped by policy"
+    },
+    "binding": "This evidence describes commitSha only, not a moving HEAD. Documentation-only successor CI is separately linked in the PR handoff."
+  },
   "preservationChecks": [
     {
       "path": ".harness/sprints/2026-11-11-f0-aud-003.json",
@@ -435,5 +465,12 @@
     "keptLastVerifiedSprint": "2026-07-04-doc-residual-reconciliation",
     "pr20BranchModified": false,
     "requiresCheckerAcceptance": true
+  },
+  "state": "execution-record-bound-to-tested-commit; no global approval",
+  "testedCommit": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
+  "humanCoordinationDecision": {
+    "status": "ACCEPTED_WITH_GATES",
+    "source": "https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463",
+    "doesNotAuthorizeMergeOrImmediatePr20Closure": true
   }
 }

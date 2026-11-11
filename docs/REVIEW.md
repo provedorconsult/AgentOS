@@ -1,5 +1,19 @@
 # REVIEW
 
+## Rodada atual — reconciliação de rastreabilidade
+
+## Estado corrente — decisões e evidências reconciliadas
+
+Fonte técnica fixada: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. [CI #43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631): Linux e Windows 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades; Gitleaks PASS Linux, skip condicional Windows. [Checklist #43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success. Logs reconferidos. Essa evidência pertence ao SHA indicado, não a qualquer HEAD futuro.
+
+Decisões humanas já recebidas: [estratégia #20/#21 aceita mantendo gates](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463); [mínimo de uma aprovação de reviewer distinto do autor](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186). Não estão pendentes de decisão. Aplicação administrativa NÃO autorizada nesta rodada nem executada; readback atual continua mínimo zero. Bypass global UNKNOWN. Consulta específica de permissões confirmou clovisjr=write e provedorconsult=admin; suely35ramos retornou null (UNKNOWN). Permissão/conta distinta do autor mkwdf1 não comprova independência humana ou aprovação efetiva.
+
+[Reconciliação e proposta administrativa concreta](security-audit/TRACEABILITY_RECONCILIATION.md) separa decisões concluídas de aplicação/readback e reauditoria pendentes. Review 5861522382: REQUEST_CHANGES por rastreabilidade, sem sign-off global. Draft; Hermes F1 BLOQUEADA.
+
+Validação local desta rodada: npm run validate (69/69, zero falhas/skip), scanner histórico e git diff --check PASS, todos exit 0. Resultados em security-audit/TRACEABILITY_RECONCILIATION.md; CI do commit documental é vinculado ao seu próprio SHA no handoff externo.
+
+## Registro das rodadas anteriores
+
 ## Rodada atual — bloqueio de deploy sem ambientes verificados
 
 HEAD inicial fc64ffd3890340810af1d682ef2900d5d5a47f84 recebeu REQUEST_CHANGES pelo environment dinâmico. [Correção](security-audit/DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências](security-audit/DEPLOY_ENVIRONMENT_EVIDENCE.json) documentam a rodada atual; os blocos seguintes permanecem históricos. Nenhum deploy ou administração executado.

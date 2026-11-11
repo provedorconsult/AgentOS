@@ -2,7 +2,7 @@
   "initialHead": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
   "base": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
   "observedAt": "2026-11-11T15:32:14.324Z",
-  "state": "local-validation-pass; final CI and SHA recorded in PR handoff",
+  "state": "execution-record-bound-to-tested-commit; no global approval",
   "red": {
     "command": "node --test tests/agentos-workflow-security.test.mjs (new regressions, old policy)",
     "tests": 7,
@@ -180,7 +180,53 @@
       "summary": []
     }
   ],
-  "ci": "pending on final SHA",
+  "ci": {
+    "commitSha": "668254b435cf46e1cc5cbc8346bad59db7ce7fcb",
+    "workflow": {
+      "id": 43049685631,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43049685631",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "checklist": {
+      "id": 43049685619,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43049685619",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "eachPlatform": {
+      "tests": 69,
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0
+    },
+    "reachableHistory": {
+      "commits": 52,
+      "blobs": 552,
+      "scope": "locally reachable refs in that CI checkout, not full remote history"
+    },
+    "gitleaks": {
+      "linux": "PASS",
+      "windows": "conditional step skipped by policy"
+    },
+    "binding": "This evidence describes commitSha only, not a moving HEAD. Documentation-only successor CI is separately linked in the PR handoff.",
+    "jobs": [
+      {
+        "id": 130623067942,
+        "name": "validate (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "logsInspected": true
+      },
+      {
+        "id": 130623068578,
+        "name": "validate (windows-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "logsInspected": true
+      }
+    ]
+  },
   "fullSuite": {
     "tests": 69,
     "passed": 69,
@@ -202,5 +248,131 @@
     "fallback regression tests",
     "dependency files",
     "local deploy contracts"
-  ]
+  ],
+  "testedCommit": "668254b435cf46e1cc5cbc8346bad59db7ce7fcb",
+  "humanDecisionsAndReadback": {
+    "coordination": {
+      "status": "ACCEPTED_WITH_GATES",
+      "source": "https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463",
+      "pr20Closure": "only after independent approval; not performed"
+    },
+    "reviewPolicy": {
+      "status": "DECIDED_NOT_APPLIED",
+      "requiredApprovals": 1,
+      "reviewerMustDifferFromAuthor": true,
+      "source": "https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186",
+      "candidates": [
+        "clovisjr",
+        "provedorconsult",
+        "suely35ramos"
+      ],
+      "administrativeChangeAuthorized": false
+    },
+    "permissions": {
+      "clovisjr": {
+        "permission": "write",
+        "result": "CONFIRMED"
+      },
+      "provedorconsult": {
+        "permission": "admin",
+        "result": "CONFIRMED"
+      },
+      "suely35ramos": {
+        "permission": null,
+        "result": "UNKNOWN; response does not confirm permission"
+      }
+    },
+    "prAuthor": "mkwdf1",
+    "reviewIndependence": "Human independence and actual approval not established by username/permission",
+    "administrativeReadback": {
+      "observedAt": "2026-11-11T15:56:43.177Z",
+      "ruleset": {
+        "id": 27031355,
+        "name": "F0-AUD-003 - Protect main",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "provedorconsult/AgentOS",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/main"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 0,
+              "dismiss_stale_reviews_on_push": false,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "merge",
+                "squash",
+                "rebase"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "validate (ubuntu-latest)"
+                },
+                {
+                  "context": "validate (windows-latest)"
+                }
+              ]
+            }
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "deletion"
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5Iz_kSzgGcdzs",
+        "created_at": "2026-11-11T09:41:53.814-03:00",
+        "updated_at": "2026-11-11T09:41:53.869-03:00",
+        "current_user_can_bypass": "never",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355"
+          },
+          "html": {
+            "href": "https://github.com/provedorconsult/AgentOS/rules/27031355"
+          }
+        }
+      },
+      "classicProtection": {
+        "error": "GitHub API error 403: {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/branches/branch-protection#get-branch-protection\",\"status\":\"403\"}",
+        "error_code": "FORBIDDEN",
+        "error_data": {
+          "message": "Resource not accessible by integration",
+          "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+          "status": "403"
+        }
+      },
+      "bypassGlobal": "UNKNOWN; bypass_actors omitted",
+      "desiredMinimum": 1,
+      "observedMinimum": 0,
+      "writePerformed": false
+    },
+    "checkerReview": {
+      "id": 5861522382,
+      "commitSha": "668254b435cf46e1cc5cbc8346bad59db7ce7fcb",
+      "verdict": "REQUEST_CHANGES",
+      "technicalDeploy": "validated; no global sign-off"
+    }
+  }
 }
