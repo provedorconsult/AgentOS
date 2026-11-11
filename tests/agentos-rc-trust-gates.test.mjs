@@ -129,7 +129,8 @@ test("secret scan is occurrence-based and redacts live values", () => {
     encoding: "utf8"
   });
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /sk-abcd…3456/);
+  assert.match(result.stderr, /REDACTED fingerprint=[a-f0-9]{16}/);
+  assert.ok(!result.stderr.includes(live.slice(0, 7)) && !result.stderr.includes(live.slice(-4)));
   assert.doesNotMatch(result.stderr, new RegExp(live));
 });
 

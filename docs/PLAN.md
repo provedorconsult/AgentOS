@@ -80,3 +80,25 @@ Final RC hardening adds the missing traceability chain: `SPEC -> PLAN -> task.fi
 - branch protection remains a GitHub-side dependency and can still drift from the documented governance contract;
 - tag and prerelease publication remain blocked until required checks are green and the owner completes the explicit release action;
 - if branch protection re-enables required review before a second eligible maintainer exists, release publication can become operationally blocked again.
+
+## Auditoria de exposição pública — 2026-11-11
+
+Ordem: baseline completo antes de correções; varreduras independentes e classificação; plano; correções autorizadas de scanner/Actions/dependências; validação local e CI; Checker. Escopo exato em .harness/sprints/2026-11-11-public-security-audit.json. Mantidos todos os limites administrativos. Sobreposição da correção fast-uri com PR #20 deve ser reconciliada por revisão/rebase, sem merge automático.
+
+<!-- Registro preservado da PR #20; estado original, não readback atual. -->
+
+## Separate audit slice — F0-AUD-003 (2026-11-11)
+
+Remediate the vulnerable transitive fast-uri lockfile entry and document current governance drift under SPEC R4/R7. Scope is declared in `.harness/sprints/2026-11-11-f0-aud-003.json`. Keep the slice blocked until administrative protection readback and independent review; do not add Hermes runtime scope or modify closed sprints. Verification: lockfile-only npm audit, complete existing Windows/Linux CI, diff hygiene and external protection readback.
+
+## Coordenação PR #20/#21 e readback de governança
+
+Inspecionar os dois diffs fixados; comparar dependências por blob; simular conflitos sem merge; consolidar evidência histórica e resolver ponteiros para a sprint pública; consultar somente APIs acessíveis; registrar pendências administrativas; validar combinação final localmente e no CI do novo SHA; solicitar reauditoria. Escopo complementar declarado na sprint pública.
+
+## Correção do workflow Deploy — revisão de fc64ffd
+
+Reproduzir aceitação indevida de environments no validador; remover seleção livre/referência ao GitHub Environment e chamada operacional; manter workflow manual com falha explícita; bloquear referências até readback/autorização; adicionar regressões, executar suíte completa/CI novo e solicitar nova revisão. Gates humanos da coordenação/bypass/reviewer permanecem abertos.
+
+## Reconciliação documental — review 5861522382
+
+Preencher CI de 668254b/fc64ffd/a894409 por SHA, reconciliar decisões #6800325463/#6800362186, conferir permissões disponíveis sem solicitar reviews, preparar proposta administrativa limitada sem aplicá-la, validar documentos/escopo/scanners e CI próprio; reauditar novo SHA.

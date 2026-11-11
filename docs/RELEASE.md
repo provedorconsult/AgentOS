@@ -35,3 +35,15 @@ This owner-approved merge policy is a temporary governance exception, not a targ
 
 - revert the release-candidate commit or restore backed-up adapter files;
 - do not run a deploy unless `AGENTOS_DEPLOY_COMMAND` is explicitly configured and approved.
+
+## Contexto histórico preservado da PR #20
+
+O trecho abaixo descreve o estado observado na PR #20, não o estado atual. Consulte [coordenação/governança](security-audit/COORDINATION_GOVERNANCE.md) para protected=true, revisão mínima zero e bypass ainda não comprovado. Os gates atuais de Checker/autorização continuam obrigatórios para esta entrega.
+
+## Observed enforcement gap — F0-AUD-003
+
+On 2026-11-11, main at `e2eedcc6249e08c389aef6282bcb13ae40d2f76a` reports `protected=false`. The policy above remains required but is not proven enforced. The integration cannot read or change detailed protection (HTTP 403, no administration permission). [The remediation record](F0-AUD-003.md) specifies the administrative gate. Do not merge, tag or publish a release while the required protection is unverified.
+
+## Política decidida para a PR #21 — aplicação ainda bloqueada
+
+O solicitante aceitou a consolidação #20/#21 em #6800325463 e definiu mínimo de uma aprovação de reviewer elegível distinto do autor em #6800362186. Essa política desejada supera a exceção histórica de revisão opcional para esta entrega, mas não foi aplicada: ruleset 27031355 ainda retornou mínimo zero. Bypass global UNKNOWN. Somente administrador autorizado poderá aplicar a alteração mínima após autorização específica, preservar demais regras e fornecer readback independente. [Proposta concreta e evidências](security-audit/TRACEABILITY_RECONCILIATION.md). Sem merge/release/deploy ou encerramento antecipado de #20.

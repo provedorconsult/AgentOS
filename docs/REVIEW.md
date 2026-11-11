@@ -1,5 +1,76 @@
 # REVIEW
 
+## CI documental confirmado — 7c252961
+
+Execução fixada em `7c2529612df1104bcf3955f6711b1a804a0dd20e`: [AgentOS CI #43054155242](https://github.com/provedorconsult/AgentOS/actions/runs/43054155242) e [Checklist #43054155256](https://github.com/provedorconsult/AgentOS/actions/runs/43054155256) completed/success. Jobs Linux 130639000598 e Windows 130639000202: 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades, histórico/doctor/validate/diff/worktree PASS. Gitleaks PASS Linux, skip condicional Windows. Logs e passos reconferidos diretamente. Histórico CI: 53 commits/566 blobs, somente refs disponíveis no checkout.
+
+Registro estruturado: documentationSuccessorCI em DEPLOY_ENVIRONMENT_EVIDENCE.json. A evidência técnica de 668254b abaixo é preservada separadamente. O commit que incorpora este resultado é necessariamente posterior à execução registrada e terá CI próprio identificado por SHA no handoff externo; não se atribui este resultado a qualquer HEAD móvel.
+
+
+## Rodada atual — reconciliação de rastreabilidade
+
+## Estado corrente — decisões e evidências reconciliadas
+
+Fonte técnica fixada: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. [CI #43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631): Linux e Windows 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades; Gitleaks PASS Linux, skip condicional Windows. [Checklist #43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success. Logs reconferidos. Essa evidência pertence ao SHA indicado, não a qualquer HEAD futuro.
+
+Decisões humanas já recebidas: [estratégia #20/#21 aceita mantendo gates](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463); [mínimo de uma aprovação de reviewer distinto do autor](https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800362186). Não estão pendentes de decisão. Aplicação administrativa NÃO autorizada nesta rodada nem executada; readback atual continua mínimo zero. Bypass global UNKNOWN. Consulta específica de permissões confirmou clovisjr=write e provedorconsult=admin; suely35ramos retornou null (UNKNOWN). Permissão/conta distinta do autor mkwdf1 não comprova independência humana ou aprovação efetiva.
+
+[Reconciliação e proposta administrativa concreta](security-audit/TRACEABILITY_RECONCILIATION.md) separa decisões concluídas de aplicação/readback e reauditoria pendentes. Review 5861522382: REQUEST_CHANGES por rastreabilidade, sem sign-off global. Draft; Hermes F1 BLOQUEADA.
+
+Validação local desta rodada: npm run validate (69/69, zero falhas/skip), scanner histórico e git diff --check PASS, todos exit 0. Resultados em security-audit/TRACEABILITY_RECONCILIATION.md; CI do commit documental é vinculado ao seu próprio SHA no handoff externo.
+
+## Registro das rodadas anteriores
+
+## Rodada atual — bloqueio de deploy sem ambientes verificados
+
+HEAD inicial fc64ffd3890340810af1d682ef2900d5d5a47f84 recebeu REQUEST_CHANGES pelo environment dinâmico. [Correção](security-audit/DEPLOY_ENVIRONMENT_REMEDIATION.md) e [evidências](security-audit/DEPLOY_ENVIRONMENT_EVIDENCE.json) documentam a rodada atual; os blocos seguintes permanecem históricos. Nenhum deploy ou administração executado.
+
+
+### Verificações locais da correção de ambiente
+
+| Comando | Exit code | Resultado |
+|---|---:|---|
+| `npm run doctor` | 0 | PASS |
+| `npm run validate` | 0 | PASS |
+| `node --test tests/agentos-public-security.test.mjs` | 0 | PASS |
+| `npm run validate:secrets:history` | 0 | PASS |
+| `npm audit --audit-level=moderate --json` | 0 | PASS |
+| `bash scripts/run-gitleaks.sh` | 0 | PASS |
+| `git diff --check` | 0 | PASS |
+
+69/69 testes completos, 17/17 de segurança pública, zero falhas/skip. Histórico 59/547 refs locais antes da publicação, não cobertura remota integral. CI do SHA final no handoff externo; nenhum workflow Deploy disparado ou write administrativo.
+
+## Rodada anterior — coordenação e governança PR #21
+
+HEAD inicial a89440920fe8382ceff21807df6a9e06f67173cd; PR #20 fixada em 9b30bec1ec72d861c984dda1e24e5e80adafa4e6. Consolidação documental/evidencial, sem merge; dependências byte a byte idênticas. [Relatório corrente](security-audit/COORDINATION_GOVERNANCE.md) e [comandos/exit codes](security-audit/COORDINATION_EVIDENCE.json) superam as afirmações antigas de estado/CI abaixo. Validação local concluída: 66/66 testes completos e 17/17 de segurança pública, zero falhas/skip; CI do SHA final será conferido no handoff externo. Bypass global UNKNOWN; mínimo humano zero no ruleset visível; Draft e Hermes F1 bloqueada.
+
+
+### Comandos da combinação final — rodada atual
+
+| Comando | Exit code | Resultado |
+|---|---:|---|
+| `npm ci --ignore-scripts` | 0 | PASS |
+| `npm run doctor` | 0 | PASS |
+| `npm run validate` | 0 | PASS |
+| `node --test tests/agentos-public-security.test.mjs` | 0 | PASS |
+| `npm run validate:secrets:history` | 0 | PASS |
+| `npm audit --audit-level=moderate --json` | 0 | PASS |
+| `bash scripts/run-gitleaks.sh` | 0 | PASS |
+| `git diff --check` | 0 | PASS |
+
+Limites: Linux local; sem lifecycle scripts; histórico somente refs locais (58/536 antes da publicação); CI novo ainda a conferir no handoff externo. Administração não alterada.
+
+## Auditoria pública 2026-11-11 — estado da entrega inicial
+
+Os registros abaixo deste bloco são históricos e não provam estado atual. Base main: e2eedcc6249e08c389aef6282bcb13ae40d2f76a. Branch security/public-exposure-hardening. Evidências completas, riscos e comandos em [handoff de segurança](security-audit/CHECKER_HANDOFF.md). main agora retorna protected=true e Ruleset 27031355 active, sem comprovação global de ausência de bypass actors. A antiga observação de main desprotegida foi superada pela consulta atual, sem reescrever a evidência histórica.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---|---|---|---|---|---|
+| Checks locais de segurança | workspace isolado | ver EVIDENCE.json | ver evidências | docs/security-audit/EVIDENCE.json | Auditoria pública | Sem comprovação de produção | Scanners não provam ausência |
+
+## Registros históricos preservados
+
+
 ## Current Release Candidate
 
 - Package metadata: `2.0.0-rc.1`.
@@ -159,3 +230,26 @@ Sprint: `.harness/sprints/2026-07-04-doc-residual-reconciliation.json`. Scope: r
 | `npm run validate:docs` | Linux local | 0 | AgentOS documentation validation passed. | Canonical docs now align with the current owner-approved governance contract and the post-PR-15 baseline. | Documentation contract. | Local host only. | None known. |
 | `npm run validate:license` | Linux local | 0 | AgentOS license and metadata validation passed. | Documentation reconciliation left metadata coherent. | Metadata contract. | Local host only. | None known. |
 | `git diff --check` | Linux local | 0 | No whitespace errors. | Diff hygiene clean for the residual-doc slice. | Diff hygiene. | Local diff only. | None known. |
+
+## Registro histórico preservado da PR #20
+
+O texto abaixo descreve o momento da PR #20; a leitura atual está no relatório de coordenação/governança, que o supera como estado corrente.
+
+## Current audit override — 2026-11-11 F0-AUD-003
+
+This section supersedes previous current-state and zero-vulnerability claims below, which are retained as historical evidence. Base main: `e2eedcc6249e08c389aef6282bcb13ae40d2f76a`. Working branch: `fix/f0-aud-003-governance-dependency`. New commit/PR and CI identifiers are reported in the PR handoff after publication.
+
+- main currently reports `protected=false`; detailed protection read/write is unavailable to this integration (403).
+- The current lockfile audit identifies transitive `fast-uri@3.1.2` as high severity. A lockfile-only update selects 3.1.9; the post-update audit reports zero vulnerabilities at this time.
+- Only fast-uri metadata changes in the dependency graph; direct dependency pins remain unchanged. No local dependency installation or lifecycle scripts executed.
+- CI at the new HEAD is pending publication. Full local doctor/validate/tests are NOT_RUN; dependencies were not installed. CI must prove Windows/Linux behavior.
+- Status: BLOCKED pending administrative enforcement and independent review. No merge, release, SSH or Hermes integration authorized.
+
+| Command | Environment | Exit Code | Result | Evidence | Criterion | Limitations | Residual Risk |
+|---|---|---:|---|---|---|---|---|
+| npm audit --package-lock-only --ignore-scripts --json (baseline) | managed workspace, npm registry | 1 | fast-uri high severity | docs/F0-AUD-003-audit-before.json | Identify dependency | Current advisory database; not proof of runtime exploitation | High until fixed |
+| npm update fast-uri --package-lock-only --ignore-scripts | isolated workspace | 0 | 3.1.2 to 3.1.9; no node_modules | lockfile diff | Minimal repair | No local runtime tests | CI pending |
+| npm audit --package-lock-only --ignore-scripts --json (updated) | managed workspace, npm registry | 0 | zero vulnerabilities | docs/F0-AUD-003-audit-after.json | Audit clean | Time-dependent database | Future advisories possible |
+| branch main metadata / detailed protection API | GitHub read-only | — | protected=false / HTTP 403 | docs/F0-AUD-003.md | Governance observed | Cannot apply protection | Administrative gate BLOCKED |
+
+[Detailed audit record and administrative proposal](F0-AUD-003.md).

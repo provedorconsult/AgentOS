@@ -1,0 +1,476 @@
+{
+  "initialHead": "a89440920fe8382ceff21807df6a9e06f67173cd",
+  "pr20Head": "9b30bec1ec72d861c984dda1e24e5e80adafa4e6",
+  "base": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+  "observedAt": "2026-11-11T14:49:13.007Z",
+  "makerStatus": "local-validation-pass; final CI and READY_FOR_CHECKER_REAUDIT recorded in exact-SHA external handoff",
+  "queries": [
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS",
+      "result": "CONFIRMED",
+      "fields": {
+        "visibility": "public",
+        "ownerType": "User",
+        "permissions": {
+          "admin": false,
+          "maintain": false,
+          "push": true,
+          "triage": true,
+          "pull": true
+        },
+        "securityAndAnalysisReturned": false,
+        "autoMerge": false
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/branches/main",
+      "result": "CONFIRMED",
+      "fields": {
+        "head": "e2eedcc6249e08c389aef6282bcb13ae40d2f76a",
+        "protected": true,
+        "legacyProtectionSummary": {
+          "enabled": false,
+          "required_status_checks": {
+            "enforcement_level": "off",
+            "contexts": [],
+            "checks": []
+          }
+        }
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/branches/main/protection",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "FORBIDDEN",
+      "error": "GitHub API error 403: {\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/branches/branch-protection#get-branch-protection\",\"status\":\"403\"}"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets?includes_parents=true&per_page=100&page=1",
+      "result": "CONFIRMED",
+      "fields": [
+        {
+          "id": 27031355,
+          "name": "F0-AUD-003 - Protect main",
+          "target": "branch",
+          "source_type": "Repository",
+          "source": "provedorconsult/AgentOS",
+          "enforcement": "active",
+          "node_id": "RRS_lACqUmVwb3NpdG9yec5Iz_kSzgGcdzs",
+          "_links": {
+            "self": {
+              "href": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355"
+            },
+            "html": {
+              "href": "https://github.com/provedorconsult/AgentOS/rules/27031355"
+            }
+          },
+          "created_at": "2026-11-11T09:41:53.814-03:00",
+          "updated_at": "2026-11-11T09:41:53.869-03:00"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355",
+      "result": "CONFIRMED",
+      "fields": {
+        "id": 27031355,
+        "name": "F0-AUD-003 - Protect main",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "provedorconsult/AgentOS",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/main"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 0,
+              "dismiss_stale_reviews_on_push": false,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "merge",
+                "squash",
+                "rebase"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "validate (ubuntu-latest)"
+                },
+                {
+                  "context": "validate (windows-latest)"
+                }
+              ]
+            }
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "deletion"
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5Iz_kSzgGcdzs",
+        "created_at": "2026-11-11T09:41:53.814-03:00",
+        "updated_at": "2026-11-11T09:41:53.869-03:00",
+        "current_user_can_bypass": "never",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355"
+          },
+          "html": {
+            "href": "https://github.com/provedorconsult/AgentOS/rules/27031355"
+          }
+        }
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355?includes_parents=true",
+      "result": "CONFIRMED",
+      "fields": {
+        "id": 27031355,
+        "name": "F0-AUD-003 - Protect main",
+        "target": "branch",
+        "source_type": "Repository",
+        "source": "provedorconsult/AgentOS",
+        "enforcement": "active",
+        "conditions": {
+          "ref_name": {
+            "exclude": [],
+            "include": [
+              "refs/heads/main"
+            ]
+          }
+        },
+        "rules": [
+          {
+            "type": "pull_request",
+            "parameters": {
+              "required_approving_review_count": 0,
+              "dismiss_stale_reviews_on_push": false,
+              "required_reviewers": [],
+              "require_code_owner_review": false,
+              "require_last_push_approval": false,
+              "required_review_thread_resolution": true,
+              "require_extra_approval_for_unattributed_changes": true,
+              "allowed_merge_methods": [
+                "merge",
+                "squash",
+                "rebase"
+              ]
+            }
+          },
+          {
+            "type": "required_status_checks",
+            "parameters": {
+              "strict_required_status_checks_policy": true,
+              "do_not_enforce_on_create": false,
+              "required_status_checks": [
+                {
+                  "context": "validate (ubuntu-latest)"
+                },
+                {
+                  "context": "validate (windows-latest)"
+                }
+              ]
+            }
+          },
+          {
+            "type": "non_fast_forward"
+          },
+          {
+            "type": "deletion"
+          }
+        ],
+        "node_id": "RRS_lACqUmVwb3NpdG9yec5Iz_kSzgGcdzs",
+        "created_at": "2026-11-11T09:41:53.814-03:00",
+        "updated_at": "2026-11-11T09:41:53.869-03:00",
+        "current_user_can_bypass": "never",
+        "_links": {
+          "self": {
+            "href": "https://api.github.com/repos/provedorconsult/AgentOS/rulesets/27031355"
+          },
+          "html": {
+            "href": "https://github.com/provedorconsult/AgentOS/rules/27031355"
+          }
+        }
+      }
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/rules/branches/main",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/actions/permissions",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/actions/permissions/workflow",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/actions/permissions/selected-actions",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/environments",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/vulnerability-alerts",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/private-vulnerability-reporting",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/code-scanning/default-setup",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    },
+    {
+      "url": "https://api.github.com/repos/provedorconsult/AgentOS/secret-scanning/alerts?per_page=1",
+      "result": "NOT ACCESSIBLE",
+      "errorCode": "INVALID_ARGUMENT",
+      "error": "HTTPError: 400: GitHub Fetch URL is not an allowed public GitHub repository or search endpoint. (Response: None)"
+    }
+  ],
+  "conclusion": {
+    "bypass": "UNKNOWN: bypass_actors omitted; current_user_can_bypass never applies only to caller",
+    "humanApproval": "NOT CONFIGURED in visible ruleset; required_approving_review_count=0; global enforcement UNKNOWN",
+    "administrativeWrites": false
+  },
+  "dependencyComparison": {
+    "packageJsonIdentical": true,
+    "lockfileIdentical": true,
+    "lockfileGitBlob": "f327ca0912cfbbe31f6d542f863501a42f5881a3",
+    "fastUri": "3.1.9"
+  },
+  "simulation": {
+    "command": "git merge-tree --write-tree a89440920fe8382ceff21807df6a9e06f67173cd 9b30bec1ec72d861c984dda1e24e5e80adafa4e6",
+    "exitCode": 1,
+    "conflicts": [
+      ".harness/current.txt",
+      ".harness/project-state.json",
+      "CHANGELOG.md",
+      "docs/PLAN.md",
+      "docs/REVIEW.md"
+    ],
+    "branchMergePerformed": false
+  },
+  "validation": [
+    {
+      "command": "npm ci --ignore-scripts --registry=https://registry.npmjs.org --userconfig=/workspace/work/agentos-a003/empty-user.npmrc --globalconfig=/workspace/work/agentos-a003/empty-global.npmrc --cache=/workspace/work/agentos-public-audit/npm-cache",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    },
+    {
+      "command": "npm run doctor",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    },
+    {
+      "command": "npm run validate",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "\u2139 tests 66",
+        "\u2139 pass 66",
+        "\u2139 fail 0",
+        "\u2139 skipped 0"
+      ]
+    },
+    {
+      "command": "node --test tests/agentos-public-security.test.mjs",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "\u2139 tests 17",
+        "\u2139 pass 17",
+        "\u2139 fail 0",
+        "\u2139 skipped 0"
+      ]
+    },
+    {
+      "command": "npm run validate:secrets:history",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "Reachable history: 58 commits; 536 unique blobs; 1 immutable binary review exceptions. Scope: locally available refs only."
+      ]
+    },
+    {
+      "command": "npm audit --audit-level=moderate --json --registry=https://registry.npmjs.org --userconfig=/workspace/work/agentos-a003/empty-user.npmrc --globalconfig=/workspace/work/agentos-a003/empty-global.npmrc --cache=/workspace/work/agentos-public-audit/npm-cache",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    },
+    {
+      "command": "bash scripts/run-gitleaks.sh",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": [
+        "Gitleaks 8.30.1: no findings in locally reachable history. Not proof of absence."
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "PASS",
+      "rawLogsPublished": false,
+      "summary": []
+    }
+  ],
+  "ci": {
+    "commitSha": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
+    "workflow": {
+      "id": 43042894497,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43042894497",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "checklist": {
+      "id": 43042894739,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43042894739",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "eachPlatform": {
+      "tests": 66,
+      "passed": 66,
+      "failed": 0,
+      "skipped": 0
+    },
+    "reachableHistory": {
+      "commits": 51,
+      "blobs": 538,
+      "scope": "locally reachable refs in that CI checkout, not full remote history"
+    },
+    "gitleaks": {
+      "linux": "PASS",
+      "windows": "conditional step skipped by policy"
+    },
+    "binding": "This evidence describes commitSha only, not a moving HEAD. Documentation-only successor CI is separately linked in the PR handoff."
+  },
+  "preservationChecks": [
+    {
+      "path": ".harness/sprints/2026-11-11-f0-aud-003.json",
+      "preservation": "byte-identical to PR20",
+      "sha256": "baa2a2ec235aa8e763ab4326c613244725aef718963056d035fe9e26be31cf09"
+    },
+    {
+      "path": "docs/F0-AUD-003.md",
+      "preservation": "byte-identical to PR20",
+      "sha256": "05603effd11d2452ace84125317951e24e6b102ab2754f3ae2a944b63e28a440"
+    },
+    {
+      "path": "docs/F0-AUD-003-audit-before.json",
+      "preservation": "byte-identical to PR20",
+      "sha256": "40607339feec15ddf4864b6d622cdacdbf6b2169a5fc190f85275de6ab1f348f"
+    },
+    {
+      "path": "docs/F0-AUD-003-audit-after.json",
+      "preservation": "byte-identical to PR20",
+      "sha256": "b966435ec31b7d61483d849d853d936f86183d654661604e532f1be934735a79"
+    },
+    {
+      "path": "docs/PLAN.md",
+      "preservation": "entire PR20 appended addition retained"
+    },
+    {
+      "path": "docs/RELEASE.md",
+      "preservation": "entire PR20 appended addition retained"
+    },
+    {
+      "path": "package.json",
+      "preservation": "byte-identical to PR20 and initial PR21",
+      "sha256": "6e58e933b12fef15159f1ac677e9ea9a3cd54bb48e912fe11fb0591acf9af006"
+    },
+    {
+      "path": "package-lock.json",
+      "preservation": "byte-identical to PR20 and initial PR21",
+      "sha256": "32a62ae1668e9460454b33bca78f50b17765909dd2b05ecca860b8631a7d61e6"
+    },
+    {
+      "path": "scripts/validate-no-secrets.mjs",
+      "preservation": "unchanged from independently reviewed initial PR21"
+    },
+    {
+      "path": "tests/agentos-public-security.test.mjs",
+      "preservation": "unchanged from independently reviewed initial PR21"
+    }
+  ],
+  "environment": {
+    "os": "Linux",
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "git": "git version 2.52.0",
+    "lifecycleScriptsExecuted": false
+  },
+  "auditVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "historyScope": "58 commits/536 unique blobs locally reachable before publication; not complete remote history",
+  "resolution": {
+    "strategy": "consolidate PR20 content into PR21; no branch merge; propose PR20 superseded after independent acceptance",
+    "preservedSourceFiles": 4,
+    "keptCurrentSprint": "2026-11-11-public-security-audit",
+    "keptLastVerifiedSprint": "2026-07-04-doc-residual-reconciliation",
+    "pr20BranchModified": false,
+    "requiresCheckerAcceptance": true
+  },
+  "state": "execution-record-bound-to-tested-commit; no global approval",
+  "testedCommit": "fc64ffd3890340810af1d682ef2900d5d5a47f84",
+  "humanCoordinationDecision": {
+    "status": "ACCEPTED_WITH_GATES",
+    "source": "https://github.com/provedorconsult/AgentOS/pull/21#issuecomment-6800325463",
+    "doesNotAuthorizeMergeOrImmediatePr20Closure": true
+  }
+}
