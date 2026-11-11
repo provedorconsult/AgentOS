@@ -10,11 +10,12 @@ Os comentários continham decisões e resultados que não haviam sido incorporad
 
 | SHA | AgentOS CI | Checklist | Testes por plataforma | Histórico no checkout CI |
 |---|---|---|---|---|
+| 7c2529612df1104bcf3955f6711b1a804a0dd20e | [43054155242](https://github.com/provedorconsult/AgentOS/actions/runs/43054155242) success | [43054155256](https://github.com/provedorconsult/AgentOS/actions/runs/43054155256) success | 69 PASS, 0 FAIL, 0 SKIP | 53 / 566 |
 | 668254b435cf46e1cc5cbc8346bad59db7ce7fcb | [43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631) success | [43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success | 69 PASS, 0 FAIL, 0 SKIP | 52 commits / 552 blobs |
 | fc64ffd3890340810af1d682ef2900d5d5a47f84 | [43042894497](https://github.com/provedorconsult/AgentOS/actions/runs/43042894497) success | [43042894739](https://github.com/provedorconsult/AgentOS/actions/runs/43042894739) success | 66 PASS, 0 FAIL, 0 SKIP | 51 / 538 |
 | a89440920fe8382ceff21807df6a9e06f67173cd | [43035036962](https://github.com/provedorconsult/AgentOS/actions/runs/43035036962) success | [43035036801](https://github.com/provedorconsult/AgentOS/actions/runs/43035036801) success | 66 PASS, 0 FAIL, 0 SKIP | 50 / 527 |
 
-Metadados das três execuções reconferidos nesta rodada. Logs dos jobs [Linux 130623067942](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631/job/130623067942) e [Windows 130623068578](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631/job/130623068578) de 668254b novamente inspecionados: testes conforme tabela, audit zero vulnerabilidades, histórico/doctor/validate/diff/worktree success; Gitleaks PASS Linux e skip condicional esperado Windows. Nenhum workflow Deploy disparado.
+Metadados das três execuções originais reconferidos na rodada anterior. O complemento atual adiciona a execução documental 7c252961, com passos e logs dos jobs 130639000598 (Linux) e 130639000202 (Windows) reconferidos; resultados conforme a tabela. Logs dos jobs [Linux 130623067942](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631/job/130623067942) e [Windows 130623068578](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631/job/130623068578) de 668254b novamente inspecionados: testes conforme tabela, audit zero vulnerabilidades, histórico/doctor/validate/diff/worktree success; Gitleaks PASS Linux e skip condicional esperado Windows. Nenhum workflow Deploy disparado.
 
 DEPLOY_ENVIRONMENT_EVIDENCE.json, COORDINATION_EVIDENCE.json e FALLBACK_EVIDENCE.json agora têm ci como objeto com commitSha, runs, conclusões e escopo. Foram removidos os marcadores de CI pendente dessas execuções. O resultado do sucessor documental pertence ao seu próprio SHA e é registrado após publicação no comentário de reauditoria, sem substituir os dados das execuções acima ou dizer que o CI de 668254b validou outro commit. Não há campo CI genérico relativo a um HEAD móvel. Logs locais e resultados de CI são evidências distintas; refs locais não cobrem todo o histórico remoto, forks ou objetos inalcançáveis.
 
@@ -66,3 +67,9 @@ Pendências reais: autorização/capacidade para aplicação administrativa; mí
 | `git diff --check` | 0 | PASS |
 
 Suíte 69/69 PASS, zero falhas/skip. Histórico local anterior à publicação: 60 commits/561 blobs; somente refs disponíveis localmente. Primeira tentativa da validação documental detectou link relativo de REVIEW incorreto; corrigido antes da execução completa PASS acima. Logs preservados em workspace fora do Git. A comparação das superfícies scripts/tests/workflows/dependências com 668254b retornou diff vazio.
+
+## Complemento solicitado para 7c252961
+
+CI de 7c252961 incorporado ao JSON, tabela deste relatório, handoff e REVIEW. Não é nova decisão de governança: estratégia aceita em #6800325463 e mínimo uma aprovação decidido em #6800362186 continuam concluídos. Aplicação/readback administrativos ainda abertos, último mínimo observado zero e bypass global UNKNOWN. Nenhuma configuração ou código alterado. A incorporação do resultado não consegue atribuir o CI anterior ao próprio commit que o registra; o novo CI é vinculado externamente ao SHA sucessor após conclusão.
+
+Validação local deste complemento: npm run validate:docs, npm run validate:secrets, npm run validate:scope -- --base e2eedcc6249e08c389aef6282bcb13ae40d2f76a e git diff --check: PASS, exit 0. Nenhum teste novo; CI próprio do sucessor executará a suíte completa.

@@ -374,5 +374,55 @@
       "verdict": "REQUEST_CHANGES",
       "technicalDeploy": "validated; no global sign-off"
     }
+  },
+  "documentationSuccessorCI": {
+    "commitSha": "7c2529612df1104bcf3955f6711b1a804a0dd20e",
+    "workflow": {
+      "id": 43054155242,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43054155242",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "checklist": {
+      "id": 43054155256,
+      "url": "https://github.com/provedorconsult/AgentOS/actions/runs/43054155256",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "jobs": [
+      {
+        "id": 130639000598,
+        "platform": "Linux",
+        "status": "completed",
+        "conclusion": "success",
+        "tests": 69,
+        "passed": 69,
+        "failed": 0,
+        "skipped": 0,
+        "logsInspected": true
+      },
+      {
+        "id": 130639000202,
+        "platform": "Windows",
+        "status": "completed",
+        "conclusion": "success",
+        "tests": 69,
+        "passed": 69,
+        "failed": 0,
+        "skipped": 0,
+        "logsInspected": true
+      }
+    ],
+    "auditVulnerabilities": 0,
+    "gitleaks": {
+      "linux": "PASS",
+      "windows": "conditional step skipped"
+    },
+    "reachableHistory": {
+      "commits": 53,
+      "blobs": 566,
+      "scope": "refs available in that CI checkout"
+    },
+    "binding": "Record of this exact completed commit, not a moving HEAD. Subsequent documentation-only CI is separately bound in the PR handoff."
   }
 }

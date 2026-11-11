@@ -1,5 +1,12 @@
 # Handoff ao Checker — AgentOS PR #21
 
+## CI documental confirmado — 7c252961
+
+Execução fixada em `7c2529612df1104bcf3955f6711b1a804a0dd20e`: [AgentOS CI #43054155242](https://github.com/provedorconsult/AgentOS/actions/runs/43054155242) e [Checklist #43054155256](https://github.com/provedorconsult/AgentOS/actions/runs/43054155256) completed/success. Jobs Linux 130639000598 e Windows 130639000202: 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades, histórico/doctor/validate/diff/worktree PASS. Gitleaks PASS Linux, skip condicional Windows. Logs e passos reconferidos diretamente. Histórico CI: 53 commits/566 blobs, somente refs disponíveis no checkout.
+
+Registro estruturado: documentationSuccessorCI em DEPLOY_ENVIRONMENT_EVIDENCE.json. A evidência técnica de 668254b abaixo é preservada separadamente. O commit que incorpora este resultado é necessariamente posterior à execução registrada e terá CI próprio identificado por SHA no handoff externo; não se atribui este resultado a qualquer HEAD móvel.
+
+
 ## Estado corrente — decisões e evidências reconciliadas
 
 Fonte técnica fixada: `668254b435cf46e1cc5cbc8346bad59db7ce7fcb`. [CI #43049685631](https://github.com/provedorconsult/AgentOS/actions/runs/43049685631): Linux e Windows 69/69 PASS cada, zero falhas/skip; audit zero vulnerabilidades; Gitleaks PASS Linux, skip condicional Windows. [Checklist #43049685619](https://github.com/provedorconsult/AgentOS/actions/runs/43049685619) success. Logs reconferidos. Essa evidência pertence ao SHA indicado, não a qualquer HEAD futuro.
